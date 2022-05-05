@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fontFamily="?android:fontFamily">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/postCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        android:backgroundTint="?colorSecondaryVariant">
+
+        <LinearLayout
+            android:id="@+id/cardTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/community_avatar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_avatar"
+                android:contentDescription="@string/logo_image_description"
+                android:layout_margin="8sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:textSize="8pt"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_margin="8sp"
+                android:text="World War 3 News"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:textSize="8pt"
+                android:layout_margin="8sp"
+                android:text="10.04.2022."/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/cardTitle"
+            android:layout_marginTop="40sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="9pt"
+                android:textStyle="bold"
+                android:layout_margin="8sp"
+                android:text="World War 3: What will Happen and Who will Support Whom?"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="7pt"
+                android:layout_margin="8sp"
+                android:text="During Moscow’s ongoing massive military operation against Ukraine, Russian Foreign Minister Sergey Lavrov warned Wednesday of a third world war’s “nuclear and devastating” consequences. As U.S. President Joe Biden said, a third World War would be a better alternative to Washington’s tough sanctions against Moscow. Asked if he was surprised that sanctions were being imposed against athletes and journalists, Lavrov said that Russia was ready for any sanctions imposed against it." />
+
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:layout_margin="16sp"
+                android:contentDescription="@string/logo_image_description"
+                android:src="@drawable/postimage1" />
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:layout_margin="16sp"
+                android:contentDescription="@string/logo_image_description"
+                android:src="@drawable/postimage2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:background="@null"
+                    android:id="@+id/commentsButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_comments"
+                    android:contentDescription="@string/logo_image_description"
+                    android:layout_margin="8sp"
+                    app:tint="?colorAccent" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:textSize="8pt"
+                    android:layout_weight="1"
+                    android:layout_margin="8sp"
+                    android:text="657"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:textSize="8pt"
+                    android:layout_margin="8sp"
+                    android:text="-14523"/>
+
+                <ImageButton
+                    android:background="@null"
+                    android:id="@+id/downVoteButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_downvote"
+                    android:contentDescription="@string/logo_image_description"
+                    android:layout_margin="8sp"
+                    app:tint="?colorAccent" />
+
+                <ImageButton
+                    android:background="@null"
+                    android:id="@+id/upVoteButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_upvote"
+                    android:contentDescription="@string/logo_image_description"
+                    android:layout_margin="8sp"
+                    app:tint="?colorAccent" />
+
+                <ImageButton
+                    android:background="@null"
+                    android:id="@+id/reportButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_report"
+                    android:contentDescription="@string/logo_image_description"
+                    android:layout_margin="8sp"
+                    app:tint="?colorAccent" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.core.widget.NestedScrollView>
