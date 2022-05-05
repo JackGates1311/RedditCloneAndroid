@@ -23,7 +23,8 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle data) {
 
-        ((MainActivity)getActivity()).hideSortGroupMenu();
+        ((MainActivity)getActivity()).setSortGroupMenuVisibility(false,
+                false);
 
         getActivity().setTitle("Register to Reddit Clone");
 

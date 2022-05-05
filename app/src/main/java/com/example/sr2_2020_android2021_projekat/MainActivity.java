@@ -147,18 +147,15 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void hideSortGroupMenu() {
+    public void setSortGroupMenuVisibility(boolean sortGroupMenuVisibility,
+                                           boolean addGroupMenuVisibility) {
 
-        if (menu != null)
-            menu.setGroupVisible(R.id.sortGroup, false);
+        if (menu != null) {
 
-    }
+            menu.setGroupVisible(R.id.sortGroup, sortGroupMenuVisibility);
+            menu.setGroupVisible(R.id.addGroup, addGroupMenuVisibility);
+        }
 
-    public void showSortGroupMenu() {
-
-        if (menu != null)
-            menu.setGroupVisible(R.id.sortGroup, true);
 
     }
-
 }

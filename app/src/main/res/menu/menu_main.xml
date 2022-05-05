@@ -11,8 +11,17 @@
                 android:icon="@drawable/ic_sort"
                 android:title="Sort by"
                 android:iconTint="?android:textColorPrimary"
-                app:showAsAction="ifRoom" />
+                app:showAsAction="always" />
 
+        </group>
+
+        <group android:id="@+id/addGroup">
+
+            <item android:id="@+id/add"
+                android:icon="@drawable/ic_post_add"
+                android:title="Sort by"
+                android:iconTint="?android:textColorPrimary"
+                app:showAsAction="always" />
 
         </group>
 

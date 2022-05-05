@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,13 +36,30 @@ public class PostDetailsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        ((MainActivity)getActivity()).showSortGroupMenu();
-
-        //TODO Commit project to git and make IndividualCommunityFragment
+        ((MainActivity)getActivity()).setSortGroupMenuVisibility(true,
+                false);
 
         getActivity().setTitle("Post details");
 
         View view = inflater.inflate(R.layout.fragment_post_details, container, false);
+
+        //
+
+        LinearLayout cardTitle = (LinearLayout) view.findViewById(R.id.cardTitle);
+
+        cardTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Toast.makeText(view.getContext(), "onClick()", Toast.LENGTH_SHORT).show();
+
+                FragmentTransition.to(CommunityFragment.newInstance(), getActivity(),
+                        true, R.id.viewPage);
+
+            }
+        });
+
+        //
 
         return view;
     }

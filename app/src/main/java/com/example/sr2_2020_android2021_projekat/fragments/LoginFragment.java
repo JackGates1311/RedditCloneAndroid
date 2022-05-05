@@ -28,7 +28,8 @@ public class LoginFragment extends Fragment {
                              @Nullable ViewGroup vg,
                              @Nullable Bundle data) {
 
-        ((MainActivity)getActivity()).hideSortGroupMenu();
+        ((MainActivity)getActivity()).setSortGroupMenuVisibility(false,
+                false);
 
         getActivity().setTitle("Login to Reddit Clone");
 
