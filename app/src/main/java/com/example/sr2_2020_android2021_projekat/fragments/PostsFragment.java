@@ -32,7 +32,7 @@ public class PostsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        ((MainActivity)getActivity()).setSortGroupMenuVisibility(true,
+        ((MainActivity)getActivity()).setGroupMenuVisibility(true,
                 true);
 
         getActivity().setTitle("Reddit Clone");

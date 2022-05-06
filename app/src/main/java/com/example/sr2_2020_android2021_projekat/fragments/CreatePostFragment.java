@@ -12,11 +12,11 @@ import androidx.annotation.Nullable;
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 
-public class CommunityFragment extends Fragment {
+public class CreatePostFragment extends Fragment {
 
-    public static CommunityFragment newInstance() {
+    public static CreatePostFragment newInstance() {
 
-        return new CommunityFragment();
+        return new CreatePostFragment();
     }
 
     @Nullable
@@ -28,10 +28,11 @@ public class CommunityFragment extends Fragment {
         ((MainActivity)getActivity()).setGroupMenuVisibility(false,
                 false);
 
-        getActivity().setTitle("Community details");
+        getActivity().setTitle("Create new post");
 
-        View view = inflater.inflate(R.layout.fragment_community, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_post, container, false);
 
         return view;
+
     }
 }

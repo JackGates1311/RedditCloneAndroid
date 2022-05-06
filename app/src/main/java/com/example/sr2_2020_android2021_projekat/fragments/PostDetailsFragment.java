@@ -1,5 +1,6 @@
 package com.example.sr2_2020_android2021_projekat.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class PostDetailsFragment extends Fragment {
 
@@ -36,7 +38,7 @@ public class PostDetailsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        ((MainActivity)getActivity()).setSortGroupMenuVisibility(true,
+        ((MainActivity)getActivity()).setGroupMenuVisibility(true,
                 false);
 
         getActivity().setTitle("Post details");
@@ -58,6 +60,61 @@ public class PostDetailsFragment extends Fragment {
 
             }
         });
+
+        ImageButton reportPostButton = (ImageButton) view.findViewById(R.id.reportPostButton);
+
+        reportPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Toast.makeText(view.getContext(), "onClick()", Toast.LENGTH_SHORT).show();
+
+                new MaterialAlertDialogBuilder(getActivity())
+                        .setTitle("Report post")
+                        .setMessage("Please select at least one reason for reporting post:")
+                        .setView(R.layout.fragment_report_post)
+                        .setPositiveButton("Report post", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).show();
+
+            }
+        });
+
+        ImageButton reportCommentButton = (ImageButton) view.findViewById(R.id.reportCommentButton);
+
+        reportCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Toast.makeText(view.getContext(), "onClick()", Toast.LENGTH_SHORT).show();
+
+                new MaterialAlertDialogBuilder(getActivity())
+                        .setTitle("Report comment")
+                        .setMessage("Please select at least one reason for reporting comment:")
+                        .setView(R.layout.fragment_report_comment)
+                        .setPositiveButton("Report", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).show();
+
+            }
+        });
+
 
         //
 

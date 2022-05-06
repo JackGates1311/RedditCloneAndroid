@@ -5,18 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 
-public class CommunityFragment extends Fragment {
+public class ChangePasswordFragment extends Fragment {
 
-    public static CommunityFragment newInstance() {
+    public static ChangePasswordFragment newInstance() {
 
-        return new CommunityFragment();
+        return new ChangePasswordFragment();
     }
 
     @Nullable
@@ -25,13 +24,8 @@ public class CommunityFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        ((MainActivity)getActivity()).setGroupMenuVisibility(false,
-                false);
 
-        getActivity().setTitle("Community details");
+        return inflater.inflate(R.layout.fragment_change_password, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_community, container, false);
-
-        return view;
     }
 }

@@ -7,7 +7,7 @@
 
         <group android:id="@+id/sortGroup">
 
-            <item android:id="@+id/sort"
+            <item android:id="@+id/action_sort"
                 android:icon="@drawable/ic_sort"
                 android:title="Sort by"
                 android:iconTint="?android:textColorPrimary"
@@ -17,7 +17,7 @@
 
         <group android:id="@+id/addGroup">
 
-            <item android:id="@+id/add"
+            <item android:id="@+id/action_add_post"
                 android:icon="@drawable/ic_post_add"
                 android:title="Sort by"
                 android:iconTint="?android:textColorPrimary"

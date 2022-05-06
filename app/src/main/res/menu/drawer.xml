@@ -19,6 +19,19 @@
             android:icon="@drawable/ic_login"
             android:title="@string/menu_user_login_name" />
 
+        <item
+            android:id="@+id/navigation_bar_item_user_manage"
+            android:icon="@drawable/ic_user_manage"
+            android:title="@string/menu_user_manage_name"
+            android:visible="false"/>
+
+        <item
+            android:id="@+id/navigation_bar_item_user_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/menu_user_logout_name"
+            android:visible="false"/>
+
+
     </group>
 
 </menu>

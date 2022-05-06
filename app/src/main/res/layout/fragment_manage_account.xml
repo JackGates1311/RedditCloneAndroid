@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:fontFamily="?android:fontFamily">
 
     <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="25.0sp" android:layout_marginBottom="25.0sp" android:layout_marginStart="50.0sp" android:layout_marginEnd="50.0sp">
@@ -17,9 +17,18 @@
                 android:src="@drawable/ic_avatar"
                 android:contentDescription="@string/logo_image_description" />
 
-            <com.google.android.material.button.MaterialButton android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="7.0sp" android:text="@string/button_upload_photo_name" />
+            <com.google.android.material.button.MaterialButton android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="7.0sp" android:text="@string/button_change_photo_name" />
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20.0sp"
+            android:textAlignment="center"
+            android:textSize="9pt"
+            android:textStyle="bold"
+            android:text="Karma score: 254"/>
 
         <com.google.android.material.textfield.TextInputLayout android:paddingTop="20.0sp" android:paddingBottom="20.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/username_login_name">
 
@@ -39,21 +48,27 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout android:id="@id/textPassword" android:paddingBottom="20.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/password_login_register_name">
-
-            <com.google.android.material.textfield.TextInputEditText android:layout_width="fill_parent" android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.textfield.TextInputLayout android:paddingBottom="20.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/description_register_name">
 
             <com.google.android.material.textfield.TextInputEditText android:layout_width="fill_parent" android:layout_height="80.0sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/button_register_name" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/change_password_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_change_password_name" />
 
-        <com.google.android.material.button.MaterialButton android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/button_cancel_name" />
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_my_communities_name" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_save_name" />
 
     </LinearLayout>
 

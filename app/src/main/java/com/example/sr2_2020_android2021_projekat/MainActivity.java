@@ -15,8 +15,10 @@ import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.sr2_2020_android2021_projekat.fragments.CreatePostFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.LoginFragment;
 
+import com.example.sr2_2020_android2021_projekat.fragments.ManageAccountFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.PostDetailsFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.PostsFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.RegisterFragment;
@@ -28,6 +30,8 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
+
+    public NavigationView navigationView;
 
     Menu menu;
 
@@ -54,12 +58,13 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         FragmentTransition.to(PostsFragment.newInstance(), this,
                 false, R.id.viewPage);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -85,6 +90,31 @@ public class MainActivity extends AppCompatActivity {
                     FragmentTransition.to(LoginFragment.newInstance(), MainActivity.this,
                             false, R.id.viewPage);
 
+                    // item.setVisible(false); -- WORKS
+
+                }
+
+                if(item.getTitle().equals("Logout")) {
+
+                    // Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+
+                    MainActivity.this.navigationView.getMenu().
+                            findItem(R.id.navigation_bar_item_user_register).setVisible(true);
+
+                    MainActivity.this.navigationView.getMenu().
+                            findItem(R.id.navigation_bar_item_user_login).setVisible(true);
+
+                    MainActivity.this.navigationView.getMenu().
+                            findItem(R.id.navigation_bar_item_user_logout).setVisible(false);
+
+                    MainActivity.this.navigationView.getMenu().
+                            findItem(R.id.navigation_bar_item_user_manage).setVisible(false);
+
+                    FragmentTransition.to(PostsFragment.newInstance(), MainActivity.this,
+                            false, R.id.viewPage);
+
+                    // item.setVisible(false); -- WORKS
+
                 }
 
                 if(item.getTitle().equals("Register")) {
@@ -93,6 +123,15 @@ public class MainActivity extends AppCompatActivity {
 
                     FragmentTransition.to(RegisterFragment.newInstance(), MainActivity.this,
                             false, R.id.viewPage);
+
+                }
+
+                if(item.getTitle().equals("Manage account")) {
+
+                    // Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+
+                    FragmentTransition.to(ManageAccountFragment.newInstance(), MainActivity.this,
+                            true, R.id.viewPage);
 
                 }
 
@@ -126,7 +165,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_settings:
+                //TODO Implement settings menu
                 return true;
+
+            case R.id.action_add_post:
+                FragmentTransition.to(CreatePostFragment.newInstance(), MainActivity.this,
+                        true, R.id.viewPage);
         }
 
         return super.onOptionsItemSelected(item);
@@ -147,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void setSortGroupMenuVisibility(boolean sortGroupMenuVisibility,
+    public void setGroupMenuVisibility(boolean sortGroupMenuVisibility,
                                            boolean addGroupMenuVisibility) {
 
         if (menu != null) {
@@ -158,4 +202,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }

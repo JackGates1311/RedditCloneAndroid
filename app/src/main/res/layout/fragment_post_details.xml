@@ -357,6 +357,7 @@
                                 app:tint="?colorAccent" />
 
                             <ImageButton
+                                android:id="@+id/reportCommentButton"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_margin="8sp"

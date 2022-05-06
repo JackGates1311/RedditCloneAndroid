@@ -107,4 +107,20 @@
     <string name="post_comment_text_name">Write your comment here</string>
     <string name="join_to_this_community_button_name">Join to this community</string>
     <string name="view_community_posts_button_name">View all community posts</string>
+    <string name="post_title_name">Post title</string>
+    <string name="post_text_name">Post text</string>
+    <string name="post_flairs_name">Post flairs</string>
+    <string name="button_create_post_name">Create post</string>
+    <string name="button_upload_post_images_name">Upload post images</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_user_logout_name">Logout</string>
+    <string name="menu_user_manage_name">Manage account</string>
+    <string name="button_change_password_name">Change password</string>
+    <string name="button_my_communities_name">My communities</string>
+    <string name="button_save_name">Save changes</string>
+    <string name="button_change_photo_name">Change image</string>
+    <string name="current_password_name">Current password</string>
+    <string name="new_password_name">New password</string>
+    <string name="repeat_new_password_name">Repeat new password</string>
 </resources>
