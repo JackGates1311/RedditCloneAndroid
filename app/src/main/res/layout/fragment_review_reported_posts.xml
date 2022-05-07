@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8sp"
+            android:checkable="true"
+            android:focusable="true">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnCount="1"
+                android:padding="8sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8sp"
+                    android:layout_columnSpan="1"
+                    android:layout_columnWeight="1"
+                    android:text="Reported posts:"
+                    android:textSize="8pt"
+                    android:textStyle="bold"  />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/reported_post_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8sp"
+                    android:layout_columnSpan="1"
+                    android:layout_columnWeight="1"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_avatar" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4sp"
+                            android:layout_weight="1"
+                            android:textAlignment="center"
+                            android:text="World War 3 News post"
+                            android:textSize="8pt"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_info"
+                            app:tint="?colorAccent"/>
+
+                        <CheckBox
+                            android:layout_width="30dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:checked="true" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8sp"
+                    android:layout_columnSpan="1"
+                    android:layout_columnWeight="1"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_avatar" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4sp"
+                            android:layout_weight="1"
+                            android:textAlignment="center"
+                            android:text="Tech Community post"
+                            android:textSize="8pt"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_info"
+                            app:tint="?colorAccent"/>
+
+                        <CheckBox
+                            android:layout_width="30dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:checked="false" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8sp"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/accept_reported_comments_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_accept_reported_posts_name" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/decline_reported_comments_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_decline_reported_posts_name" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -59,8 +59,18 @@ public class LoginFragment extends Fragment {
                 ((MainActivity) getActivity()).navigationView.getMenu().
                         findItem(R.id.navigation_bar_item_user_manage).setVisible(true);
 
+                ((MainActivity) getActivity()).navigationView.getMenu().
+                        findItem(R.id.navigation_bar_item_create_community).setVisible(true);
+
+                ((MainActivity) getActivity()).navigationView.getMenu().
+                        findItem(R.id.navigation_bar_item_communities).setVisible(true);
+
+                ((MainActivity) getActivity()).navigationView.getMenu().
+                        findItem(R.id.navigation_bar_item_administrator_tools).setVisible(true);
+
+
                 FragmentTransition.to(PostsFragment.newInstance(), getActivity(),
-                        false, R.id.viewPage);
+                        true, R.id.viewPage);
 
 
 

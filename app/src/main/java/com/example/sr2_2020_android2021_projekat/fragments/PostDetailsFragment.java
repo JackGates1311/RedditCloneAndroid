@@ -2,6 +2,7 @@ package com.example.sr2_2020_android2021_projekat.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
@@ -115,8 +117,31 @@ public class PostDetailsFragment extends Fragment {
             }
         });
 
+        ImageButton editPostButton = (ImageButton) view.findViewById(R.id.editPostButton);
 
-        //
+        editPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ((MainActivity)getActivity()).postMode = "EDIT";
+
+                FragmentTransition.to(CreateEditPostFragment.newInstance(), getActivity(),
+                        true, R.id.viewPage);
+
+            }
+        });
+
+        TextView displayNameComment = (TextView) view.findViewById(R.id.display_name_comment);
+
+        displayNameComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentTransition.to(UserInfoFragment.newInstance(), getActivity(),
+                        true, R.id.viewPage);
+
+            }
+        });
 
         return view;
     }

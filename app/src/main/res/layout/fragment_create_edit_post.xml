@@ -61,9 +61,17 @@
             android:text="@string/button_upload_post_images_name" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_create_post"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_create_post_name" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_save_changes_post"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_save_name"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

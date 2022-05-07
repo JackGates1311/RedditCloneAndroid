@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fontFamily="?android:fontFamily">
 
     <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="25.0sp" android:layout_marginBottom="25.0sp" android:layout_marginStart="50.0sp" android:layout_marginEnd="50.0sp">
@@ -39,9 +39,9 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout android:id="@id/textPassword" android:paddingBottom="20.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/password_login_register_name">
+        <com.google.android.material.textfield.TextInputLayout android:id="@id/textPassword" android:paddingBottom="20.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/password_login_register_name" app:endIconMode="password_toggle">
 
-            <com.google.android.material.textfield.TextInputEditText android:layout_width="fill_parent" android:layout_height="wrap_content" />
+            <com.google.android.material.textfield.TextInputEditText android:layout_width="fill_parent" android:layout_height="wrap_content"  android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

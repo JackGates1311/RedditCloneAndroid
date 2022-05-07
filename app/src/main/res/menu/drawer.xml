@@ -26,10 +26,29 @@
             android:visible="false"/>
 
         <item
+            android:id="@+id/navigation_bar_item_create_community"
+            android:icon="@drawable/ic_community_add"
+            android:title="@string/menu_create_community_name"
+            android:visible="false"/>
+
+        <item
+            android:id="@+id/navigation_bar_item_communities"
+            android:icon="@drawable/ic_community"
+            android:title="@string/menu_communities_name"
+            android:visible="false"/>
+
+        <item
+            android:id="@+id/navigation_bar_item_administrator_tools"
+            android:icon="@drawable/ic_admin_tools"
+            android:title="@string/menu_administrator_tools_name"
+            android:visible="false"/>
+
+        <item
             android:id="@+id/navigation_bar_item_user_logout"
             android:icon="@drawable/ic_logout"
             android:title="@string/menu_user_logout_name"
             android:visible="false"/>
+
 
 
     </group>

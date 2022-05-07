@@ -37,6 +37,9 @@ public class PostsFragment extends Fragment {
 
         getActivity().setTitle("Reddit Clone");
 
+        ((MainActivity)getActivity()).navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_homepage).setChecked(true);
+
         View view = inflater.inflate(R.layout.fragment_posts, container, false);
 
         CardView cardView = (CardView) view.findViewById(R.id.postCard);

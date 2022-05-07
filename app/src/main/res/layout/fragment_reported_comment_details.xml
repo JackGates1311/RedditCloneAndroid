@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fontFamily="?android:fontFamily">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.ReportedCommentDetailsFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -115,46 +116,6 @@
                     android:text="-14523"
                     android:textSize="8pt" />
 
-                <ImageButton
-                    android:id="@+id/downVoteButton"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="8sp"
-                    android:background="@null"
-                    android:contentDescription="@string/logo_image_description"
-                    android:src="@drawable/ic_downvote"
-                    app:tint="?colorAccent" />
-
-                <ImageButton
-                    android:id="@+id/upVoteButton"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="8sp"
-                    android:background="@null"
-                    android:contentDescription="@string/logo_image_description"
-                    android:src="@drawable/ic_upvote"
-                    app:tint="?colorAccent" />
-
-                <ImageButton
-                    android:id="@+id/editPostButton"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="8sp"
-                    android:background="@null"
-                    android:contentDescription="@string/logo_image_description"
-                    android:src="@drawable/ic_edit"
-                    app:tint="?colorAccent" />
-
-                <ImageButton
-                    android:id="@+id/reportPostButton"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="8sp"
-                    android:background="@null"
-                    android:contentDescription="@string/logo_image_description"
-                    android:src="@drawable/ic_report"
-                    app:tint="?colorAccent" />
-
             </LinearLayout>
 
             <!--!-->
@@ -207,45 +168,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textComment"
-                    android:layout_width="0dp"
-                    android:layout_height="50sp"
-                    android:layout_margin="8sp"
-                    android:layout_weight="1"
-                    android:hint="@string/post_comment_text_name"
-                    app:hintAnimationEnabled="false">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <ImageButton
-                    android:id="@+id/postCommentButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="8sp"
-                    android:background="@null"
-                    android:contentDescription="@string/logo_image_description"
-                    android:src="@drawable/ic_reply"
-                    app:tint="?colorAccent" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8sp"
                     android:text="Comments:" />
-
 
             </LinearLayout>
 
@@ -278,7 +205,6 @@
                             android:src="@drawable/ic_avatar" />
 
                         <TextView
-                            android:id="@+id/display_name_comment"
                             android:layout_width="100dp"
                             android:layout_height="24dp"
                             android:layout_columnSpan="2"
@@ -329,44 +255,6 @@
                                 android:text="34"
                                 android:textAlignment="textEnd"
                                 android:textSize="8pt" />
-
-                            <ImageButton
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_margin="8sp"
-                                android:background="@null"
-                                android:contentDescription="@string/logo_image_description"
-                                android:src="@drawable/ic_downvote"
-                                app:tint="?colorAccent" />
-
-                            <ImageButton
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_margin="8sp"
-                                android:background="@null"
-                                android:contentDescription="@string/logo_image_description"
-                                android:src="@drawable/ic_upvote"
-                                app:tint="?colorAccent" />
-
-                            <ImageButton
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_margin="8sp"
-                                android:background="@null"
-                                android:contentDescription="@string/logo_image_description"
-                                android:src="@drawable/ic_reply"
-                                app:tint="?colorAccent" />
-
-                            <ImageButton
-                                android:id="@+id/reportCommentButton"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_margin="8sp"
-                                android:background="@null"
-                                android:contentDescription="@string/logo_image_description"
-                                android:src="@drawable/ic_report"
-                                app:tint="?colorAccent" />
-
 
                         </LinearLayout>
 
@@ -451,176 +339,11 @@
                                         android:textAlignment="textEnd"
                                         android:textSize="8pt" />
 
-                                    <ImageButton
-                                        android:layout_width="24dp"
-                                        android:layout_height="24dp"
-                                        android:layout_margin="8sp"
-                                        android:background="@null"
-                                        android:contentDescription="@string/logo_image_description"
-                                        android:src="@drawable/ic_downvote"
-                                        app:tint="?colorAccent" />
-
-                                    <ImageButton
-                                        android:layout_width="24dp"
-                                        android:layout_height="24dp"
-                                        android:layout_margin="8sp"
-                                        android:background="@null"
-                                        android:contentDescription="@string/logo_image_description"
-                                        android:src="@drawable/ic_upvote"
-                                        app:tint="?colorAccent" />
-
-                                    <ImageButton
-                                        android:layout_width="24dp"
-                                        android:layout_height="24dp"
-                                        android:layout_margin="8sp"
-                                        android:background="@null"
-                                        android:contentDescription="@string/logo_image_description"
-                                        android:src="@drawable/ic_reply"
-                                        app:tint="?colorAccent" />
-
-                                    <ImageButton
-                                        android:layout_width="24dp"
-                                        android:layout_height="24dp"
-                                        android:layout_margin="8sp"
-                                        android:background="@null"
-                                        android:contentDescription="@string/logo_image_description"
-                                        android:src="@drawable/ic_report"
-                                        app:tint="?colorAccent" />
-
                                 </LinearLayout>
 
                             </GridLayout>
 
                         </com.google.android.material.card.MaterialCardView>
-
-                    </GridLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8sp"
-                    android:checkable="true"
-                    android:focusable="true">
-
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:columnCount="3"
-                        android:padding="8sp">
-
-                        <!-- row 1 !-->
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_columnWeight="0.05"
-                            android:layout_gravity="center"
-                            android:layout_margin="4sp"
-                            android:contentDescription="@string/logo_image_description"
-                            android:src="@drawable/ic_avatar" />
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="24dp"
-                            android:layout_columnSpan="2"
-                            android:layout_columnWeight="0.95"
-                            android:layout_margin="4sp"
-                            android:text="Kecmanoo99"
-                            android:textSize="8pt"
-                            android:textStyle="bold" />
-
-                        <!-- row 2 !-->
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="24dp"
-                            android:layout_columnSpan="3"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="8sp"
-                            android:text="09.04.2022. at 07:54"
-                            android:textAlignment="textEnd"
-                            android:textSize="8pt"
-                            android:textStyle="normal" />
-
-                        <!-- row 3 !-->
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_columnSpan="3"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="8sp"
-                            android:text="What we can do it about WW3"
-                            android:textSize="8pt"
-                            android:textStyle="normal" />
-
-                        <!-- row 4 !-->
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_columnSpan="3"
-                            android:layout_columnWeight="1">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="24dp"
-                                android:layout_margin="8sp"
-                                android:layout_weight="1"
-                                android:text="-14523"
-                                android:textAlignment="textEnd"
-                                android:textSize="8pt" />
-
-                            <ImageButton
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_margin="8sp"
-                                android:background="@null"
-                                android:contentDescription="@string/logo_image_description"
-                                android:src="@drawable/ic_downvote"
-                                app:tint="?colorAccent" />
-
-                            <ImageButton
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_margin="8sp"
-                                android:background="@null"
-                                android:contentDescription="@string/logo_image_description"
-                                android:src="@drawable/ic_upvote"
-                                app:tint="?colorAccent" />
-
-                            <ImageButton
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_margin="8sp"
-                                android:background="@null"
-                                android:contentDescription="@string/logo_image_description"
-                                android:src="@drawable/ic_reply"
-                                app:tint="?colorAccent" />
-
-                            <ImageButton
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_margin="8sp"
-                                android:background="@null"
-                                android:contentDescription="@string/logo_image_description"
-                                android:src="@drawable/ic_report"
-                                app:tint="?colorAccent" />
-
-
-                        </LinearLayout>
-
-                        <!-- row 5 !-->
-
-                        <!-- here will be added nested comments !-->
 
                     </GridLayout>
 

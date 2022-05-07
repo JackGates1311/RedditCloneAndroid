@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8sp"
+            android:checkable="true"
+            android:focusable="true">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnCount="1"
+                android:padding="8sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8sp"
+                    android:layout_columnSpan="1"
+                    android:layout_columnWeight="1"
+                    android:text="Reported users:"
+                    android:textSize="8pt"
+                    android:textStyle="bold"  />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/reported_user_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8sp"
+                    android:layout_columnSpan="1"
+                    android:layout_columnWeight="1"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_avatar" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4sp"
+                            android:layout_weight="1"
+                            android:text="Kecman0099"
+                            android:textSize="8pt"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/reported_user_details_button"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_info"
+                            app:tint="?colorAccent"/>
+
+                        <ImageView
+                            android:id="@+id/reject_user_report_button"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_cancel"
+                            app:tint="?colorAccent"/>
+
+                        <ImageView
+                            android:id="@+id/block_user_button"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_block"
+                            app:tint="?colorAccent"/>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8sp"
+                    android:layout_columnSpan="1"
+                    android:layout_columnWeight="1"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_avatar" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4sp"
+                            android:layout_weight="1"
+                            android:text="Mrka3304"
+                            android:textSize="8pt"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_info"
+                            app:tint="?colorAccent"/>
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_cancel"
+                            app:tint="?colorAccent"/>
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_block"
+                            app:tint="?colorAccent"/>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8sp"
+            android:checkable="true"
+            android:focusable="true">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnCount="1"
+                android:padding="8sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8sp"
+                    android:layout_columnSpan="1"
+                    android:layout_columnWeight="1"
+                    android:text="Blocked users:"
+                    android:textSize="8pt"
+                    android:textStyle="bold"  />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/blocked_user_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8sp"
+                    android:layout_columnSpan="1"
+                    android:layout_columnWeight="1"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_avatar" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4sp"
+                            android:layout_weight="1"
+                            android:text="Miljan333"
+                            android:textSize="8pt"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/manage_blocked_user_button"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_settings"
+                            app:tint="?colorAccent"/>
+
+
+                        <ImageView
+                            android:id="@+id/reject_user_block_button"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_cancel"
+                            app:tint="?colorAccent"/>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8sp"
+                    android:layout_columnSpan="1"
+                    android:layout_columnWeight="1"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_avatar" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4sp"
+                            android:layout_weight="1"
+                            android:text="MicaMaca233"
+                            android:textSize="8pt"
+                            android:textStyle="bold" />
+
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_settings"
+                            app:tint="?colorAccent"/>
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="4sp"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/ic_cancel"
+                            app:tint="?colorAccent"/>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

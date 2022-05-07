@@ -28,6 +28,9 @@ public class RegisterFragment extends Fragment {
 
         getActivity().setTitle("Register to Reddit Clone");
 
+        ((MainActivity)getActivity()).navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_user_register).setChecked(true);
+
         return inflater.inflate(R.layout.fragment_register, vg, false);
     }
 

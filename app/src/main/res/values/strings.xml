@@ -123,4 +123,29 @@
     <string name="current_password_name">Current password</string>
     <string name="new_password_name">New password</string>
     <string name="repeat_new_password_name">Repeat new password</string>
+    <string name="menu_create_community_name">Create community</string>
+    <string name="community_name">Community name</string>
+    <string name="community_description_name">Community description</string>
+    <string name="community_rules_name">Community rules</string>
+    <string name="community_flairs_name">Community flairs</string>
+    <string name="button_create_community_name">Create community</string>
+    <string name="menu_communities_name">Communities</string>
+    <string name="button_review_reported_comments_name">Review reported comments</string>
+    <string name="button_review_reported_posts_name">Review reported posts</string>
+    <string name="button_review_blocked_users_name">Review blocked users</string>
+    <string name="button_accept_reported_comments_name">Accept reports on selected comments</string>
+    <string name="button_decline_reported_comments_name">Decline reports on selected comments</string>
+    <string name="button_accept_reported_posts_name">Accept reports on selected posts</string>
+    <string name="button_decline_reported_posts_name">Decline reports on selected posts</string>
+    <string name="posting_new_posts_checkbox">Posting new images</string>
+    <string name="posting_new_comments_checkbox">Posting new comments</string>
+    <string name="reacting_new_posts_checkbox">Reacting to posts</string>
+    <string name="reacting_new_comments_checkbox">Reacting to comments</string>
+    <string name="button_report_user_name">Report user</string>
+    <string name="reason_for_reporting_user_name">Reason of reporting user (optional)</string>
+    <string name="menu_administrator_tools_name">Administrator tools</string>
+    <string name="reason_for_suspending_community_name">Reason of suspending community</string>
+    <string name="button_block_user_name">Block</string>
+    <string name="button_reject_user_name">Reject</string>
+
 </resources>

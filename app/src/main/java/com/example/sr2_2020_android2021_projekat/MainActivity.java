@@ -1,28 +1,29 @@
 package com.example.sr2_2020_android2021_projekat;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.sr2_2020_android2021_projekat.fragments.CreatePostFragment;
+import com.example.sr2_2020_android2021_projekat.fragments.AdministratorManagerFragment;
+import com.example.sr2_2020_android2021_projekat.fragments.CommunitiesFragment;
+import com.example.sr2_2020_android2021_projekat.fragments.CreateEditCommunityFragment;
+import com.example.sr2_2020_android2021_projekat.fragments.CreateEditPostFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.LoginFragment;
 
 import com.example.sr2_2020_android2021_projekat.fragments.ManageAccountFragment;
-import com.example.sr2_2020_android2021_projekat.fragments.PostDetailsFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.PostsFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.RegisterFragment;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     public NavigationView navigationView;
 
     Menu menu;
+
+    public String communityMode;
+
+    public String postMode;
 
     public MainActivity() {
         super();
@@ -88,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                    // Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
 
                     FragmentTransition.to(LoginFragment.newInstance(), MainActivity.this,
-                            false, R.id.viewPage);
+                            true, R.id.viewPage);
 
                     // item.setVisible(false); -- WORKS
 
@@ -110,8 +115,18 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.navigationView.getMenu().
                             findItem(R.id.navigation_bar_item_user_manage).setVisible(false);
 
+                    MainActivity.this.navigationView.getMenu().
+                            findItem(R.id.navigation_bar_item_create_community).setVisible(false);
+
+                    MainActivity.this.navigationView.getMenu().
+                            findItem(R.id.navigation_bar_item_communities).setVisible(false);
+
+                    MainActivity.this.navigationView.getMenu().
+                            findItem(R.id.navigation_bar_item_administrator_tools).setVisible(false);
+
                     FragmentTransition.to(PostsFragment.newInstance(), MainActivity.this,
                             false, R.id.viewPage);
+
 
                     // item.setVisible(false); -- WORKS
 
@@ -122,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     // Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
 
                     FragmentTransition.to(RegisterFragment.newInstance(), MainActivity.this,
-                            false, R.id.viewPage);
+                            true, R.id.viewPage);
 
                 }
 
@@ -134,6 +149,36 @@ public class MainActivity extends AppCompatActivity {
                             true, R.id.viewPage);
 
                 }
+
+                if(item.getTitle().equals("Create community")) {
+
+                    // Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+
+                    communityMode = "ADD";
+
+                    FragmentTransition.to(CreateEditCommunityFragment.newInstance(), MainActivity.this,
+                            true, R.id.viewPage);
+
+                }
+
+                if(item.getTitle().equals("Communities")) {
+
+                    // Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+
+                    communityMode = "EDIT";
+
+                    FragmentTransition.to(CommunitiesFragment.newInstance(), MainActivity.this,
+                            true, R.id.viewPage);
+
+                }
+
+                if(item.getTitle().equals("Administrator tools")) {
+
+                    FragmentTransition.to(AdministratorManagerFragment.newInstance(),
+                            MainActivity.this, true, R.id.viewPage);
+
+                }
+
 
                 return true;
             }
@@ -169,8 +214,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_add_post:
-                FragmentTransition.to(CreatePostFragment.newInstance(), MainActivity.this,
+                postMode = "ADD";
+                FragmentTransition.to(CreateEditPostFragment.newInstance(), MainActivity.this,
                         true, R.id.viewPage);
+
+            case R.id.action_sort:
+
+                // Not implemented yet
         }
 
         return super.onOptionsItemSelected(item);

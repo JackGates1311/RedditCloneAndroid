@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
@@ -16,12 +15,13 @@ import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-public class ManageAccountFragment extends Fragment {
+public class UserInfoFragment extends Fragment {
 
-    public static ManageAccountFragment newInstance() {
+    public static UserInfoFragment newInstance() {
 
-        return new ManageAccountFragment();
+        return new UserInfoFragment();
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -31,25 +31,23 @@ public class ManageAccountFragment extends Fragment {
         ((MainActivity)getActivity()).setGroupMenuVisibility(false,
                 false);
 
-        getActivity().setTitle("Manage account");
+        getActivity().setTitle("User info");
 
-        ((MainActivity)getActivity()).navigationView.getMenu().
-                findItem(R.id.navigation_bar_item_user_manage).setChecked(true);
+        View view = inflater.inflate(R.layout.fragment_user_info, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_manage_account, container, false);
+        Button reportUserButton = (Button) view.findViewById(R.id.report_user_button);
 
-        Button changePasswordButton = (Button) view.findViewById(R.id.change_password_button);
-
-        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+        reportUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //Toast.makeText(view.getContext(), "onClick()", Toast.LENGTH_SHORT).show();
 
                 new MaterialAlertDialogBuilder(getActivity())
-                        .setTitle("Change account password")
-                        .setView(R.layout.fragment_change_password)
-                        .setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                        .setTitle("Report user")
+                        .setMessage("Please select at least one reason for reporting user and " +
+                                "describe the reason if you want:")
+                        .setView(R.layout.fragment_report_user)
+                        .setPositiveButton("Report", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
