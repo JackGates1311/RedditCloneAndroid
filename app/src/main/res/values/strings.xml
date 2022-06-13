@@ -8,6 +8,7 @@
     <string name="menu_user_login_name">Login</string>
     <string name="email_login_register_name">Email</string>
     <string name="password_login_register_name">Password</string>
+    <string name="password_repeat_login_register_name">Repeat password</string>
     <string name="button_login_name">Login</string>
     <string name="button_cancel_name">Cancel</string>
     <string name="username_login_name">Username</string>
@@ -35,15 +36,15 @@
         "and use of imagery guide visual treatments. These elements do far more than please the "
         "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
         "imagery, large scale typography, and intentional white space create a bold and graphic "
-        "interface that immerse the user in the experience.\n"
-        "An emphasis on user actions makes core functionality immediately apparent and provides "
-        "waypoints for the user.\n\n"
+        "interface that immerse the registerUser in the experience.\n"
+        "An emphasis on registerUser actions makes core functionality immediately apparent and provides "
+        "waypoints for the registerUser.\n\n"
 
         "Motion provides meaning.\n\n"
 
-        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
+        "Motion respects and reinforces the registerUser as the prime mover. Primary registerUser actions are "
         "inflection points that initiate motion, transforming the whole design.\n"
-        "All action takes place in a single environment. Objects are presented to the user without "
+        "All action takes place in a single environment. Objects are presented to the registerUser without "
         "breaking the continuity of experience even as they transform and reorganize.\n"
         "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
         "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
@@ -82,7 +83,7 @@
         "Responsive elevation and dynamic elevation offsets.\n\n"
 
         "Some component types have responsive elevation, meaning they change elevation in response "
-        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
+        "to registerUser input (e.g., normal, focused, and pressed) or system events. These elevation "
         "changes are consistently implemented using dynamic elevation offsets.\n"
         "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
         "to the component’s resting state. They ensure that elevation changes are consistent "
@@ -99,10 +100,10 @@
         "whether on a per component basis or using the entire app layout.\n"
         "On a component level, components can move or be removed before they cause interference. "
         "For example, a floating action button (FAB) can disappear or move off screen before a "
-        "user picks up a card, or it can move if a snackbar appears.\n"
+        "registerUser picks up a card, or it can move if a snackbar appears.\n"
         "On the layout level, design your app layout to minimize opportunities for interference. "
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
-        "when a user tries to pick up one of cards.\n\n"
+        "when a registerUser tries to pick up one of cards.\n\n"
     </string>
     <string name="post_comment_text_name">Write your comment here</string>
     <string name="join_to_this_community_button_name">Join to this community</string>
@@ -141,8 +142,8 @@
     <string name="posting_new_comments_checkbox">Posting new comments</string>
     <string name="reacting_new_posts_checkbox">Reacting to posts</string>
     <string name="reacting_new_comments_checkbox">Reacting to comments</string>
-    <string name="button_report_user_name">Report user</string>
-    <string name="reason_for_reporting_user_name">Reason of reporting user (optional)</string>
+    <string name="button_report_user_name">Report registerUser</string>
+    <string name="reason_for_reporting_user_name">Reason of reporting registerUser (optional)</string>
     <string name="menu_administrator_tools_name">Administrator tools</string>
     <string name="reason_for_suspending_community_name">Reason of suspending community</string>
     <string name="button_block_user_name">Block</string>
