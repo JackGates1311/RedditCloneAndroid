@@ -1,16 +1,20 @@
 package com.example.sr2_2020_android2021_projekat.adapters;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.model.Post;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 
 public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapter.ViewHolder> {
@@ -32,6 +36,7 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
         return new ViewHolder(v);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -42,6 +47,15 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
         holder.postCommunity.setText(post.getCommunityName());
         holder.postTitle.setText(post.getTitle());
         holder.postText.setText(post.getText());
+
+        ///
+
+        String postTimestampStripped = post.getCreationDate().substring(0, 10);
+
+
+        ///
+
+        holder.postTimestamp.setText(postTimestampStripped);
 
         // here you can add setOnClickListener for Post Details ...
 
@@ -75,6 +89,8 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 
         private final TextView postText;
 
+        private final TextView postTimestamp;
+
         ViewHolder(View v) {
 
             super(v);
@@ -82,6 +98,7 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
             postCommunity = v.findViewById(R.id.post_community);
             postTitle = v.findViewById(R.id.post_title);
             postText = v.findViewById(R.id.post_text);
+            postTimestamp = v.findViewById(R.id.post_timestamp);
 
         }
     }

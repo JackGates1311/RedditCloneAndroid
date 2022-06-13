@@ -14,30 +14,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <!-- <ImageView
                 android:id="@+id/community_avatar"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_avatar"
                 android:contentDescription="@string/logo_image_description"
-                android:layout_margin="8sp"/>
+                android:layout_margin="8sp"/> !-->
 
             <TextView
                 android:id="@+id/post_community"
                 android:layout_width="0dp"
                 android:layout_height="24dp"
-                android:textSize="8pt"
+                android:textSize="7pt"
                 android:textStyle="bold"
                 android:layout_weight="1"
-                android:layout_margin="8sp"
-                android:text="World War 3 News"/>
+                android:layout_margin="7sp"
+                android:text=""/>
 
             <TextView
+                android:id="@+id/post_timestamp"
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
-                android:textSize="8pt"
-                android:layout_margin="8sp"
-                android:text="10.04.2022."/>
+                android:textSize="7pt"
+                android:layout_margin="7sp"
+                android:text=""/>
 
         </LinearLayout>
 
@@ -53,7 +54,7 @@
                 android:id="@+id/post_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="9pt"
+                android:textSize="7pt"
                 android:textStyle="bold"
                 android:layout_margin="8sp"
                 android:text=""/>
@@ -65,10 +66,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="7pt"
                 android:layout_margin="8sp"
-                android:text="During Moscow’s ongoing massive military operation against Ukraine, Russian Foreign Minister Sergey Lavrov warned Wednesday of a third world war’s “nuclear and devastating” consequences. As U.S. President Joe Biden said, a third World War would be a better alternative to Washington’s tough sanctions against Moscow. Asked if he was surprised that sanctions were being imposed against athletes and journalists, Lavrov said that Russia was ready for any sanctions imposed against it." />
+                android:text="" />
 
 
-            <ImageView
+            <!-- <ImageView
                 android:layout_width="300dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
@@ -84,7 +85,7 @@
                 android:scaleType="centerCrop"
                 android:layout_margin="16sp"
                 android:contentDescription="@string/logo_image_description"
-                android:src="@drawable/postimage2" />
+                android:src="@drawable/postimage2" /> !-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,15 +106,15 @@
                     android:layout_height="24dp"
                     android:textSize="8pt"
                     android:layout_weight="1"
-                    android:layout_margin="8sp"
-                    android:text="657"/>
+                    android:layout_margin="4sp"
+                    android:text="0"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:textSize="8pt"
-                    android:layout_margin="8sp"
-                    android:text="-14523"/>
+                    android:layout_margin="4sp"
+                    android:text="0"/>
 
                 <ImageButton
                     android:background="@null"
