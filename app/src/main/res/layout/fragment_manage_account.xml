@@ -42,7 +42,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout android:id="@id/textEmail" android:paddingBottom="20.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/email_login_register_name">
+        <com.google.android.material.textfield.TextInputLayout android:id="@+id/textEmail" android:paddingBottom="20.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/email_login_register_name">
 
             <com.google.android.material.textfield.TextInputEditText android:layout_width="fill_parent" android:layout_height="wrap_content" />
 

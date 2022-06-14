@@ -1,6 +1,8 @@
 package com.example.sr2_2020_android2021_projekat;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -114,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if(item.getTitle().equals("Logout")) {
 
+                    storeDataToSharedPreferences(null, 0);
+
                     // Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
 
                     MainActivity.this.navigationView.getMenu().
@@ -192,11 +196,22 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-
                 return true;
             }
         });
 
+    }
+
+    private void storeDataToSharedPreferences(String authToken, int expiresIn) {
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString("authToken", authToken);
+        editor.putInt("expiresIn", expiresIn);
+
+        editor.apply();
     }
 
     @Override

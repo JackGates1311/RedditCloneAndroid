@@ -148,5 +148,6 @@
     <string name="reason_for_suspending_community_name">Reason of suspending community</string>
     <string name="button_block_user_name">Block</string>
     <string name="button_reject_user_name">Reject</string>
+    <string name="username_login_register_name">Username</string>
 
 </resources>

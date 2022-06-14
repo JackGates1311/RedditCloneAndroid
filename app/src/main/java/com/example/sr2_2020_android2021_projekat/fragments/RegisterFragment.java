@@ -134,8 +134,6 @@ public class RegisterFragment extends Fragment {
 
                 register();
 
-                // here add getters for values and then create json and send to api ....
-
             }
         });
 

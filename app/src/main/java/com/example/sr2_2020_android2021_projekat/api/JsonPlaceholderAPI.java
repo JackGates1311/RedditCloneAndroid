@@ -1,5 +1,7 @@
 package com.example.sr2_2020_android2021_projekat.api;
 
+import com.example.sr2_2020_android2021_projekat.model.LoginRequest;
+import com.example.sr2_2020_android2021_projekat.model.LoginResponse;
 import com.example.sr2_2020_android2021_projekat.model.Post;
 import com.example.sr2_2020_android2021_projekat.model.RegisterUser;
 
@@ -18,4 +20,6 @@ public interface JsonPlaceholderAPI {
     @POST("auth/register")
     Call<String> register(@Body RegisterUser registerUser);
 
+    @POST("auth/login")
+    Call<LoginResponse> login(@Body LoginRequest loginRequest);
 }
