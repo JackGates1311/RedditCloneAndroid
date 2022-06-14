@@ -111,7 +111,7 @@
     <string name="post_title_name">Post title</string>
     <string name="post_text_name">Post text</string>
     <string name="post_flairs_name">Post flairs</string>
-    <string name="button_create_post_name">Create postResponse</string>
+    <string name="button_create_post_name">Create post</string>
     <string name="button_upload_post_images_name">Upload postResponse images</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

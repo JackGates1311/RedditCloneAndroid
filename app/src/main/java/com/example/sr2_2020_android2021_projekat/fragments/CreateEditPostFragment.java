@@ -63,20 +63,20 @@ public class CreateEditPostFragment extends Fragment {
             public void onClick(View view) {
 
                 boolean isTitleValid = title.getText().toString().length() > 0;
-                boolean isTextValid = title.getText().toString().length() > 0;
+                boolean isTextValid = text.getText().toString().length() > 0;
 
                 if(!isTitleValid) {
 
-                    Toast.makeText(view.getContext(), "Please provide a valid post title",
-                            Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(), "Please provide a valid post title",
+                            Toast.LENGTH_SHORT).show();
 
                     return;
                 }
 
                 if(!isTextValid) {
 
-                    Toast.makeText(view.getContext(), "Please provide a valid post text",
-                            Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(), "Please provide a valid post text",
+                            Toast.LENGTH_SHORT).show();
 
                     return;
                 }
