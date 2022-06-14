@@ -1,25 +1,17 @@
 package com.example.sr2_2020_android2021_projekat.fragments;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
@@ -57,7 +49,7 @@ public class PostDetailsFragment extends Fragment {
 
                 //Toast.makeText(view.getContext(), "onClick()", Toast.LENGTH_SHORT).show();
 
-                FragmentTransition.to(CommunityFragment.newInstance(), getActivity(),
+                FragmentTransition.to(CommunityFragment.newInstance("FTN Novi Sad"), getActivity(),
                         true, R.id.viewPage);
 
             }

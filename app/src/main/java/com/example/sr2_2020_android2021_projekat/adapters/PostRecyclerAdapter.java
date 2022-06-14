@@ -7,10 +7,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
+import com.example.sr2_2020_android2021_projekat.fragments.CommunityFragment;
+import com.example.sr2_2020_android2021_projekat.fragments.PostsFragment;
+import com.example.sr2_2020_android2021_projekat.fragments.RegisterFragment;
 import com.example.sr2_2020_android2021_projekat.model.PostResponse;
+import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
@@ -18,9 +27,14 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 
     private List<PostResponse> postsRecyclerView;
 
-    public PostRecyclerAdapter(List<PostResponse> postResponses) {
+    //
+    private FragmentActivity fragmentActivity;
+
+    public PostRecyclerAdapter(FragmentActivity fragmentActivity,
+                               List<PostResponse> postResponses) {
 
         this.postsRecyclerView = postResponses;
+        this.fragmentActivity = fragmentActivity;
     }
 
     @NonNull
@@ -53,6 +67,16 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
         ///
 
         holder.postTimestamp.setText(postTimestampStripped);
+
+        holder.postCommunity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentTransition.to(CommunityFragment.newInstance(postResponse.getCommunityName()), fragmentActivity,
+                        true, R.id.viewPage);
+
+            }
+        });
 
         // here you can add setOnClickListener for Post Details ...
 

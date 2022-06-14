@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     public NavigationView navigationView;
 
-    Menu menu;
+    public Menu menu;
 
     public String communityMode;
 
@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        menu = findViewById(R.id.activityMenu);
 
         FragmentTransition.to(PostsFragment.newInstance(), this,
                 false, R.id.viewPage);
@@ -126,9 +128,10 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.navigationView.getMenu().
                             findItem(R.id.navigation_bar_item_administrator_tools).setVisible(false);
 
+                    MainActivity.this.menu.findItem(R.id.action_add_post).setVisible(false);
+
                     FragmentTransition.to(PostsFragment.newInstance(), MainActivity.this,
                             false, R.id.viewPage);
-
 
                     // item.setVisible(false); -- WORKS
 
@@ -260,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
         if (menu != null) {
 
             menu.setGroupVisible(R.id.sortGroup, sortGroupMenuVisibility);
-            menu.setGroupVisible(R.id.addGroup, addGroupMenuVisibility);
+           // menu.setGroupVisible(R.id.addGroup, addGroupMenuVisibility);
         }
 
 

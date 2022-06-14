@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -180,7 +181,7 @@ public class PostsFragment extends Fragment {
                     return;
                 }
 
-                recyclerView.setAdapter(new PostRecyclerAdapter(response.body()));
+                recyclerView.setAdapter(new PostRecyclerAdapter(getActivity(), response.body()));
 
             }
 
@@ -192,7 +193,6 @@ public class PostsFragment extends Fragment {
             }
         });
 
-        return;
     }
 
     @Override

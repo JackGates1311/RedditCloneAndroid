@@ -1,5 +1,6 @@
 package com.example.sr2_2020_android2021_projekat.api;
 
+import com.example.sr2_2020_android2021_projekat.model.Community;
 import com.example.sr2_2020_android2021_projekat.model.LoginRequest;
 import com.example.sr2_2020_android2021_projekat.model.LoginResponse;
 import com.example.sr2_2020_android2021_projekat.model.PostRequest;
@@ -13,6 +14,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface JsonPlaceholderAPI {
 
@@ -27,4 +29,15 @@ public interface JsonPlaceholderAPI {
 
     @POST("posts/createPost")
     Call<String> createPost(@Header("Authorization") String authToken, @Body PostRequest postRequest);
+
+    @GET("communities/name={name}")
+    Call<Community> getCommunityByName(@Path("name") String communityName);
+
+    @GET("posts/communityName={name}")
+    Call<List<PostResponse>> getPostsByCommunityName(@Path("name") String communityName);
+
+    @GET("communities/getAllCommunities")
+    Call<List<Community>> getAllCommunities();
+
+
 }

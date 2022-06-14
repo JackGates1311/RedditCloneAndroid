@@ -107,7 +107,7 @@
     </string>
     <string name="post_comment_text_name">Write your comment here</string>
     <string name="join_to_this_community_button_name">Join to this community</string>
-    <string name="view_community_posts_button_name">View all community postResponses</string>
+    <string name="view_community_posts_button_name">Show community posts</string>
     <string name="post_title_name">Post title</string>
     <string name="post_text_name">Post text</string>
     <string name="post_flairs_name">Post flairs</string>

@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -16,9 +18,13 @@ import androidx.annotation.Nullable;
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.api.JsonPlaceholderAPI;
+import com.example.sr2_2020_android2021_projekat.model.Community;
 import com.example.sr2_2020_android2021_projekat.model.PostRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +37,8 @@ public class CreateEditPostFragment extends Fragment {
 
     private com.google.android.material.textfield.TextInputEditText title;
     private com.google.android.material.textfield.TextInputEditText text;
+
+    private AutoCompleteTextView postCommunities;
 
     private Button createPostButton;
 
@@ -55,7 +63,11 @@ public class CreateEditPostFragment extends Fragment {
         title = view.findViewById(R.id.title);
         text = view.findViewById(R.id.text);
 
+        postCommunities = view.findViewById(R.id.postCommunities);
+
         createPostButton = view.findViewById(R.id.button_create_post);
+
+        getAllCommunities(view);
 
         createPostButton.setOnClickListener(new View.OnClickListener() {
 
@@ -109,6 +121,54 @@ public class CreateEditPostFragment extends Fragment {
 
     }
 
+    private void getAllCommunities(View view) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.6:8080/api/").
+                addConverterFactory(GsonConverterFactory.create()).build();
+
+        JsonPlaceholderAPI jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
+
+        Call<List<Community>> call = jsonPlaceholderAPI.getAllCommunities();
+
+        call.enqueue(new Callback<List<Community>>() {
+
+            @Override
+            public void onResponse(Call<List<Community>> call, Response<List<Community>> response) {
+
+                if(!response.isSuccessful()) {
+
+                    // Errors 400 and 500
+
+                    Toast.makeText(getContext(), "HTTP returned code " + response.code(),
+                            Toast.LENGTH_LONG).show();
+                }
+
+                List<String> communityNames = new ArrayList<>();
+
+                assert response.body() != null;
+
+                for(Community community : response.body()) {
+
+                    communityNames.add(community.getName());
+                }
+
+                ArrayAdapter<String> adapter = new
+                        ArrayAdapter<>(getContext(), R.layout.drop_down_item, communityNames);
+
+                AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.postCommunities);
+
+                autoCompleteTextView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Community>> call, Throwable t) {
+
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void createPost() {
 
         Gson gson = new GsonBuilder().setLenient().create();
@@ -119,7 +179,7 @@ public class CreateEditPostFragment extends Fragment {
 
         jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
 
-        PostRequest postRequest = new PostRequest("FTN Novi Sad", "",
+        PostRequest postRequest = new PostRequest(postCommunities.getText().toString(), "",
                 text.getText().toString(), title.getText().toString());
 
         SharedPreferences preferences = PreferenceManager.

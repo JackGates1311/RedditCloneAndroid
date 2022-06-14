@@ -121,6 +121,10 @@ public class LoginFragment extends Fragment {
 
         ((MainActivity) getActivity()).navigationView.getMenu().
                 findItem(R.id.navigation_bar_item_administrator_tools).setVisible(true);
+
+        ((MainActivity) getActivity()).menu.findItem(R.id.action_add_post).setVisible(true);
+
+
     }
 
     private void login() {

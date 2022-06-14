@@ -36,6 +36,7 @@
                     android:src="@drawable/ic_avatar" />
 
                 <TextView
+                    android:id="@+id/community_info_name"
                     android:layout_width="100dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
@@ -62,6 +63,7 @@
                 <!-- row 3 !-->
 
                 <TextView
+                    android:id="@+id/community_info_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnSpan="3"
@@ -80,17 +82,18 @@
                     android:layout_columnSpan="3"
                     android:layout_columnWeight="1"
                     android:text="@string/join_to_this_community_button_name"
-                    android:textSize="8pt"
+                    android:textSize="7pt"
                     android:textColor="?android:textColorSecondary"/>
 
                 <Button
+                    android:id="@+id/show_community_posts_button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="8sp"
                     android:layout_columnSpan="3"
                     android:layout_columnWeight="1"
                     android:text="@string/view_community_posts_button_name"
-                    android:textSize="8pt"
+                    android:textSize="7pt"
                     android:textColor="?android:textColorSecondary"/>
 
 
