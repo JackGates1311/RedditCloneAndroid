@@ -76,7 +76,7 @@ public class RegisterFragment extends Fragment {
 
                 boolean isUsernameValid = username.getText().toString().length() > 0;
                 boolean isDisplayNameValid = displayName.getText().toString().length() > 0;
-                boolean isEmailValid = email.getText().toString().length() > 0 ||
+                boolean isEmailValid = email.getText().toString().length() > 0 &&
                         email.getText().toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+");
                 boolean isPasswordValid = password.getText().toString().length() > 0;
                 boolean isRepeatedPasswordValid = password.getText().toString().length() > 0 &&
