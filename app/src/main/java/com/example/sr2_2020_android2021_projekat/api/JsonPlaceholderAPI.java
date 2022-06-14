@@ -16,6 +16,6 @@ public interface JsonPlaceholderAPI {
     Call<List<Post>> getAllPosts();
 
     @POST("auth/register")
-    Call<RegisterUser> register(@Body RegisterUser registerUser);
+    Call<String> register(@Body RegisterUser registerUser);
 
 }

@@ -15,9 +15,20 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
+import com.example.sr2_2020_android2021_projekat.api.JsonPlaceholderAPI;
+import com.example.sr2_2020_android2021_projekat.model.RegisterUser;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RegisterFragment extends Fragment {
 
@@ -29,6 +40,8 @@ public class RegisterFragment extends Fragment {
     private com.google.android.material.textfield.TextInputEditText description;
 
     private Button registerButton;
+
+    private JsonPlaceholderAPI jsonPlaceholderAPI;
 
     public static RegisterFragment newInstance() {
 
@@ -119,7 +132,7 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
-                Toast.makeText(view.getContext(), "Register event works", Toast.LENGTH_SHORT).show();
+                register();
 
                 // here add getters for values and then create json and send to api ....
 
@@ -127,6 +140,50 @@ public class RegisterFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void register() {
+
+        Gson gson = new GsonBuilder().setLenient().create();
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.6:8080/api/").
+                addConverterFactory(ScalarsConverterFactory.create()).
+                addConverterFactory(GsonConverterFactory.create(gson)).build();
+
+        jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
+
+        RegisterUser registerUser = new RegisterUser(username.getText().toString(),
+                password.getText().toString(), email.getText().toString(), "",
+                description.getText().toString(), displayName.getText().toString());
+
+        Call<String> call = jsonPlaceholderAPI.register(registerUser);
+
+        call.enqueue(new Callback<String>() {
+
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if(!response.isSuccessful()) {
+
+                    Toast.makeText(getContext(), "HTTP returned code " + response.code(),
+                            Toast.LENGTH_LONG).show();
+
+                    return;
+                }
+
+                Toast.makeText(getContext(), "User registration is successful",
+                        Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+        });
+
     }
 
     @Override

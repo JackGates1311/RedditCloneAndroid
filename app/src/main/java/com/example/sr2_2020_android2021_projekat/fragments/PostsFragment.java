@@ -100,9 +100,6 @@ public class PostsFragment extends Fragment {
         getPosts(recyclerView);
 
 
-
-
-
         //recyclerView.addItemDecoration();
 
         /* postCommunity = (TextView) view.findViewById(R.id.post_community);
@@ -187,7 +184,7 @@ public class PostsFragment extends Fragment {
 
                     // Errors 400 and 500
 
-                    Toast.makeText(getContext(), "Code: HTTP " + response.code() + " error",
+                    Toast.makeText(getContext(), "HTTP returned code " + response.code(),
                             Toast.LENGTH_LONG).show();
 
                     return;
@@ -200,9 +197,7 @@ public class PostsFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Post>> call, Throwable t) {
 
-                // network error (100 status)
-
-                // postTitle.setText(t.getMessage());
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
 
             }
         });
