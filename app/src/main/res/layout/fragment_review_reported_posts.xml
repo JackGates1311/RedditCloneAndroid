@@ -29,7 +29,7 @@
                     android:layout_margin="8sp"
                     android:layout_columnSpan="1"
                     android:layout_columnWeight="1"
-                    android:text="Reported posts:"
+                    android:text="Reported postResponses:"
                     android:textSize="8pt"
                     android:textStyle="bold"  />
 
@@ -62,7 +62,7 @@
                             android:layout_margin="4sp"
                             android:layout_weight="1"
                             android:textAlignment="center"
-                            android:text="World War 3 News post"
+                            android:text="World War 3 News postResponse"
                             android:textSize="8pt"
                             android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
                             android:layout_margin="4sp"
                             android:layout_weight="1"
                             android:textAlignment="center"
-                            android:text="Tech Community post"
+                            android:text="Tech Community postResponse"
                             android:textSize="8pt"
                             android:textStyle="bold" />
 

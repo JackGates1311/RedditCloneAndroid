@@ -1,6 +1,6 @@
 package com.example.sr2_2020_android2021_projekat.model;
 
-public class Post {
+public class PostResponse {
 
     private Long postId;
     private String communityName;

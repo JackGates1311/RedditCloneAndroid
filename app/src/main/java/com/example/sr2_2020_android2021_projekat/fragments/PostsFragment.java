@@ -4,14 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,16 +15,11 @@ import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.adapters.PostRecyclerAdapter;
 import com.example.sr2_2020_android2021_projekat.api.JsonPlaceholderAPI;
-import com.example.sr2_2020_android2021_projekat.model.Post;
-import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+import com.example.sr2_2020_android2021_projekat.model.PostResponse;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -50,7 +40,7 @@ public class PostsFragment extends Fragment {
 
     private TextView postText;
 
-    List<Post> posts;
+    List<PostResponse> postResponses;
 
     ///
 
@@ -173,12 +163,12 @@ public class PostsFragment extends Fragment {
 
         JsonPlaceholderAPI jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
 
-        Call<List<Post>> call = jsonPlaceholderAPI.getAllPosts();
+        Call<List<PostResponse>> call = jsonPlaceholderAPI.getAllPosts();
 
-        call.enqueue(new Callback<List<Post>>() {
+        call.enqueue(new Callback<List<PostResponse>>() {
 
             @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+            public void onResponse(Call<List<PostResponse>> call, Response<List<PostResponse>> response) {
 
                 if(!response.isSuccessful()) {
 
@@ -195,7 +185,7 @@ public class PostsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
+            public void onFailure(Call<List<PostResponse>> call, Throwable t) {
 
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
 
@@ -228,19 +218,19 @@ public class PostsFragment extends Fragment {
     }
 
 
-    private List<Post> getPosts() {
+    private List<PostResponse> getPosts() {
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.6:8080/api/posts/").
                 addConverterFactory(GsonConverterFactory.create()).build();
 
         JsonPlaceholderAPI jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
 
-        Call<List<Post>> call = jsonPlaceholderAPI.getAllPosts();
+        Call<List<PostResponse>> call = jsonPlaceholderAPI.getAllPosts();
 
-        call.enqueue(new Callback<List<Post>>() {
+        call.enqueue(new Callback<List<PostResponse>>() {
 
             @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+            public void onResponse(Call<List<PostResponse>> call, Response<List<PostResponse>> response) {
 
                 if(!response.isSuccessful()) {
 
@@ -252,22 +242,22 @@ public class PostsFragment extends Fragment {
                     return;
                 }
 
-                posts = response.body();
+                postResponses = response.body();
 
-                assert posts != null;
+                assert postResponses != null;
 
-                for(Post post : posts) {
+                for(PostResponse postResponse : postResponses) {
 
-                    postCommunity.setText(post.getCommunityName());
-                    postTitle.setText(post.getTitle());
-                    postText.setText(post.getText());
+                    postCommunity.setText(postResponse.getCommunityName());
+                    postTitle.setText(postResponse.getTitle());
+                    postText.setText(postResponse.getText());
 
                 }
 
             }
 
             @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
+            public void onFailure(Call<List<PostResponse>> call, Throwable t) {
 
                 // network error (100 status)
 
@@ -276,7 +266,7 @@ public class PostsFragment extends Fragment {
             }
         });
 
-        return posts;
+        return postResponses;
     }
 
 }

@@ -5,22 +5,15 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sr2_2020_android2021_projekat.adapters.PostRecyclerAdapter;
-import com.example.sr2_2020_android2021_projekat.api.JsonPlaceholderAPI;
 import com.example.sr2_2020_android2021_projekat.fragments.AdministratorManagerFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.CommunitiesFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.CreateEditCommunityFragment;
@@ -30,18 +23,10 @@ import com.example.sr2_2020_android2021_projekat.fragments.LoginFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.ManageAccountFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.PostsFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.RegisterFragment;
-import com.example.sr2_2020_android2021_projekat.model.Post;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.List;
 import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 

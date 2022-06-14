@@ -7,23 +7,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sr2_2020_android2021_projekat.R;
-import com.example.sr2_2020_android2021_projekat.model.Post;
+import com.example.sr2_2020_android2021_projekat.model.PostResponse;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 
 public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapter.ViewHolder> {
 
-    private List<Post> postsRecyclerView;
+    private List<PostResponse> postsRecyclerView;
 
-    public PostRecyclerAdapter(List<Post> posts) {
+    public PostRecyclerAdapter(List<PostResponse> postResponses) {
 
-        this.postsRecyclerView = posts;
+        this.postsRecyclerView = postResponses;
     }
 
     @NonNull
@@ -42,15 +39,15 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 
         //set all values here
 
-        Post post = this.postsRecyclerView.get(position);
+        PostResponse postResponse = this.postsRecyclerView.get(position);
 
-        holder.postCommunity.setText(post.getCommunityName());
-        holder.postTitle.setText(post.getTitle());
-        holder.postText.setText(post.getText());
+        holder.postCommunity.setText(postResponse.getCommunityName());
+        holder.postTitle.setText(postResponse.getTitle());
+        holder.postText.setText(postResponse.getText());
 
         ///
 
-        String postTimestampStripped = post.getCreationDate().substring(0, 10);
+        String postTimestampStripped = postResponse.getCreationDate().substring(0, 10);
 
 
         ///

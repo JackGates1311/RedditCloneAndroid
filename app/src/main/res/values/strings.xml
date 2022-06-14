@@ -3,7 +3,7 @@
     <string name="splashText">Reddit Clone</string>
     <string name="logo_image_description">Reddit Clone Image</string>
     <string name="menu_homepage_name">Home page</string>
-    <string name="floating_button_sort_post_by">Sort post by</string>
+    <string name="floating_button_sort_post_by">Sort postResponse by</string>
     <string name="menu_user_register_name">Register</string>
     <string name="menu_user_login_name">Login</string>
     <string name="email_login_register_name">Email</string>
@@ -107,12 +107,12 @@
     </string>
     <string name="post_comment_text_name">Write your comment here</string>
     <string name="join_to_this_community_button_name">Join to this community</string>
-    <string name="view_community_posts_button_name">View all community posts</string>
+    <string name="view_community_posts_button_name">View all community postResponses</string>
     <string name="post_title_name">Post title</string>
     <string name="post_text_name">Post text</string>
     <string name="post_flairs_name">Post flairs</string>
-    <string name="button_create_post_name">Create post</string>
-    <string name="button_upload_post_images_name">Upload post images</string>
+    <string name="button_create_post_name">Create postResponse</string>
+    <string name="button_upload_post_images_name">Upload postResponse images</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_user_logout_name">Logout</string>
@@ -132,15 +132,15 @@
     <string name="button_create_community_name">Create community</string>
     <string name="menu_communities_name">Communities</string>
     <string name="button_review_reported_comments_name">Review reported comments</string>
-    <string name="button_review_reported_posts_name">Review reported posts</string>
+    <string name="button_review_reported_posts_name">Review reported postResponses</string>
     <string name="button_review_blocked_users_name">Review blocked users</string>
     <string name="button_accept_reported_comments_name">Accept reports on selected comments</string>
     <string name="button_decline_reported_comments_name">Decline reports on selected comments</string>
-    <string name="button_accept_reported_posts_name">Accept reports on selected posts</string>
-    <string name="button_decline_reported_posts_name">Decline reports on selected posts</string>
+    <string name="button_accept_reported_posts_name">Accept reports on selected postResponses</string>
+    <string name="button_decline_reported_posts_name">Decline reports on selected postResponses</string>
     <string name="posting_new_posts_checkbox">Posting new images</string>
     <string name="posting_new_comments_checkbox">Posting new comments</string>
-    <string name="reacting_new_posts_checkbox">Reacting to posts</string>
+    <string name="reacting_new_posts_checkbox">Reacting to postResponses</string>
     <string name="reacting_new_comments_checkbox">Reacting to comments</string>
     <string name="button_report_user_name">Report registerUser</string>
     <string name="reason_for_reporting_user_name">Reason of reporting registerUser (optional)</string>
