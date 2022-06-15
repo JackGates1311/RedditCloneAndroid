@@ -74,8 +74,17 @@ public class CreateEditPostFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                boolean isCommunityValid = postCommunities.getText().toString().length() > 0;
                 boolean isTitleValid = title.getText().toString().length() > 0;
                 boolean isTextValid = text.getText().toString().length() > 0;
+
+                if(!isCommunityValid) {
+
+                    Toast.makeText(getContext(), "Please select a community",
+                            Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
 
                 if(!isTitleValid) {
 

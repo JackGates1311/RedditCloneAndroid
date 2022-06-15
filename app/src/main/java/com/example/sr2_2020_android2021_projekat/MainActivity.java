@@ -1,10 +1,16 @@
 package com.example.sr2_2020_android2021_projekat;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +46,18 @@ public class MainActivity extends AppCompatActivity {
 
     public String postMode;
 
+    ///
+
+    private SensorManager sm;
+
+    private float acelVal; // Current acceleration value and gravity
+    private float acelLast; // Last acceleration value and gravity
+    private float shake; // Acceleration value differ from gravity
+
+    private static int sensitivityLevel = 9; // Lower value, more sensitive
+
+    ///
+
     public MainActivity() {
         super();
     }
@@ -50,6 +68,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        /////
+
+        sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        sm.registerListener(sensorListener,
+                sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+
+        acelVal = SensorManager.GRAVITY_EARTH;
+        acelLast = SensorManager.GRAVITY_EARTH;
+        shake = 0.00f;
+
+        /////
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -269,4 +300,38 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private final SensorEventListener sensorListener = new SensorEventListener() {
+
+        @Override
+        public void onSensorChanged(SensorEvent sensorEvent) {
+
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
+
+            acelLast = acelVal;
+
+            acelVal = (float) Math.sqrt((x * x + y * y + z * z));
+
+            float delta = acelVal - acelLast;
+
+            shake = shake * 0.9f + delta;
+
+            if(shake > sensitivityLevel) { // Shake sensitivity
+
+                FragmentTransition.to(PostsFragment.newInstance(),
+                        MainActivity.this, false, R.id.viewPage);
+
+                Toast.makeText(MainActivity.this,
+                        "Posts are up to date now!", Toast.LENGTH_LONG).show();
+
+            }
+
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int i) {
+
+        }
+    };
 }
