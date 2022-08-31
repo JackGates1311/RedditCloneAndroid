@@ -31,7 +31,7 @@ public interface Routes {
     Call<String> createPost(@Header("Authorization") String authToken, @Body PostRequest postRequest);
 
     @GET("communities/name={name}")
-    Call<List<Community>> getCommunityByName(@Path("name") String communityName);
+    Call<Community> getCommunityByName(@Path("name") String communityName);
 
     @GET("posts/communityName={name}")
     Call<List<PostResponse>> getPostsByCommunityName(@Path("name") String communityName);

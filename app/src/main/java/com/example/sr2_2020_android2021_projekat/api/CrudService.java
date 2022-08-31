@@ -10,9 +10,10 @@ import retrofit2.Response;
 
 public class CrudService <T> {
 
-    List<T> responseData;
+    List<T> responseDataList;
+    T responseData;
 
-    public void getData(Call<List<T>> data, View view, Runnable afterResponse){
+    public void getDataList(Call<List<T>> data, View view, Runnable afterResponseCode){
 
         Callback<List<T>> listCallback = new Callback<List<T>>() {
 
@@ -25,9 +26,9 @@ public class CrudService <T> {
                     return;
                 }
 
-                setResponseData(response.body());
+                setResponseDataList(response.body());
 
-                afterResponse.run();
+                afterResponseCode.run();
 
             }
 
@@ -40,18 +41,52 @@ public class CrudService <T> {
         data.enqueue(listCallback);
     }
 
+    public void getData(Call<T> data, View view, Runnable afterResponseCode) {
+
+        Callback<T> callback = new Callback<T>() {
+            @Override
+            public void onResponse(@NonNull Call<T> call, Response<T> response) {
+                if(!response.isSuccessful()) {
+
+                    RetrofitTools.showResponseErrorMessage(response.code(), view);
+
+                    return;
+                }
+
+                setResponseData(response.body());
+
+                afterResponseCode.run();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
+                RetrofitTools.showConnectionErrorMessage(t, view);
+            }
+        };
+
+        data.enqueue(callback);
+
+    }
+
     private void postData(){}
 
     private void updateData(){}
 
     private void deleteData(){}
 
-    public List<T> getResponseData(){
-        return this.responseData;
+    public List<T> getResponseDataList(){
+        return this.responseDataList;
     }
 
-    public void setResponseData(List<T> responseBody) {
-        this.responseData = responseBody;
+    public void setResponseDataList(List<T> responseBody) {
+        this.responseDataList = responseBody;
     }
 
+    public T getResponseData() {
+        return responseData;
+    }
+
+    public void setResponseData(T responseData) {
+        this.responseData = responseData;
+    }
 }

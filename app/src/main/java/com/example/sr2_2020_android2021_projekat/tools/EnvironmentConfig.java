@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class EnvironmentConfig {
 
     public static String protocol = "http";
-    public static String ipAddress = "192.168.1.6";
+    public static String ipAddress = "192.168.0.75";
     public static String port = "8080";
     public static String apiRootURL = "/api/";
     public static String baseURL = protocol + "://" + ipAddress + ":" + port + apiRootURL;
