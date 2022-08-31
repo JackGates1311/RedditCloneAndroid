@@ -4,11 +4,13 @@ public class LoginResponse {
 
     private String authToken;
     private int expiresIn;
+    private String role;
 
-    public LoginResponse(String authToken, int expiresIn) {
+    public LoginResponse(String authToken, int expiresIn, String role) {
 
         this.authToken = authToken;
         this.expiresIn = expiresIn;
+        this.role = role;
     }
 
     public String getAuthToken() {
@@ -27,5 +29,13 @@ public class LoginResponse {
 
     public void setExpiresIn(int expiresIn) {
         this.expiresIn = expiresIn;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

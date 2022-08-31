@@ -14,12 +14,14 @@ import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.adapters.PostRecyclerAdapter;
 import com.example.sr2_2020_android2021_projekat.api.CrudService;
 import com.example.sr2_2020_android2021_projekat.model.PostResponse;
-import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
+import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
+
 import java.util.List;
 
 public class PostsFragment extends Fragment {
 
     private final CrudService<PostResponse> crudService = new CrudService<>();
+    private final HttpClient httpClient = new HttpClient();
 
     public static PostsFragment newInstance() {
 
@@ -54,7 +56,7 @@ public class PostsFragment extends Fragment {
 
     public void getPosts(RecyclerView recyclerView, View view) {
 
-        crudService.getDataList(EnvironmentConfig.routes.getAllPosts(), view, () -> {
+        crudService.getDataList(httpClient.routes.getAllPosts(), view, () -> {
 
             List<PostResponse> postResponse = crudService.getResponseDataList();
 

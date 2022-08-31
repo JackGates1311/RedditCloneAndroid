@@ -12,11 +12,16 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
+import com.example.sr2_2020_android2021_projekat.api.CrudService;
 import com.example.sr2_2020_android2021_projekat.api.Routes;
 import com.example.sr2_2020_android2021_projekat.model.RegisterUser;
 import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
+import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
+import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,9 +39,7 @@ public class RegisterFragment extends Fragment {
     private com.google.android.material.textfield.TextInputEditText passwordRepeated;
     private com.google.android.material.textfield.TextInputEditText description;
 
-    private Button registerButton;
-
-    private Routes routes;
+    private final HttpClient httpClient = new HttpClient();
 
     public static RegisterFragment newInstance() {
 
@@ -63,7 +66,7 @@ public class RegisterFragment extends Fragment {
         passwordRepeated = view.findViewById(R.id.passwordRepeated);
         description = view.findViewById(R.id.description);
 
-        registerButton = view.findViewById(R.id.registerButton);
+        Button registerButton = view.findViewById(R.id.registerButton);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +130,7 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
-                register();
+                register(view);
 
             }
         });
@@ -135,47 +138,24 @@ public class RegisterFragment extends Fragment {
         return view;
     }
 
-    private void register() {
+    private void register(View view) {
 
-        Gson gson = new GsonBuilder().setLenient().create();
+        CrudService<String> crudService = new CrudService<>();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
-                addConverterFactory(ScalarsConverterFactory.create()).
-                addConverterFactory(GsonConverterFactory.create(gson)).build();
+        RegisterUser registerUser = new RegisterUser(
+                Objects.requireNonNull(username.getText()).toString(),
+                Objects.requireNonNull(password.getText()).toString(),
+                Objects.requireNonNull(email.getText()).toString(), "",
+                Objects.requireNonNull(description.getText()).toString(),
+                Objects.requireNonNull(displayName.getText()).toString(), false);
 
-        routes = retrofit.create(Routes.class);
-
-        RegisterUser registerUser = new RegisterUser(username.getText().toString(),
-                password.getText().toString(), email.getText().toString(), "",
-                description.getText().toString(), displayName.getText().toString());
-
-        Call<String> call = routes.register(registerUser);
-
-        call.enqueue(new Callback<String>() {
-
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-
-                if(!response.isSuccessful()) {
-
-                    Toast.makeText(getContext(), "HTTP returned code " + response.code(),
-                            Toast.LENGTH_LONG).show();
-
-                    return;
-                }
-
+        crudService.postData(httpClient.routes.register(registerUser), view, () ->
                 Toast.makeText(getContext(), "User registration is successful",
-                        Toast.LENGTH_LONG).show();
+                Toast.LENGTH_LONG).show());
 
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-
-        });
+        if(getActivity() != null)
+            FragmentTransition.to(PostsFragment.newInstance(), getActivity(),
+                    false, R.id.viewPage);
 
     }
 

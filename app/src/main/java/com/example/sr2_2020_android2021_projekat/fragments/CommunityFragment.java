@@ -14,12 +14,14 @@ import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.api.CrudService;
 import com.example.sr2_2020_android2021_projekat.model.Community;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
-import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
+import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 
 
 public class CommunityFragment extends Fragment {
 
     private final CrudService<Community> crudService = new CrudService<>();
+
+    private final HttpClient httpClient = new HttpClient();
 
     private final String communityNameParam;
 
@@ -70,7 +72,7 @@ public class CommunityFragment extends Fragment {
 
         //TODO Add interceptor
 
-        crudService.getData(EnvironmentConfig.routes.getCommunityByName(communityNameParam),
+        crudService.getData(httpClient.routes.getCommunityByName(communityNameParam),
                 view, () -> {
 
             Community community  = crudService.getResponseData();

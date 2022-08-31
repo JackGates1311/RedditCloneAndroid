@@ -68,7 +68,30 @@ public class CrudService <T> {
 
     }
 
-    private void postData(){}
+    public void postData(Call<T> data, View view, Runnable afterResponseCode){
+
+        Callback<T> callback = new Callback<T>() {
+            @Override
+            public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
+                if(!response.isSuccessful()) {
+
+                    RetrofitTools.showResponseErrorMessage(response.code(), view);
+
+                    return;
+                }
+
+                afterResponseCode.run();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
+                RetrofitTools.showConnectionErrorMessage(t, view);
+            }
+        };
+
+        data.enqueue(callback);
+
+    }
 
     private void updateData(){}
 

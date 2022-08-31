@@ -8,9 +8,10 @@ public class RegisterUser {
     private String avatar;
     private String description;
     private String displayName;
+    private Boolean isAdministrator;
 
     public RegisterUser(String username, String password, String email, String avatar,
-                        String description, String displayName) {
+                        String description, String displayName, Boolean isAdministrator) {
 
         this.username = username;
         this.password = password;
@@ -18,6 +19,7 @@ public class RegisterUser {
         this.avatar = avatar;
         this.description = description;
         this.displayName = displayName;
+        this.isAdministrator = isAdministrator;
     }
 
     public String getUsername() {
@@ -66,5 +68,13 @@ public class RegisterUser {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public Boolean getAdministrator() {
+        return isAdministrator;
+    }
+
+    public void setAdministrator(Boolean administrator) {
+        isAdministrator = administrator;
     }
 }

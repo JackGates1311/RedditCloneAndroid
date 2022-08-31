@@ -28,7 +28,8 @@ public interface Routes {
     Call<LoginResponse> login(@Body LoginRequest loginRequest);
 
     @POST("posts/createPost")
-    Call<String> createPost(@Header("Authorization") String authToken, @Body PostRequest postRequest);
+    //Call<String> createPost(@Header("Authorization") String authToken, @Body PostRequest postRequest);
+    Call<String> createPost(@Body PostRequest postRequest);
 
     @GET("communities/name={name}")
     Call<Community> getCommunityByName(@Path("name") String communityName);

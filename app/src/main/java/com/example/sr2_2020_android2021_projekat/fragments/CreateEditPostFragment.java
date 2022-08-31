@@ -1,8 +1,6 @@
 package com.example.sr2_2020_android2021_projekat.fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,25 +14,17 @@ import androidx.annotation.Nullable;
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.api.CrudService;
-import com.example.sr2_2020_android2021_projekat.api.Routes;
 import com.example.sr2_2020_android2021_projekat.model.Community;
 import com.example.sr2_2020_android2021_projekat.model.PostRequest;
-import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
+import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class CreateEditPostFragment extends Fragment {
 
-    private final CrudService<Community> crudService = new CrudService<>();
+    private final HttpClient httpClient = new HttpClient();
 
     private com.google.android.material.textfield.TextInputEditText title;
     private com.google.android.material.textfield.TextInputEditText text;
@@ -42,7 +32,6 @@ public class CreateEditPostFragment extends Fragment {
     private AutoCompleteTextView postCommunities;
 
     public static CreateEditPostFragment newInstance() {
-
         return new CreateEditPostFragment();
     }
 
@@ -55,7 +44,7 @@ public class CreateEditPostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_create_edit_post, container,
                 false);
 
-        if((MainActivity)getActivity() != null)
+        if(getActivity() != null)
             ((MainActivity)getActivity()).setGroupMenuVisibility(false,
                 false);
 
@@ -98,11 +87,13 @@ public class CreateEditPostFragment extends Fragment {
                 return;
             }
 
-            createPost();
+            createPost(view);
 
         });
 
-        if(((MainActivity)getActivity()).postMode == "ADD") {
+        httpClient.setContext(getContext());
+
+        if(Objects.equals(((MainActivity) getActivity()).postMode, "ADD")) {
 
             getActivity().setTitle("Create new post");
 
@@ -124,7 +115,9 @@ public class CreateEditPostFragment extends Fragment {
 
     private void getAllCommunities(View view) {
 
-        crudService.getDataList(EnvironmentConfig.routes.getAllCommunities(), view, () -> {
+        CrudService<Community> crudService = new CrudService<>();
+
+        crudService.getDataList(httpClient.routes.getAllCommunities(), view, () -> {
 
             List<String> communityNames = new ArrayList<>();
 
@@ -145,53 +138,21 @@ public class CreateEditPostFragment extends Fragment {
         });
     }
 
-    private void createPost() {
+    private void createPost(View view) {
 
-        Gson gson = new GsonBuilder().setLenient().create();
+        CrudService<String> crudService = new CrudService<>();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
-                addConverterFactory(ScalarsConverterFactory.create()).
-                addConverterFactory(GsonConverterFactory.create(gson)).build();
+        PostRequest postRequest = new PostRequest(postCommunities.getText().toString(),
+                Objects.requireNonNull(text.getText()).toString(),
+                Objects.requireNonNull(title.getText()).toString(), null);
 
-        Routes routes = retrofit.create(Routes.class);
-
-        PostRequest postRequest = new PostRequest(postCommunities.getText().toString(), "",
-                text.getText().toString(), title.getText().toString());
-
-        SharedPreferences preferences = PreferenceManager.
-                getDefaultSharedPreferences(getContext());
-
-        String authToken = "Bearer " + preferences.getString("authToken", null);
-
-        Call<String> call = routes.createPost(authToken, postRequest);
-
-        call.enqueue(new Callback<String>() {
-
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-
-                if(!response.isSuccessful()) {
-
-                    Toast.makeText(getContext(), "HTTP returned code " + response.code(),
-                            Toast.LENGTH_LONG).show();
-
-                    return;
-                }
-
+        crudService.postData(httpClient.routes.createPost(postRequest), view, () ->
                 Toast.makeText(getContext(), "Post successfully created",
-                        Toast.LENGTH_LONG).show();
+                Toast.LENGTH_LONG).show());
 
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-
+        if(getActivity() != null)
+            FragmentTransition.to(PostsFragment.newInstance(), getActivity(),
+                    false, R.id.viewPage);
 
     }
 }

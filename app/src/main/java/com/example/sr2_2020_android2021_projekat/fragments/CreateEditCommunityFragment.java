@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
@@ -12,8 +11,11 @@ import androidx.annotation.Nullable;
 
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
+import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 
 public class CreateEditCommunityFragment extends Fragment {
+
+    HttpClient httpClient = new HttpClient();
 
     public static CreateEditCommunityFragment newInstance() {
 
