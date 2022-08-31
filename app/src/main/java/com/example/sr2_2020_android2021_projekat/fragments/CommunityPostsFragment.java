@@ -15,8 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.adapters.PostRecyclerAdapter;
-import com.example.sr2_2020_android2021_projekat.api.JsonPlaceholderAPI;
+import com.example.sr2_2020_android2021_projekat.api.Routes;
 import com.example.sr2_2020_android2021_projekat.model.PostResponse;
+import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
 
 import java.util.List;
 
@@ -68,12 +69,12 @@ public class CommunityPostsFragment extends Fragment {
 
     private void getPostsByCommunityName(RecyclerView recyclerView) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.6:8080/api/").
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
                 addConverterFactory(GsonConverterFactory.create()).build();
 
-        JsonPlaceholderAPI jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
+        Routes routes = retrofit.create(Routes.class);
 
-        Call<List<PostResponse>> call = jsonPlaceholderAPI.getPostsByCommunityName(
+        Call<List<PostResponse>> call = routes.getPostsByCommunityName(
                 communityNameParam);
 
         call.enqueue(new Callback<List<PostResponse>>() {

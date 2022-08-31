@@ -1,10 +1,7 @@
 package com.example.sr2_2020_android2021_projekat.fragments;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +12,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
-import com.example.sr2_2020_android2021_projekat.api.JsonPlaceholderAPI;
+import com.example.sr2_2020_android2021_projekat.api.Routes;
 import com.example.sr2_2020_android2021_projekat.model.RegisterUser;
-import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
+import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +36,7 @@ public class RegisterFragment extends Fragment {
 
     private Button registerButton;
 
-    private JsonPlaceholderAPI jsonPlaceholderAPI;
+    private Routes routes;
 
     public static RegisterFragment newInstance() {
 
@@ -144,17 +139,17 @@ public class RegisterFragment extends Fragment {
 
         Gson gson = new GsonBuilder().setLenient().create();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.6:8080/api/").
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
                 addConverterFactory(ScalarsConverterFactory.create()).
                 addConverterFactory(GsonConverterFactory.create(gson)).build();
 
-        jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
+        routes = retrofit.create(Routes.class);
 
         RegisterUser registerUser = new RegisterUser(username.getText().toString(),
                 password.getText().toString(), email.getText().toString(), "",
                 description.getText().toString(), displayName.getText().toString());
 
-        Call<String> call = jsonPlaceholderAPI.register(registerUser);
+        Call<String> call = routes.register(registerUser);
 
         call.enqueue(new Callback<String>() {
 

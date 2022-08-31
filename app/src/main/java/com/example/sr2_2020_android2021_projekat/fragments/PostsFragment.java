@@ -1,47 +1,49 @@
 package com.example.sr2_2020_android2021_projekat.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.adapters.PostRecyclerAdapter;
-import com.example.sr2_2020_android2021_projekat.api.JsonPlaceholderAPI;
+import com.example.sr2_2020_android2021_projekat.api.CrudService;
 import com.example.sr2_2020_android2021_projekat.model.PostResponse;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
+import com.example.sr2_2020_android2021_projekat.tools.RetrofitTools;
 
 import java.util.List;
-import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.function.Function;
 
 public class PostsFragment extends Fragment {
 
+    private final CrudService<PostResponse> crudService = new CrudService<>();
+
     ///
 
-    private com.google.android.material.card.MaterialCardView postView;
+    /* private com.google.android.material.card.MaterialCardView postView;
 
     private TextView postCommunity;
 
     private TextView postTitle;
 
-    private TextView postText;
+    private TextView postText; */
 
     List<PostResponse> postResponses;
+
+    private final RetrofitTools retrofitTools = new RetrofitTools();
+
+    //TODO you must instance object properly to avoid error ... on null reference object ...
+
+
 
     ///
 
@@ -56,7 +58,8 @@ public class PostsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        ((MainActivity)getActivity()).setGroupMenuVisibility(true,
+        if((MainActivity)getActivity() != null)
+            ((MainActivity)getActivity()).setGroupMenuVisibility(true,
                 true);
 
         getActivity().setTitle("Reddit Clone");
@@ -88,7 +91,7 @@ public class PostsFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        getPosts(recyclerView);
+        getPosts(recyclerView, view);
 
 
         //recyclerView.addItemDecoration();
@@ -142,58 +145,51 @@ public class PostsFragment extends Fragment {
         return view;
     }
 
-    public void getPosts(RecyclerView recyclerView) {
+    public void getPosts(RecyclerView recyclerView, View view) {
 
-        //com.google.android.material.card.MaterialCardView postView;
-
-        //TextView postCommunity = null;
-
-        //TextView postTitle = null;
-
-        //TextView postText = null;
-
-
-        ///
-
-        ///
-
-
-
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.6:8080/api/").
-                addConverterFactory(GsonConverterFactory.create()).build();
-
-        JsonPlaceholderAPI jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
-
-        Call<List<PostResponse>> call = jsonPlaceholderAPI.getAllPosts();
+        /*Call<List<PostResponse>> call = EnvironmentConfig.routes.getAllPosts();
 
         call.enqueue(new Callback<List<PostResponse>>() {
 
             @Override
-            public void onResponse(Call<List<PostResponse>> call, Response<List<PostResponse>> response) {
+            public void onResponse(@NonNull Call<List<PostResponse>> call,
+                                   @NonNull Response<List<PostResponse>> response) {
 
                 if(!response.isSuccessful()) {
 
-                    // Errors 400 and 500
-
-                    Toast.makeText(getContext(), "HTTP returned code " + response.code(),
-                            Toast.LENGTH_LONG).show();
+                    RetrofitTools.showResponseErrorMessage(response.code(), view);
 
                     return;
                 }
+
+                postResponses = response.body();
 
                 recyclerView.setAdapter(new PostRecyclerAdapter(getActivity(), response.body()));
 
             }
 
             @Override
-            public void onFailure(Call<List<PostResponse>> call, Throwable t) {
-
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-
+            public void onFailure(@NonNull Call<List<PostResponse>> call, @NonNull Throwable t) {
+                RetrofitTools.showConnectionErrorMessage(t, view);
             }
+        });*/
+
+        ;
+
+
+        crudService.getData(EnvironmentConfig.routes.getAllPosts(), view, () -> {
+
+            List<PostResponse> postResponse = crudService.getResponseData();
+
+            recyclerView.setAdapter(new PostRecyclerAdapter(getActivity(), postResponse));
+
         });
+    }
+
+    private void doSomething() {
 
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -218,14 +214,14 @@ public class PostsFragment extends Fragment {
     }
 
 
-    private List<PostResponse> getPosts() {
+    /*private List<PostResponse> getPosts() {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.6:8080/api/posts/").
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.75:8080/api/posts/").
                 addConverterFactory(GsonConverterFactory.create()).build();
 
-        JsonPlaceholderAPI jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
+        Routes routes = retrofit.create(Routes.class);
 
-        Call<List<PostResponse>> call = jsonPlaceholderAPI.getAllPosts();
+        Call<List<PostResponse>> call = routes.getAllPosts();
 
         call.enqueue(new Callback<List<PostResponse>>() {
 
@@ -267,6 +263,6 @@ public class PostsFragment extends Fragment {
         });
 
         return postResponses;
-    }
+    }*/
 
 }

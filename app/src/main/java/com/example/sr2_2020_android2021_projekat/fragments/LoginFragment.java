@@ -5,35 +5,30 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
-import com.example.sr2_2020_android2021_projekat.api.JsonPlaceholderAPI;
+import com.example.sr2_2020_android2021_projekat.api.Routes;
 import com.example.sr2_2020_android2021_projekat.model.LoginRequest;
 import com.example.sr2_2020_android2021_projekat.model.LoginResponse;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
-import com.google.android.material.navigation.NavigationView;
+import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class LoginFragment extends Fragment {
 
@@ -42,7 +37,7 @@ public class LoginFragment extends Fragment {
 
     private Button loginButton;
 
-    private JsonPlaceholderAPI jsonPlaceholderAPI;
+    private Routes routes;
 
     public static LoginFragment newInstance() {
 
@@ -131,15 +126,15 @@ public class LoginFragment extends Fragment {
 
         Gson gson = new GsonBuilder().setLenient().create();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.6:8080/api/").
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
                 addConverterFactory(GsonConverterFactory.create(gson)).build();
 
-        jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
+        routes = retrofit.create(Routes.class);
 
         LoginRequest loginRequest = new LoginRequest(username.getText().toString(),
                 password.getText().toString());
 
-        Call<LoginResponse> call = jsonPlaceholderAPI.login(loginRequest);
+        Call<LoginResponse> call = routes.login(loginRequest);
 
         call.enqueue(new Callback<LoginResponse>() {
 

@@ -14,30 +14,29 @@ import androidx.annotation.Nullable;
 
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
-import com.example.sr2_2020_android2021_projekat.api.JsonPlaceholderAPI;
+import com.example.sr2_2020_android2021_projekat.adapters.PostRecyclerAdapter;
+import com.example.sr2_2020_android2021_projekat.api.CrudService;
+import com.example.sr2_2020_android2021_projekat.api.Routes;
 import com.example.sr2_2020_android2021_projekat.model.Community;
+import com.example.sr2_2020_android2021_projekat.model.PostResponse;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class CommunityFragment extends Fragment {
 
-    private String communityNameParam;
+    private final CrudService<Community> crudService = new CrudService<>();
 
-    private TextView communityName;
+    private final String communityNameParam;
 
     private TextView communityDescription;
-
-    private Button showAllCommunityPostsButton;
-
-    private JsonPlaceholderAPI jsonPlaceholderAPI;
 
     public static CommunityFragment newInstance(String communityNameParam) {
 
@@ -55,49 +54,49 @@ public class CommunityFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        ((MainActivity)getActivity()).setGroupMenuVisibility(false,
-                false);
+        if((MainActivity)getActivity() != null)
+            ((MainActivity)getActivity()).setGroupMenuVisibility(
+                    false, false);
 
         getActivity().setTitle("Community details");
 
         View view = inflater.inflate(R.layout.fragment_community, container, false);
 
-        communityName = view.findViewById(R.id.community_info_name);
+        TextView communityName = view.findViewById(R.id.community_info_name);
 
         communityDescription = view.findViewById(R.id.community_info_description);
 
-        showAllCommunityPostsButton = view.findViewById(R.id.show_community_posts_button);
+        Button showAllCommunityPostsButton = view.findViewById(R.id.show_community_posts_button);
 
-        showAllCommunityPostsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                FragmentTransition.to(CommunityPostsFragment.newInstance(communityNameParam), getActivity(), true,
-                        R.id.viewPage);
-
-            }
-        });
+        showAllCommunityPostsButton.setOnClickListener(view1 ->
+                FragmentTransition.to(CommunityPostsFragment.newInstance(
+                        communityNameParam), getActivity(), true, R.id.viewPage));
 
         communityName.setText(communityNameParam);
 
-        getCommunityByName();
+        getCommunityByName(view);
 
         return view;
     }
 
-    private void getCommunityByName() {
+    private void getCommunityByName(View view) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.6:8080/api/").
+        //TODO make develop branch and do commit
+        //Add interceptor
+        //Refactor code
+
+        /*Retrofit retrofit = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
                 addConverterFactory(GsonConverterFactory.create()).build();
 
-        jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
+        Routes route = retrofit.create(Routes.class);
 
-        Call<Community> call = jsonPlaceholderAPI.getCommunityByName(communityNameParam);
+        Call<Community> call = route.getCommunityByName(communityNameParam);
 
         call.enqueue(new Callback<Community>() {
 
             @Override
-            public void onResponse(Call<Community> call, Response<Community> response) {
+            public void onResponse(@NonNull Call<Community> call,
+                                   @NonNull Response<Community> response) {
 
                 if(!response.isSuccessful()) {
 
@@ -111,18 +110,22 @@ public class CommunityFragment extends Fragment {
 
                 Community community = response.body();
 
+                assert community != null;
                 communityDescription.setText(community.getDescription());
-
-
-
             }
 
             @Override
-            public void onFailure(Call<Community> call, Throwable t) {
-
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-
+            public void onFailure(@NonNull Call<Community> call, @NonNull Throwable t) {
+                Toast.makeText(getContext(), "Connection with server is not established", Toast.LENGTH_LONG).show();
             }
+        });*/
+
+        crudService.getData(EnvironmentConfig.routes.getCommunityByName(communityNameParam), view, () -> {
+
+            Community community  = crudService.getResponseData().get(0);
+
+            communityDescription.setText(community.getDescription());
+
         });
 
     }

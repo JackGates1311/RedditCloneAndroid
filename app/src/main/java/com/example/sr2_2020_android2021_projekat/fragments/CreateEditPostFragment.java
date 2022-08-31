@@ -17,9 +17,13 @@ import androidx.annotation.Nullable;
 
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
-import com.example.sr2_2020_android2021_projekat.api.JsonPlaceholderAPI;
+import com.example.sr2_2020_android2021_projekat.adapters.PostRecyclerAdapter;
+import com.example.sr2_2020_android2021_projekat.api.CrudService;
+import com.example.sr2_2020_android2021_projekat.api.Routes;
 import com.example.sr2_2020_android2021_projekat.model.Community;
 import com.example.sr2_2020_android2021_projekat.model.PostRequest;
+import com.example.sr2_2020_android2021_projekat.model.PostResponse;
+import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,6 +39,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class CreateEditPostFragment extends Fragment {
 
+    private final CrudService<Community> crudService = new CrudService<>();
+
     private com.google.android.material.textfield.TextInputEditText title;
     private com.google.android.material.textfield.TextInputEditText text;
 
@@ -42,7 +48,7 @@ public class CreateEditPostFragment extends Fragment {
 
     private Button createPostButton;
 
-    private JsonPlaceholderAPI jsonPlaceholderAPI;
+    private Routes routes;
 
     public static CreateEditPostFragment newInstance() {
 
@@ -132,12 +138,12 @@ public class CreateEditPostFragment extends Fragment {
 
     private void getAllCommunities(View view) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.6:8080/api/").
+        /*Retrofit retrofit = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
                 addConverterFactory(GsonConverterFactory.create()).build();
 
-        JsonPlaceholderAPI jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
+        Routes routes = retrofit.create(Routes.class);
 
-        Call<List<Community>> call = jsonPlaceholderAPI.getAllCommunities();
+        Call<List<Community>> call = routes.getAllCommunities();
 
         call.enqueue(new Callback<List<Community>>() {
 
@@ -175,6 +181,26 @@ public class CreateEditPostFragment extends Fragment {
 
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
+        });*/
+
+        crudService.getData(EnvironmentConfig.routes.getAllCommunities(), view, () -> {
+
+            List<String> communityNames = new ArrayList<>();
+
+            assert crudService.getResponseData() != null;
+
+            for(Community community : crudService.getResponseData()) {
+
+                communityNames.add(community.getName());
+            }
+
+            ArrayAdapter<String> adapter = new
+                    ArrayAdapter<>(getContext(), R.layout.drop_down_item, communityNames);
+
+            AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.postCommunities);
+
+            autoCompleteTextView.setAdapter(adapter);
+
         });
     }
 
@@ -182,11 +208,11 @@ public class CreateEditPostFragment extends Fragment {
 
         Gson gson = new GsonBuilder().setLenient().create();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.6:8080/api/").
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
                 addConverterFactory(ScalarsConverterFactory.create()).
                 addConverterFactory(GsonConverterFactory.create(gson)).build();
 
-        jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
+        routes = retrofit.create(Routes.class);
 
         PostRequest postRequest = new PostRequest(postCommunities.getText().toString(), "",
                 text.getText().toString(), title.getText().toString());
@@ -196,7 +222,7 @@ public class CreateEditPostFragment extends Fragment {
 
         String authToken = "Bearer " + preferences.getString("authToken", null);
 
-        Call<String> call = jsonPlaceholderAPI.createPost(authToken, postRequest);
+        Call<String> call = routes.createPost(authToken, postRequest);
 
         call.enqueue(new Callback<String>() {
 
