@@ -36,15 +36,15 @@
         "and use of imagery guide visual treatments. These elements do far more than please the "
         "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
         "imagery, large scale typography, and intentional white space create a bold and graphic "
-        "interface that immerse the registerUser in the experience.\n"
-        "An emphasis on registerUser actions makes core functionality immediately apparent and provides "
-        "waypoints for the registerUser.\n\n"
+        "interface that immerse the registerRequest in the experience.\n"
+        "An emphasis on registerRequest actions makes core functionality immediately apparent and provides "
+        "waypoints for the registerRequest.\n\n"
 
         "Motion provides meaning.\n\n"
 
-        "Motion respects and reinforces the registerUser as the prime mover. Primary registerUser actions are "
+        "Motion respects and reinforces the registerRequest as the prime mover. Primary registerRequest actions are "
         "inflection points that initiate motion, transforming the whole design.\n"
-        "All action takes place in a single environment. Objects are presented to the registerUser without "
+        "All action takes place in a single environment. Objects are presented to the registerRequest without "
         "breaking the continuity of experience even as they transform and reorganize.\n"
         "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
         "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
@@ -83,7 +83,7 @@
         "Responsive elevation and dynamic elevation offsets.\n\n"
 
         "Some component types have responsive elevation, meaning they change elevation in response "
-        "to registerUser input (e.g., normal, focused, and pressed) or system events. These elevation "
+        "to registerRequest input (e.g., normal, focused, and pressed) or system events. These elevation "
         "changes are consistently implemented using dynamic elevation offsets.\n"
         "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
         "to the component’s resting state. They ensure that elevation changes are consistent "
@@ -100,14 +100,14 @@
         "whether on a per component basis or using the entire app layout.\n"
         "On a component level, components can move or be removed before they cause interference. "
         "For example, a floating action button (FAB) can disappear or move off screen before a "
-        "registerUser picks up a card, or it can move if a snackbar appears.\n"
+        "registerRequest picks up a card, or it can move if a snackbar appears.\n"
         "On the layout level, design your app layout to minimize opportunities for interference. "
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
-        "when a registerUser tries to pick up one of cards.\n\n"
+        "when a registerRequest tries to pick up one of cards.\n\n"
     </string>
     <string name="post_comment_text_name">Write your comment here</string>
-    <string name="join_to_this_community_button_name">Join to this community</string>
-    <string name="view_community_posts_button_name">Show community posts</string>
+    <string name="join_to_this_community_button_name">Join to this communityDTOResponse</string>
+    <string name="view_community_posts_button_name">Show communityDTOResponse posts</string>
     <string name="post_title_name">Post title</string>
     <string name="post_text_name">Post text</string>
     <string name="post_flairs_name">Post flairs</string>
@@ -124,12 +124,12 @@
     <string name="current_password_name">Current password</string>
     <string name="new_password_name">New password</string>
     <string name="repeat_new_password_name">Repeat new password</string>
-    <string name="menu_create_community_name">Create community</string>
+    <string name="menu_create_community_name">Create communityDTOResponse</string>
     <string name="community_name">Community name</string>
     <string name="community_description_name">Community description</string>
     <string name="community_rules_name">Community rules</string>
     <string name="community_flairs_name">Community flairs</string>
-    <string name="button_create_community_name">Create community</string>
+    <string name="button_create_community_name">Create communityDTOResponse</string>
     <string name="menu_communities_name">Communities</string>
     <string name="button_review_reported_comments_name">Review reported comments</string>
     <string name="button_review_reported_posts_name">Review reported postResponses</string>
@@ -142,10 +142,10 @@
     <string name="posting_new_comments_checkbox">Posting new comments</string>
     <string name="reacting_new_posts_checkbox">Reacting to postResponses</string>
     <string name="reacting_new_comments_checkbox">Reacting to comments</string>
-    <string name="button_report_user_name">Report registerUser</string>
-    <string name="reason_for_reporting_user_name">Reason of reporting registerUser (optional)</string>
+    <string name="button_report_user_name">Report registerRequest</string>
+    <string name="reason_for_reporting_user_name">Reason of reporting registerRequest (optional)</string>
     <string name="menu_administrator_tools_name">Administrator tools</string>
-    <string name="reason_for_suspending_community_name">Reason of suspending community</string>
+    <string name="reason_for_suspending_community_name">Reason of suspending communityDTOResponse</string>
     <string name="button_block_user_name">Block</string>
     <string name="button_reject_user_name">Reject</string>
     <string name="username_login_register_name">Username</string>

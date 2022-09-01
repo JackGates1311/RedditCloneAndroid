@@ -11,15 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
-import com.example.sr2_2020_android2021_projekat.api.CrudService;
-import com.example.sr2_2020_android2021_projekat.model.Community;
+import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
+import com.example.sr2_2020_android2021_projekat.model.CommunityDTOResponse;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
 import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 
 
 public class CommunityFragment extends Fragment {
 
-    private final CrudService<Community> crudService = new CrudService<>();
+    private final RetrofitRepository<CommunityDTOResponse> retrofitRepository = new RetrofitRepository<>();
 
     private final HttpClient httpClient = new HttpClient();
 
@@ -43,7 +43,7 @@ public class CommunityFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        if((MainActivity)getActivity() != null)
+        if(getActivity() != null)
             ((MainActivity)getActivity()).setGroupMenuVisibility(
                     false, false);
 
@@ -70,14 +70,12 @@ public class CommunityFragment extends Fragment {
 
     private void getCommunityByName(View view) {
 
-        //TODO Add interceptor
-
-        crudService.getData(httpClient.routes.getCommunityByName(communityNameParam),
+        retrofitRepository.sendRequest(httpClient.routes.getCommunityByName(communityNameParam),
                 view, () -> {
 
-            Community community  = crudService.getResponseData();
+            CommunityDTOResponse communityDTOResponse = retrofitRepository.getResponseData();
 
-            communityDescription.setText(community.getDescription());
+            communityDescription.setText(communityDTOResponse.getDescription());
 
         });
 

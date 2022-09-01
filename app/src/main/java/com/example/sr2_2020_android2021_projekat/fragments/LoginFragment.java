@@ -18,7 +18,7 @@ import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.api.Routes;
 import com.example.sr2_2020_android2021_projekat.model.LoginRequest;
-import com.example.sr2_2020_android2021_projekat.model.LoginResponse;
+import com.example.sr2_2020_android2021_projekat.model.AuthResponse;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
 import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
 import com.google.gson.Gson;
@@ -134,12 +134,12 @@ public class LoginFragment extends Fragment {
         LoginRequest loginRequest = new LoginRequest(username.getText().toString(),
                 password.getText().toString());
 
-        Call<LoginResponse> call = routes.login(loginRequest);
+        Call<AuthResponse> call = routes.login(loginRequest);
 
-        call.enqueue(new Callback<LoginResponse>() {
+        call.enqueue(new Callback<AuthResponse>() {
 
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
 
                 if(!response.isSuccessful()) {
 
@@ -150,17 +150,17 @@ public class LoginFragment extends Fragment {
                     return;
                 }
 
-                LoginResponse loginResponse = response.body();
+                AuthResponse authResponse = response.body();
 
-                String authToken = loginResponse.getAuthToken();
-                int expiresIn = loginResponse.getExpiresIn();
+                String authToken = authResponse.getAuthToken();
+                int expiresIn = authResponse.getExpiresIn();
 
                 storeDataToSharedPreferences(authToken, expiresIn);
 
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
 
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
 

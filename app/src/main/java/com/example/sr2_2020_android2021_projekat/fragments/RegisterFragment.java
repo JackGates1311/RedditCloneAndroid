@@ -12,23 +12,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
-import com.example.sr2_2020_android2021_projekat.api.CrudService;
-import com.example.sr2_2020_android2021_projekat.api.Routes;
-import com.example.sr2_2020_android2021_projekat.model.RegisterUser;
-import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
+import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
+import com.example.sr2_2020_android2021_projekat.model.RegisterRequest;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
 import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RegisterFragment extends Fragment {
 
@@ -140,16 +129,16 @@ public class RegisterFragment extends Fragment {
 
     private void register(View view) {
 
-        CrudService<String> crudService = new CrudService<>();
+        RetrofitRepository<String> retrofitRepository = new RetrofitRepository<>();
 
-        RegisterUser registerUser = new RegisterUser(
+        RegisterRequest registerRequest = new RegisterRequest(
                 Objects.requireNonNull(username.getText()).toString(),
                 Objects.requireNonNull(password.getText()).toString(),
                 Objects.requireNonNull(email.getText()).toString(), "",
                 Objects.requireNonNull(description.getText()).toString(),
                 Objects.requireNonNull(displayName.getText()).toString(), false);
 
-        crudService.postData(httpClient.routes.register(registerUser), view, () ->
+        retrofitRepository.sendRequest(httpClient.routes.register(registerRequest), view, () ->
                 Toast.makeText(getContext(), "User registration is successful",
                 Toast.LENGTH_LONG).show());
 

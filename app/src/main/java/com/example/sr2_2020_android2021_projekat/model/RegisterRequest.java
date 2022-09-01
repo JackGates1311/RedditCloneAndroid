@@ -1,6 +1,8 @@
 package com.example.sr2_2020_android2021_projekat.model;
 
-public class RegisterUser {
+import androidx.annotation.NonNull;
+
+public class RegisterRequest {
 
     private String username;
     private String password;
@@ -10,8 +12,8 @@ public class RegisterUser {
     private String displayName;
     private Boolean isAdministrator;
 
-    public RegisterUser(String username, String password, String email, String avatar,
-                        String description, String displayName, Boolean isAdministrator) {
+    public RegisterRequest(String username, String password, String email, String avatar,
+                           String description, String displayName, Boolean isAdministrator) {
 
         this.username = username;
         this.password = password;
@@ -76,5 +78,19 @@ public class RegisterUser {
 
     public void setAdministrator(Boolean administrator) {
         isAdministrator = administrator;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "RegisterUser{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", description='" + description + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", isAdministrator=" + isAdministrator +
+                '}';
     }
 }

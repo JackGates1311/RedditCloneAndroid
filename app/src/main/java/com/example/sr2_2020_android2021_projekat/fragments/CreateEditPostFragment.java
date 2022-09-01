@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
-import com.example.sr2_2020_android2021_projekat.api.CrudService;
-import com.example.sr2_2020_android2021_projekat.model.Community;
+import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
+import com.example.sr2_2020_android2021_projekat.model.CommunityDTOResponse;
 import com.example.sr2_2020_android2021_projekat.model.PostRequest;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
 import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
@@ -115,17 +115,17 @@ public class CreateEditPostFragment extends Fragment {
 
     private void getAllCommunities(View view) {
 
-        CrudService<Community> crudService = new CrudService<>();
+        RetrofitRepository<List<CommunityDTOResponse>> retrofitRepository = new RetrofitRepository<>();
 
-        crudService.getDataList(httpClient.routes.getAllCommunities(), view, () -> {
+        retrofitRepository.sendRequest(httpClient.routes.getAllCommunities(), view, () -> {
 
             List<String> communityNames = new ArrayList<>();
 
-            assert crudService.getResponseDataList() != null;
+            assert retrofitRepository.getResponseData() != null;
 
-            for(Community community : crudService.getResponseDataList()) {
+            for(CommunityDTOResponse communityDTOResponse : retrofitRepository.getResponseData()) {
 
-                communityNames.add(community.getName());
+                communityNames.add(communityDTOResponse.getName());
             }
 
             ArrayAdapter<String> adapter = new
@@ -140,13 +140,13 @@ public class CreateEditPostFragment extends Fragment {
 
     private void createPost(View view) {
 
-        CrudService<String> crudService = new CrudService<>();
+        RetrofitRepository<String> retrofitRepository = new RetrofitRepository<>();
 
         PostRequest postRequest = new PostRequest(postCommunities.getText().toString(),
                 Objects.requireNonNull(text.getText()).toString(),
                 Objects.requireNonNull(title.getText()).toString(), null);
 
-        crudService.postData(httpClient.routes.createPost(postRequest), view, () ->
+        retrofitRepository.sendRequest(httpClient.routes.createPost(postRequest), view, () ->
                 Toast.makeText(getContext(), "Post successfully created",
                 Toast.LENGTH_LONG).show());
 

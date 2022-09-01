@@ -1,5 +1,7 @@
 package com.example.sr2_2020_android2021_projekat.model;
 
+import androidx.annotation.NonNull;
+
 public class LoginRequest {
 
     private String username;
@@ -29,5 +31,14 @@ public class LoginRequest {
     public void setPassword(String password) {
 
         this.password = password;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "LoginRequest{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

@@ -55,7 +55,7 @@
                     android:layout_columnSpan="3"
                     android:layout_columnWeight="1"
                     android:layout_margin="8sp"
-                    android:text="About community:"
+                    android:text="About communityDTOResponse:"
                     android:textAlignment="textStart"
                     android:textSize="8pt"
                     android:textStyle="bold" />
@@ -69,7 +69,7 @@
                     android:layout_columnSpan="3"
                     android:layout_columnWeight="1"
                     android:layout_margin="8sp"
-                    android:text="All news info about wars, especially between Russia and Ukraine. If you are interested for this content, smash the join to this community button."
+                    android:text="All news info about wars, especially between Russia and Ukraine. If you are interested for this content, smash the join to this communityDTOResponse button."
                     android:textSize="8pt"
                     android:textStyle="normal" />
 
@@ -203,7 +203,7 @@
                     android:layout_columnSpan="3"
                     android:layout_columnWeight="1"
                     android:layout_margin="8sp"
-                    android:text="1) Don't spread hate in this community\n\n2) Don't copy content from this community\n\n3) Clickbait is strongly forbidden\n\n4) Repost is strongly forbidden"
+                    android:text="1) Don't spread hate in this communityDTOResponse\n\n2) Don't copy content from this communityDTOResponse\n\n3) Clickbait is strongly forbidden\n\n4) Repost is strongly forbidden"
                     android:textSize="8pt"
                     android:textStyle="normal" />
 

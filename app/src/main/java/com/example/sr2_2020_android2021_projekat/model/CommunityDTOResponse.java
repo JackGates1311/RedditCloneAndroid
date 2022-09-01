@@ -1,8 +1,10 @@
 package com.example.sr2_2020_android2021_projekat.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
-public class Community {
+public class CommunityDTOResponse {
 
     private Long communityId;
     private String name;
@@ -13,9 +15,9 @@ public class Community {
     private int numberOfPosts;
     private List<String> flairs;
 
-    public Community(Long communityId, String name, String description, String creationDate,
-                     Boolean isSuspended, String suspendedReason, int numberOfPosts,
-                     List<String> flairs) {
+    public CommunityDTOResponse(Long communityId, String name, String description, String creationDate,
+                                Boolean isSuspended, String suspendedReason, int numberOfPosts,
+                                List<String> flairs) {
 
         this.communityId = communityId;
         this.name = name;
@@ -89,5 +91,20 @@ public class Community {
 
     public void setFlairs(List<String> flairs) {
         this.flairs = flairs;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Community{" +
+                "communityId=" + communityId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", creationDate='" + creationDate + '\'' +
+                ", isSuspended=" + isSuspended +
+                ", suspendedReason='" + suspendedReason + '\'' +
+                ", numberOfPosts=" + numberOfPosts +
+                ", flairs=" + flairs +
+                '}';
     }
 }

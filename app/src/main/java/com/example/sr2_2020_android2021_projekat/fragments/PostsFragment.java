@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.adapters.PostRecyclerAdapter;
-import com.example.sr2_2020_android2021_projekat.api.CrudService;
+import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
 import com.example.sr2_2020_android2021_projekat.model.PostResponse;
 import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 
@@ -20,7 +20,8 @@ import java.util.List;
 
 public class PostsFragment extends Fragment {
 
-    private final CrudService<PostResponse> crudService = new CrudService<>();
+    private final RetrofitRepository<List<PostResponse>> retrofitRepository =
+            new RetrofitRepository<>();
     private final HttpClient httpClient = new HttpClient();
 
     public static PostsFragment newInstance() {
@@ -34,7 +35,7 @@ public class PostsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        if((MainActivity)getActivity() != null)
+        if(getActivity() != null)
             ((MainActivity)getActivity()).setGroupMenuVisibility(true,
                 true);
 
@@ -56,22 +57,14 @@ public class PostsFragment extends Fragment {
 
     public void getPosts(RecyclerView recyclerView, View view) {
 
-        crudService.getDataList(httpClient.routes.getAllPosts(), view, () -> {
+        retrofitRepository.sendRequest(httpClient.routes.getAllPosts(), view, () -> {
 
-            List<PostResponse> postResponse = crudService.getResponseDataList();
+            List<PostResponse> postResponse = retrofitRepository.getResponseData();
 
             recyclerView.setAdapter(new PostRecyclerAdapter(getActivity(), postResponse));
 
         });
     }
-
-    /*@Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-
-        super.onActivityCreated(savedInstanceState);
-
-        //Toast.makeText(getActivity(), "onAttach()", Toast.LENGTH_SHORT).show();
-    }*/
 
     @Override
     public void onDestroyView() {

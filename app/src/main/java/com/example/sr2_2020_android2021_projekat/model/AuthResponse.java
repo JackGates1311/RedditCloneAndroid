@@ -1,12 +1,14 @@
 package com.example.sr2_2020_android2021_projekat.model;
 
-public class LoginResponse {
+import androidx.annotation.NonNull;
+
+public class AuthResponse {
 
     private String authToken;
     private int expiresIn;
     private String role;
 
-    public LoginResponse(String authToken, int expiresIn, String role) {
+    public AuthResponse(String authToken, int expiresIn, String role) {
 
         this.authToken = authToken;
         this.expiresIn = expiresIn;
@@ -37,5 +39,15 @@ public class LoginResponse {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "AuthResponse{" +
+                "authToken='" + authToken + '\'' +
+                ", expiresIn=" + expiresIn +
+                ", role='" + role + '\'' +
+                '}';
     }
 }
