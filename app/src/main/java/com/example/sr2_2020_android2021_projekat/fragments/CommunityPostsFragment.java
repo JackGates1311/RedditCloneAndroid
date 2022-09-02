@@ -74,7 +74,7 @@ public class CommunityPostsFragment extends Fragment {
 
         Routes routes = retrofit.create(Routes.class);
 
-        Call<List<PostResponse>> call = routes.getPostsByCommunityName(
+        Call<List<PostResponse>> call = routes.getPostsByCommunityName("hot",
                 communityNameParam);
 
         call.enqueue(new Callback<List<PostResponse>>() {
