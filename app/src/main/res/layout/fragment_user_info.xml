@@ -13,7 +13,7 @@
                 android:layout_width="64.0dip"
                 android:layout_height="64.0dip"
                 android:layout_marginRight="10.0sp"
-                android:src="@drawable/ic_avatar"
+                android:src="@drawable/ic_community"
                 android:contentDescription="@string/logo_image_description" />
 
             <TextView

@@ -44,6 +44,8 @@ public class CreateEditPostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_create_edit_post, container,
                 false);
 
+        httpClient.setContext(getContext());
+
         if(getActivity() != null)
             ((MainActivity)getActivity()).setGroupMenuVisibility(false,
                 false);
@@ -51,7 +53,7 @@ public class CreateEditPostFragment extends Fragment {
         title = view.findViewById(R.id.title);
         text = view.findViewById(R.id.text);
 
-        postCommunities = view.findViewById(R.id.postCommunities);
+        postCommunities = view.findViewById(R.id.post_communities);
 
         Button createPostButton = view.findViewById(R.id.button_create_post);
 
@@ -91,11 +93,11 @@ public class CreateEditPostFragment extends Fragment {
 
         });
 
-        httpClient.setContext(getContext());
-
-        if(Objects.equals(((MainActivity) getActivity()).postMode, "ADD")) {
+        if(Objects.equals(((MainActivity) getActivity()).getPostMode(), "ADD")) {
 
             getActivity().setTitle("Create new post");
+
+            ((MainActivity) getActivity()).menu.setGroupVisible(R.id.addGroup, false);
 
             view.findViewById(R.id.button_create_post).setVisibility(View.VISIBLE);
 
@@ -131,7 +133,7 @@ public class CreateEditPostFragment extends Fragment {
             ArrayAdapter<String> adapter = new
                     ArrayAdapter<>(getContext(), R.layout.drop_down_item, communityNames);
 
-            AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.postCommunities);
+            AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.post_communities);
 
             autoCompleteTextView.setAdapter(adapter);
 
@@ -151,8 +153,9 @@ public class CreateEditPostFragment extends Fragment {
                 Toast.LENGTH_LONG).show());
 
         if(getActivity() != null)
-            FragmentTransition.to(PostsFragment.newInstance(), getActivity(),
+            FragmentTransition.to(PostsFragment.newInstance("hot"), getActivity(),
                     false, R.id.viewPage);
 
     }
+
 }

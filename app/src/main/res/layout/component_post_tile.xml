@@ -102,17 +102,11 @@
                     app:tint="?colorAccent" />
 
                 <TextView
+                    android:id="@+id/post_comment_count"
                     android:layout_width="0dp"
                     android:layout_height="24dp"
                     android:textSize="8pt"
                     android:layout_weight="1"
-                    android:layout_margin="4sp"
-                    android:text="0"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:textSize="8pt"
                     android:layout_margin="4sp"
                     android:text="0"/>
 
@@ -125,6 +119,14 @@
                     android:contentDescription="@string/logo_image_description"
                     android:layout_margin="8sp"
                     app:tint="?colorAccent" />
+
+                <TextView
+                    android:id="@+id/post_reaction_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:textSize="8pt"
+                    android:layout_margin="4sp"
+                    android:text="0"/>
 
                 <ImageButton
                     android:background="@null"

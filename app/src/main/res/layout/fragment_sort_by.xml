@@ -10,18 +10,18 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dateFilterContainer" style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20.0sp"
             android:hint="Sort by">
 
             <AutoCompleteTextView
-                android:id="@+id/datesFilterSpinner"
+                android:id="@+id/sort_by_types"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
-                tools:text="All Time"/>
+                tools:text=""/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

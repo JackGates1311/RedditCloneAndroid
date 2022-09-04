@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment {
 
                     setAppDrawer();
 
-                    FragmentTransition.to(PostsFragment.newInstance(), getActivity(),
+                    FragmentTransition.to(PostsFragment.newInstance("hot"), getActivity(),
                             true, R.id.viewPage);
 
                     System.out.println(preferences.getString("authToken", null));

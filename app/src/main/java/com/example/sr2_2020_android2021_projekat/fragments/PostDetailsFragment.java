@@ -8,21 +8,35 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
+import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
+import com.example.sr2_2020_android2021_projekat.model.CommunityDTOResponse;
+import com.example.sr2_2020_android2021_projekat.model.PostResponse;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
+import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class PostDetailsFragment extends Fragment {
 
-    public static PostDetailsFragment newInstance() {
+    private final RetrofitRepository<PostResponse> retrofitRepository = new RetrofitRepository<>();
 
-        return new PostDetailsFragment();
+    private final HttpClient httpClient = new HttpClient();
+
+    private final Long postIdParam;
+
+    private String communityName = null;
+
+    public PostDetailsFragment(Long postIdParam) {
+        this.postIdParam = postIdParam;
+    }
+
+    public static PostDetailsFragment newInstance(Long postIdParam) {
+
+        return new PostDetailsFragment(postIdParam);
     }
 
 
@@ -32,27 +46,21 @@ public class PostDetailsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        ((MainActivity)getActivity()).setGroupMenuVisibility(true,
+        if(getActivity() != null)
+            ((MainActivity)getActivity()).setGroupMenuVisibility(true,
                 false);
 
         getActivity().setTitle("Post details");
 
         View view = inflater.inflate(R.layout.fragment_post_details, container, false);
 
-        //
+        LinearLayout cardTitle = view.findViewById(R.id.cardTitle);
 
-        LinearLayout cardTitle = (LinearLayout) view.findViewById(R.id.cardTitle);
+        cardTitle.setOnClickListener(v -> {
 
-        cardTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            FragmentTransition.to(CommunityFragment.newInstance(communityName), getActivity(),
+                    true, R.id.viewPage);
 
-                //Toast.makeText(view.getContext(), "onClick()", Toast.LENGTH_SHORT).show();
-
-                FragmentTransition.to(CommunityFragment.newInstance("FTN Novi Sad"), getActivity(),
-                        true, R.id.viewPage);
-
-            }
         });
 
         ImageButton reportPostButton = (ImageButton) view.findViewById(R.id.reportPostButton);
@@ -115,7 +123,7 @@ public class PostDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                ((MainActivity)getActivity()).postMode = "EDIT";
+                ((MainActivity)getActivity()).setPostMode("EDIT");
 
                 FragmentTransition.to(CreateEditPostFragment.newInstance(), getActivity(),
                         true, R.id.viewPage);
@@ -135,7 +143,23 @@ public class PostDetailsFragment extends Fragment {
             }
         });
 
+        getPostById(view);
+
         return view;
+    }
+
+    private void getPostById(View view) {
+
+        retrofitRepository.sendRequest(httpClient.routes.getPostById(postIdParam),
+                view, () -> {
+
+                    PostResponse postResponse = retrofitRepository.getResponseData();
+
+                    communityName = postResponse.getCommunityName();
+
+                    //communityDescription.setText(communityDTOResponse.getDescription());
+
+                });
     }
 
 }

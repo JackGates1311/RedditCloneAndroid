@@ -143,15 +143,9 @@ public class RegisterFragment extends Fragment {
                 Toast.LENGTH_LONG).show());
 
         if(getActivity() != null)
-            FragmentTransition.to(PostsFragment.newInstance(), getActivity(),
+            FragmentTransition.to(PostsFragment.newInstance("hot"), getActivity(),
                     false, R.id.viewPage);
 
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        //Toast.makeText(getActivity(), "onActivityCreated()", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -77,8 +77,8 @@ public interface Routes {
     Call<CommunityDTOResponse> getCommunityByName(@Path("name") String communityName);
 
     @GET("posts/communityName={name}")
-    Call<List<PostResponse>> getPostsByCommunityName(@Query("sortBy") String sortBy,
-                                                     @Path("name") String communityName);
+    Call<List<PostResponse>> getPostsByCommunityName(@Path("name") String communityName,
+                                                     @Query("sortBy") String sortBy);
 
     @GET("reactions")
     Call<List<ReactionDTO>> getReactionsByUsername(@Body ReactionDTO reactionDTO);

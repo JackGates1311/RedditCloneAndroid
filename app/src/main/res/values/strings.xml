@@ -106,8 +106,8 @@
         "when a registerRequest tries to pick up one of cards.\n\n"
     </string>
     <string name="post_comment_text_name">Write your comment here</string>
-    <string name="join_to_this_community_button_name">Join to this communityDTOResponse</string>
-    <string name="view_community_posts_button_name">Show communityDTOResponse posts</string>
+    <string name="join_to_this_community_button_name">Join to this community</string>
+    <string name="view_community_posts_button_name">Show community posts</string>
     <string name="post_title_name">Post title</string>
     <string name="post_text_name">Post text</string>
     <string name="post_flairs_name">Post flairs</string>
@@ -124,12 +124,12 @@
     <string name="current_password_name">Current password</string>
     <string name="new_password_name">New password</string>
     <string name="repeat_new_password_name">Repeat new password</string>
-    <string name="menu_create_community_name">Create communityDTOResponse</string>
+    <string name="menu_create_community_name">Create community</string>
     <string name="community_name">Community name</string>
     <string name="community_description_name">Community description</string>
     <string name="community_rules_name">Community rules</string>
     <string name="community_flairs_name">Community flairs</string>
-    <string name="button_create_community_name">Create communityDTOResponse</string>
+    <string name="button_create_community_name">Create community</string>
     <string name="menu_communities_name">Communities</string>
     <string name="button_review_reported_comments_name">Review reported comments</string>
     <string name="button_review_reported_posts_name">Review reported postResponses</string>
@@ -149,5 +149,14 @@
     <string name="button_block_user_name">Block</string>
     <string name="button_reject_user_name">Reject</string>
     <string name="username_login_register_name">Username</string>
-
+    <string name="about_community_text">About community:</string>
+    <string name="community_flairs_text">Community flairs:</string>
+    <string name="community_rules_text">Community rules:</string>
+    <string name="no_flairs_text">Not attached flairs yet</string>
+    <string name="no_rules_text">Not attached rules yet</string>
+    <string name="button_select_flairs">Select flairs</string>
+    <string name="button_add_flair">Add flair</string>
+    <string name="flair_name_text">Flair name</string>
+    <string name="btn_save_text">Save</string>
+    <string name="change_flairs_text">Change flairs</string>
 </resources>

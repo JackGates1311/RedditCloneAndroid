@@ -14,7 +14,7 @@
                 android:layout_width="64.0dip"
                 android:layout_height="64.0dip"
                 android:layout_marginRight="10.0sp"
-                android:src="@drawable/ic_avatar"
+                android:src="@drawable/ic_community"
                 android:contentDescription="@string/logo_image_description" />
 
             <com.google.android.material.button.MaterialButton android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="7.0sp" android:text="@string/button_change_photo_name" />

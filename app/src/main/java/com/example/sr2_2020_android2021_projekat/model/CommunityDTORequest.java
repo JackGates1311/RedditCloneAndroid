@@ -2,6 +2,8 @@ package com.example.sr2_2020_android2021_projekat.model;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.util.List;
 
 public class CommunityDTORequest {
@@ -13,14 +15,14 @@ public class CommunityDTORequest {
     private String suspendedReason;
     private List<String> flairs;
 
-    public CommunityDTORequest(Long communityId, String name, String description,
-                               Boolean isSuspended, String suspendedReason, List<String> flairs) {
-        this.communityId = communityId;
-        this.name = name;
-        this.description = description;
-        this.isSuspended = isSuspended;
-        this.suspendedReason = suspendedReason;
-        this.flairs = flairs;
+    public CommunityDTORequest(String communityName,
+                               String communityDescription,
+                               List<String> communityFlairs) {
+
+        this.name = communityName;
+        this.description = communityDescription;
+        this.flairs = communityFlairs;
+
     }
 
     public Long getCommunityId() {

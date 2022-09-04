@@ -4,5 +4,4 @@
     android:layout_height="wrap_content"
     android:padding="16dp"
     android:maxLines="1">
-
 </TextView>

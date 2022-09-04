@@ -54,7 +54,7 @@
                             android:layout_gravity="center"
                             android:layout_margin="4sp"
                             android:contentDescription="@string/logo_image_description"
-                            android:src="@drawable/ic_avatar" />
+                            android:src="@drawable/ic_community" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                             android:layout_gravity="center"
                             android:layout_margin="4sp"
                             android:contentDescription="@string/logo_image_description"
-                            android:src="@drawable/ic_avatar" />
+                            android:src="@drawable/ic_community" />
 
                         <TextView
                             android:layout_width="match_parent"

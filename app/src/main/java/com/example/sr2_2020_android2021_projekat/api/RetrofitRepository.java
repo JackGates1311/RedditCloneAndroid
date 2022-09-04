@@ -3,7 +3,6 @@ package com.example.sr2_2020_android2021_projekat.api;
 import android.view.View;
 import androidx.annotation.NonNull;
 import com.example.sr2_2020_android2021_projekat.tools.RetrofitTools;
-import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

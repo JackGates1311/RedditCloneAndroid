@@ -30,22 +30,34 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_columnWeight="0.05"
+                    android:layout_columnSpan="1"
                     android:layout_gravity="center"
                     android:layout_margin="4sp"
                     android:contentDescription="@string/logo_image_description"
-                    android:src="@drawable/ic_avatar" />
+                    android:src="@drawable/ic_community" />
 
                 <TextView
                     android:id="@+id/community_info_name"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
+                    android:maxWidth="200dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_columnSpan="2"
-                    android:layout_columnWeight="0.95"
+                    android:layout_columnSpan="1"
+                    android:layout_columnWeight="0.90"
                     android:layout_margin="4sp"
-                    android:text="World War 3 News"
                     android:textSize="8pt"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/button_edit_community"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_columnWeight="0.05"
+                    android:layout_columnSpan="1"
+                    android:layout_gravity="end"
+                    android:layout_margin="8sp"
+                    android:src="@drawable/ic_edit"
+                    android:visibility="gone" />
 
                 <!-- row 2 !-->
 
@@ -55,7 +67,7 @@
                     android:layout_columnSpan="3"
                     android:layout_columnWeight="1"
                     android:layout_margin="8sp"
-                    android:text="About communityDTOResponse:"
+                    android:text="@string/about_community_text"
                     android:textAlignment="textStart"
                     android:textSize="8pt"
                     android:textStyle="bold" />
@@ -69,7 +81,6 @@
                     android:layout_columnSpan="3"
                     android:layout_columnWeight="1"
                     android:layout_margin="8sp"
-                    android:text="All news info about wars, especially between Russia and Ukraine. If you are interested for this content, smash the join to this communityDTOResponse button."
                     android:textSize="8pt"
                     android:textStyle="normal" />
 
@@ -82,7 +93,7 @@
                     android:layout_columnSpan="3"
                     android:layout_columnWeight="1"
                     android:text="@string/join_to_this_community_button_name"
-                    android:textSize="7pt"
+                    android:textSize="5pt"
                     android:textColor="?android:textColorSecondary"/>
 
                 <Button
@@ -93,7 +104,7 @@
                     android:layout_columnSpan="3"
                     android:layout_columnWeight="1"
                     android:text="@string/view_community_posts_button_name"
-                    android:textSize="7pt"
+                    android:textSize="5pt"
                     android:textColor="?android:textColorSecondary"/>
 
 
@@ -122,90 +133,76 @@
                     android:layout_columnSpan="3"
                     android:layout_columnWeight="1"
                     android:layout_margin="8sp"
-                    android:text="Community flairs:"
+                    android:text="@string/community_flairs_text"
                     android:textAlignment="textStart"
                     android:textSize="8pt"
                     android:textStyle="bold" />
 
                 <!-- row 2 !-->
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_margin="4sp"
-                    android:layout_columnSpan="1"
-                    android:text="War"
-                    android:textSize="5pt"
-                    android:textColor="?android:textColorSecondary"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_margin="4sp"
-                    android:layout_columnSpan="1"
-                    android:text="Image"
-                    android:textSize="5pt"
-                    android:textColor="?android:textColorSecondary"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_margin="4sp"
-                    android:layout_columnSpan="1"
-                    android:text="Info"
-                    android:textSize="5pt"
-                    android:textColor="?android:textColorSecondary"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_margin="4sp"
-                    android:layout_columnSpan="1"
-                    android:text="News"
-                    android:textSize="5pt"
-                    android:textColor="?android:textColorSecondary"/>
-
-            </GridLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8sp"
-            android:checkable="true"
-            android:focusable="true">
-
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnCount="3"
-                android:padding="8sp">
-
-                <!-- row 1 !-->
-
                 <TextView
+                    android:id="@+id/no_flairs_text"
                     android:layout_width="0dp"
                     android:layout_height="24dp"
                     android:layout_columnSpan="3"
-                    android:layout_columnWeight="1"
+                    android:layout_columnWeight="2"
                     android:layout_margin="8sp"
-                    android:text="Community rules:"
+                    android:text="@string/no_flairs_text"
                     android:textAlignment="textStart"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
+                    android:textSize="6pt"
+                    android:textStyle="normal"
+                    android:visibility="gone"/>
 
-                <!-- row 2 !-->
-
-                <TextView
-                    android:layout_width="0dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_columnSpan="1"
+                    android:id="@+id/recycler_view_flairs"/>
+
+            </GridLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8sp"
+            android:checkable="true"
+            android:focusable="true">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnCount="3"
+                android:padding="8sp">
+
+                <!-- row 1 !-->
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
                     android:layout_columnSpan="3"
                     android:layout_columnWeight="1"
                     android:layout_margin="8sp"
-                    android:text="1) Don't spread hate in this communityDTOResponse\n\n2) Don't copy content from this communityDTOResponse\n\n3) Clickbait is strongly forbidden\n\n4) Repost is strongly forbidden"
+                    android:text="@string/community_rules_text"
+                    android:textAlignment="textStart"
                     android:textSize="8pt"
-                    android:textStyle="normal" />
+                    android:textStyle="bold" />
+
+                <!-- row 2 !-->
+
+                <TextView
+                    android:id="@+id/no_rules_text"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_columnSpan="3"
+                    android:layout_columnWeight="2"
+                    android:layout_margin="8sp"
+                    android:text="@string/no_rules_text"
+                    android:textAlignment="textStart"
+                    android:textSize="6pt"
+                    android:textStyle="normal"
+                    android:visibility="visible"/>
 
 
             </GridLayout>

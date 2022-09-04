@@ -12,6 +12,10 @@ public class FlairDTO {
         this.name = name;
     }
 
+    public FlairDTO(String name) {
+        this.name = name;
+    }
+
     public Long getFlairId() {
         return flairId;
     }

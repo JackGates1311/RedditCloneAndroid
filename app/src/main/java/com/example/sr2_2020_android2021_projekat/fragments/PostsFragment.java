@@ -23,12 +23,16 @@ public class PostsFragment extends Fragment {
     private final RetrofitRepository<List<PostResponse>> retrofitRepository =
             new RetrofitRepository<>();
     private final HttpClient httpClient = new HttpClient();
-    
     private View view = null;
+    private final String sortBy;
 
-    public static PostsFragment newInstance() {
+    public PostsFragment(String sortBy) {
+        this.sortBy = sortBy;
+    }
 
-        return new PostsFragment();
+    public static PostsFragment newInstance(String sortBy) {
+
+        return new PostsFragment(sortBy);
     }
 
     @Nullable
@@ -37,9 +41,11 @@ public class PostsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        if(getActivity() != null)
+        if(getActivity() != null) {
             ((MainActivity)getActivity()).setGroupMenuVisibility(true,
-                true);
+                    true);
+        }
+
 
         getActivity().setTitle("Reddit Clone");
 
@@ -56,7 +62,7 @@ public class PostsFragment extends Fragment {
 
     public void getPosts(RecyclerView recyclerView, View view) {
 
-        retrofitRepository.sendRequest(httpClient.routes.getAllPosts("hot"), view, () -> {
+        retrofitRepository.sendRequest(httpClient.routes.getAllPosts(sortBy), view, () -> {
 
             List<PostResponse> postResponse = retrofitRepository.getResponseData();
 
@@ -66,6 +72,9 @@ public class PostsFragment extends Fragment {
     }
 
     private void initializeRecyclerView() {
+
+        if(getActivity() != null)
+            ((MainActivity)getActivity()).setSortByMode("posts");
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
 
@@ -94,6 +103,9 @@ public class PostsFragment extends Fragment {
         super.onResume();
 
         initializeRecyclerView();
+
+
+
 
     }
 
