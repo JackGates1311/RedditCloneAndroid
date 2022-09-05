@@ -24,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
@@ -109,18 +110,20 @@ public interface Routes {
     @GET("comments/{id}")
     Call<CommentDTOResponse> getCommentById(@Path("id") Long id);
 
+    @Multipart
     @POST("file/upload")
-    Call<FileResponse> uploadFile(@Part MultipartBody.Part multipartFile);
+    Call<FileResponse> uploadFile(@Part MultipartBody.Part files);
 
+    @Multipart
     @POST("file/upload")
     Call<FileResponse> uploadFile(@Query("postId") Long id,
-                                  @Part MultipartBody.Part multipartFile);
+                                  @Part MultipartBody.Part files);
 
     @GET("file/{filename}")
     Call<ResponseBody> getFile(@Path("filename") String filename);
 
     @PUT("file/upload")
-    Call<FileResponse> changeAvatar(@Part MultipartBody.Part multipartFile);
+    Call<FileResponse> changeAvatar(@Part MultipartBody.Part files);
 
     @DELETE("file/delete/{filename}")
     Call<ResponseBody> deleteFile(@Path("filename") String filename);

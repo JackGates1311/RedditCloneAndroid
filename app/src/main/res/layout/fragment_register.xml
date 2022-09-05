@@ -17,7 +17,12 @@
                 android:src="@drawable/ic_avatar"
                 android:contentDescription="@string/logo_image_description" />
 
-            <com.google.android.material.button.MaterialButton android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="7.0sp" android:text="@string/button_upload_photo_name" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_avatar_upload"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.0sp"
+                android:text="@string/button_upload_photo_name" />
 
         </LinearLayout>
 

@@ -8,16 +8,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
+import com.example.sr2_2020_android2021_projekat.model.AuthResponse;
+import com.example.sr2_2020_android2021_projekat.model.FileResponse;
+import com.example.sr2_2020_android2021_projekat.model.LoginRequest;
 import com.example.sr2_2020_android2021_projekat.model.RegisterRequest;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
 import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
-
 import java.util.Objects;
+import okhttp3.MultipartBody;
 
 public class RegisterFragment extends Fragment {
 
@@ -36,9 +39,12 @@ public class RegisterFragment extends Fragment {
 
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle data) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup vg, Bundle data) {
 
-        ((MainActivity)getActivity()).setGroupMenuVisibility(false,
+        httpClient.setContext(getContext());
+
+        if(getActivity() != null)
+            ((MainActivity)getActivity()).setGroupMenuVisibility(false,
                 false);
 
         getActivity().setTitle("Register to Reddit Clone");
@@ -54,77 +60,89 @@ public class RegisterFragment extends Fragment {
         password = view.findViewById(R.id.password);
         passwordRepeated = view.findViewById(R.id.passwordRepeated);
         description = view.findViewById(R.id.description);
+        com.google.android.material.button.MaterialButton uploadAvatarButton = view.findViewById(R.id.button_avatar_upload);
 
         Button registerButton = view.findViewById(R.id.registerButton);
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        registerButton.setOnClickListener(v -> {
 
-                boolean isUsernameValid = username.getText().toString().length() > 0;
-                boolean isDisplayNameValid = displayName.getText().toString().length() > 0;
-                boolean isEmailValid = email.getText().toString().length() > 0 &&
-                        email.getText().toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+");
-                boolean isPasswordValid = password.getText().toString().length() > 0;
-                boolean isRepeatedPasswordValid = password.getText().toString().length() > 0 &&
-                        passwordRepeated.getText().toString().equals(password.getText().toString());
-                boolean isDescriptionValid = description.getText().toString().length() > 0;
+            if (validateData(view)) return;
 
+            register(view);
 
-                if(!isUsernameValid) {
-
-                    Toast.makeText(view.getContext(), "Please provide a valid username",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                if(!isDisplayNameValid) {
-
-                    Toast.makeText(view.getContext(), "Please provide a valid display name",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                if(!isEmailValid) {
-
-                    Toast.makeText(view.getContext(), "Please provide a valid email",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                if(!isPasswordValid) {
-
-                    Toast.makeText(view.getContext(), "Please provide a valid password",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                if(!isRepeatedPasswordValid) {
-
-                    Toast.makeText(view.getContext(), "Passwords are not matching",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                if(!isDescriptionValid) {
-
-                    Toast.makeText(view.getContext(), "Please provide a valid description",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                register(view);
-
-            }
         });
 
+        uploadAvatarButton.setOnClickListener(v ->
+                ((MainActivity)getActivity()).openFileChooser());
+
         return view;
+    }
+
+    private boolean validateData(View view) {
+
+        boolean isUsernameValid = Objects.requireNonNull(username.getText()).
+                toString().length() > 0;
+        boolean isDisplayNameValid = Objects.requireNonNull(displayName.getText()).
+                toString().length() > 0;
+        boolean isEmailValid = Objects.requireNonNull(email.getText()).
+                toString().length() > 0 && email.getText().toString().
+                matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+");
+        boolean isPasswordValid = Objects.requireNonNull(password.getText()).
+                toString().length() > 0;
+        boolean isRepeatedPasswordValid = password.getText().toString().length() > 0 &&
+                Objects.requireNonNull(passwordRepeated.getText()).toString().equals(
+                        password.getText().toString());
+        boolean isDescriptionValid = Objects.requireNonNull(description.getText()).
+                toString().length() > 0;
+
+        if(!isUsernameValid) {
+
+            Toast.makeText(view.getContext(), "Please provide a valid username",
+                    Toast.LENGTH_SHORT).show();
+
+            return true;
+        }
+
+        if(!isDisplayNameValid) {
+
+            Toast.makeText(view.getContext(), "Please provide a valid display name",
+                    Toast.LENGTH_SHORT).show();
+
+            return true;
+        }
+
+        if(!isEmailValid) {
+
+            Toast.makeText(view.getContext(), "Please provide a valid email",
+                    Toast.LENGTH_SHORT).show();
+
+            return true;
+        }
+
+        if(!isPasswordValid) {
+
+            Toast.makeText(view.getContext(), "Please provide a valid password",
+                    Toast.LENGTH_SHORT).show();
+
+            return true;
+        }
+
+        if(!isRepeatedPasswordValid) {
+
+            Toast.makeText(view.getContext(), "Passwords are not matching",
+                    Toast.LENGTH_SHORT).show();
+
+            return true;
+        }
+
+        if(!isDescriptionValid) {
+
+            Toast.makeText(view.getContext(), "Please provide a valid description",
+                    Toast.LENGTH_SHORT).show();
+
+            return true;
+        }
+        return false;
     }
 
     private void register(View view) {
@@ -138,9 +156,16 @@ public class RegisterFragment extends Fragment {
                 Objects.requireNonNull(description.getText()).toString(),
                 Objects.requireNonNull(displayName.getText()).toString(), false);
 
-        retrofitRepository.sendRequest(httpClient.routes.register(registerRequest), view, () ->
-                Toast.makeText(getContext(), "User registration is successful",
-                Toast.LENGTH_LONG).show());
+        retrofitRepository.sendRequest(httpClient.routes.register(registerRequest), view, () -> {
+
+            Toast.makeText(getContext(), "User registration is successful",
+                    Toast.LENGTH_LONG).show();
+
+            if(getActivity() != null)
+                if(((MainActivity)getActivity()).getMultipartFile() != null)
+                    uploadAvatar(((MainActivity)getActivity()).getMultipartFile(), view);
+        });
+
 
         if(getActivity() != null)
             FragmentTransition.to(PostsFragment.newInstance("hot"), getActivity(),
@@ -148,8 +173,50 @@ public class RegisterFragment extends Fragment {
 
     }
 
+    private void uploadAvatar(MultipartBody.Part multipartFile, View view) {
+
+        RetrofitRepository<AuthResponse> authResponseRetrofitRepository =
+                new RetrofitRepository<>();
+
+        LoginRequest loginRequest = new LoginRequest(
+                Objects.requireNonNull(username.getText()).toString(),
+                Objects.requireNonNull(password.getText()).toString());
+
+
+        HttpClient uploadHttpClient = new HttpClient();
+
+        authResponseRetrofitRepository.sendRequest(httpClient.routes.login(loginRequest), view,
+                () -> {
+
+                    //check if executes
+
+                    String authToken = authResponseRetrofitRepository.getResponseData().
+                            getAuthToken();
+
+                    int expiresIn = authResponseRetrofitRepository.getResponseData().
+                            getExpiresIn();
+
+                    if(getActivity() != null)
+                        ((MainActivity)getActivity()).storeDataToSharedPreferences(authToken, expiresIn);
+
+                    RetrofitRepository<FileResponse> retrofitRepository = new RetrofitRepository<>();
+
+                    uploadHttpClient.setContext(getContext());
+
+                    if(getActivity() != null) {
+
+                        retrofitRepository.sendRequest(uploadHttpClient.routes.uploadFile(
+                                multipartFile), view, () ->
+                                Toast.makeText(getActivity(),
+                                        "User avatar uploaded successfully",
+                                        Toast.LENGTH_SHORT).show());
+                    }
+        });
+
+    }
+
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         //Toast.makeText(getActivity(), "onAttach()", Toast.LENGTH_SHORT).show();
     }
@@ -163,7 +230,6 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        //Toast.makeText(getActivity(), "onDeatach()", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "onDetach()", Toast.LENGTH_SHORT).show();
     }
-
 }

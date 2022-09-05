@@ -1,17 +1,22 @@
 package com.example.sr2_2020_android2021_projekat;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,8 +37,16 @@ import com.example.sr2_2020_android2021_projekat.fragments.RegisterFragment;
 import com.example.sr2_2020_android2021_projekat.tools.DialogHelper;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
 import com.google.android.material.navigation.NavigationView;
+
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
 import java.util.Locale;
 import java.util.Objects;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
     private String sortBy;
     private String sortByMode;
     private String communityNameParam = null;
+    public int fileSelectRequestCode = 1;
+    private Uri uri = null;
+    private MultipartBody.Part multipartFile;
 
     ///
 
@@ -221,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void storeDataToSharedPreferences(String authToken, int expiresIn) {
+    public void storeDataToSharedPreferences(String authToken, int expiresIn) {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -290,6 +306,48 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == Activity.RESULT_OK) {
+
+            if(data == null) {
+                return;
+            }
+
+            uri = data.getData();
+
+            File file = new File(uri.getPath());
+
+            String filePath = file.getPath().split(":")[1];
+
+            RequestBody requestFile =
+                    RequestBody.create(MediaType.parse(getContentResolver().
+                            getType(uri)), filePath);
+
+            Log.d("FilePath", filePath);
+            Log.d("MULTIPART FILE", String.valueOf(
+                    MultipartBody.Part.createFormData("files", file.getName(), requestFile)));
+
+            multipartFile = MultipartBody.Part.createFormData("files", file.getName(), requestFile);
+
+            //Toast.makeText(getApplicationContext(), avatarPath, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void openFileChooser() {
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        startActivityForResult(intent, fileSelectRequestCode);
+    }
+
+    //
 
 
     @Override
@@ -392,5 +450,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void setCommunityMode(String communityMode) {
         this.communityMode = communityMode;
+    }
+
+    public Uri getUri() {
+        return uri;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
+    }
+
+    public MultipartBody.Part getMultipartFile() {
+        return multipartFile;
+    }
+
+    public void setMultipartFile(MultipartBody.Part multipartFile) {
+        this.multipartFile = multipartFile;
     }
 }

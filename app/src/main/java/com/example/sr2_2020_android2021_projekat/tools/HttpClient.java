@@ -3,6 +3,7 @@ package com.example.sr2_2020_android2021_projekat.tools;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.example.sr2_2020_android2021_projekat.api.Routes;
 import com.google.gson.GsonBuilder;
@@ -23,6 +24,8 @@ public class HttpClient {
             addConverterFactory(GsonConverterFactory.create(
                     new GsonBuilder().setLenient().create())).build().create(Routes.class);
 
+    private String authToken;
+
     public OkHttpClient intercept(){
 
         OkHttpClient.Builder httpRequest = new OkHttpClient.Builder();
@@ -31,7 +34,9 @@ public class HttpClient {
 
             Request request = chain.request();
 
-            String authToken = "";
+            authToken = "";
+
+            Log.d("CONTEXT", String.valueOf(context));
 
             if(context != null) {
 
@@ -55,4 +60,11 @@ public class HttpClient {
         this.context = context;
     }
 
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
 }
