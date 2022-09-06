@@ -1,58 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:fontFamily="?android:fontFamily">
 
     <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="25.0sp" android:layout_marginBottom="25.0sp" android:layout_marginStart="50.0sp" android:layout_marginEnd="50.0sp">
 
-        <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="64.0dip"
-                android:layout_height="64.0dip"
-                android:layout_marginRight="10.0sp"
-                android:src="@drawable/ic_avatar"
-                android:contentDescription="@string/logo_image_description" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/user_avatar_image"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_avatar" />
 
-            <com.google.android.material.button.MaterialButton android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="7.0sp" android:text="@string/button_change_photo_name" />
+            <TextView
+                android:id="@+id/user_karma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="20.0sp"
+                android:textAlignment="center"
+                android:textSize="9pt"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="20.0sp"
-            android:textAlignment="center"
-            android:textSize="9pt"
-            android:textStyle="bold"
-            android:text="Karma score: 254"/>
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputLayout android:paddingTop="20.0sp" android:paddingBottom="20.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/username_login_name">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/change_avatar_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.0sp"
+                android:layout_weight="0.5"
+                android:text="@string/button_change_photo_name" />
 
-            <com.google.android.material.textfield.TextInputEditText android:layout_width="fill_parent" android:layout_height="wrap_content" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/remove_avatar_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.0sp"
+                android:text="@string/button_remove_photo_name" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/add_avatar_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.0sp"
+                android:visibility="gone"
+                android:text="@string/button_upload_photo_name" />
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:paddingTop="20.0sp"
+            android:paddingBottom="20.0sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="@string/username_login_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_username"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout android:paddingBottom="20.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/display_name_register_name">
+        <com.google.android.material.textfield.TextInputLayout
+            android:paddingBottom="20.0sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="@string/email_login_register_name">
 
-            <com.google.android.material.textfield.TextInputEditText android:layout_width="fill_parent" android:layout_height="wrap_content" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_email"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:paddingBottom="20.0sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/display_name_register_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_display_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout android:id="@+id/textEmail" android:paddingBottom="20.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/email_login_register_name">
+        <com.google.android.material.textfield.TextInputLayout
+            android:paddingBottom="20.0sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/description_register_name">
 
-            <com.google.android.material.textfield.TextInputEditText android:layout_width="fill_parent" android:layout_height="wrap_content" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_description"
+                android:layout_width="fill_parent"
+                android:layout_height="200.0sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout android:paddingBottom="20.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/description_register_name">
-
-            <com.google.android.material.textfield.TextInputEditText android:layout_width="fill_parent" android:layout_height="80.0sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        <CheckBox
+            android:id="@+id/enable_fingerprint_checkbox"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_enable_fingerprint_name" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/change_password_button"
@@ -66,6 +136,7 @@
             android:text="@string/button_my_communities_name" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/save_changes_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_save_name" />

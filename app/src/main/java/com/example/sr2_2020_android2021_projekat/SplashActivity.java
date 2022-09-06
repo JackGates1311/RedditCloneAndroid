@@ -1,7 +1,9 @@
 package com.example.sr2_2020_android2021_projekat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,17 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_splash);
+
+        SharedPreferences preferences = PreferenceManager.
+                getDefaultSharedPreferences(this);
+
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString("authToken", null);
+
+        editor.putString("username", null);
+
+        editor.apply();
 
         int delay = 3000;
 

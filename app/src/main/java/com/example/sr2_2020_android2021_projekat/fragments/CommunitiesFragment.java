@@ -45,9 +45,9 @@ public class CommunitiesFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                ((MainActivity)getActivity()).communityMode = "EDIT";
+                ((MainActivity)getActivity()).setCommunityMode("EDIT");
 
-                FragmentTransition.to(CreateEditCommunityFragment.newInstance(), getActivity(),
+                FragmentTransition.to(CreateEditCommunityFragment.newInstance(null), getActivity(),
                         true, R.id.viewPage);
 
             }

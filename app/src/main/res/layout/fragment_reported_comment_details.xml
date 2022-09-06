@@ -23,7 +23,7 @@
                 android:id="@+id/community_avatar"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_avatar"
+                android:src="@drawable/ic_community"
                 android:contentDescription="@string/logo_image_description"
                 android:layout_margin="8sp"/>
 
@@ -202,7 +202,7 @@
                             android:layout_gravity="center"
                             android:layout_margin="4sp"
                             android:contentDescription="@string/logo_image_description"
-                            android:src="@drawable/ic_avatar" />
+                            android:src="@drawable/ic_community" />
 
                         <TextView
                             android:layout_width="100dp"
@@ -285,7 +285,7 @@
                                     android:layout_gravity="center"
                                     android:layout_margin="4sp"
                                     android:contentDescription="@string/logo_image_description"
-                                    android:src="@drawable/ic_avatar" />
+                                    android:src="@drawable/ic_community" />
 
                                 <TextView
                                     android:layout_width="100dp"

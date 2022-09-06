@@ -13,7 +13,7 @@
                 android:layout_width="64.0dip"
                 android:layout_height="64.0dip"
                 android:layout_marginRight="10.0sp"
-                android:src="@drawable/ic_avatar"
+                android:src="@drawable/ic_community"
                 android:contentDescription="@string/logo_image_description" />
 
             <TextView
@@ -47,7 +47,7 @@
             android:textAlignment="textStart"
             android:textSize="9pt"
             android:textStyle="bold"
-            android:text="About registerUser:"/>
+            android:text="About registerRequest:"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -55,7 +55,7 @@
             android:layout_columnSpan="3"
             android:layout_columnWeight="1"
             android:layout_marginVertical="8sp"
-            android:text="My super registerUser description My super registerUser descriptionMy super registerUser description"
+            android:text="My super registerRequest description My super registerRequest descriptionMy super registerRequest description"
             android:textAlignment="textStart"
             android:textSize="8pt"
             android:textStyle="normal" />
@@ -75,7 +75,7 @@
             android:layout_columnSpan="3"
             android:layout_columnWeight="1"
             android:layout_marginVertical="8sp"
-            android:text="Breaking community rules"
+            android:text="Breaking communityDTOResponse rules"
             android:textAlignment="textStart"
             android:textSize="8pt"
             android:textStyle="normal" />

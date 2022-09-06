@@ -1,15 +1,21 @@
 package com.example.sr2_2020_android2021_projekat.model;
 
+import androidx.annotation.NonNull;
+
+import java.util.List;
+
 public class PostResponse {
 
     private Long postId;
     private String communityName;
     private String creationDate;
-    private String imagePath;
     private String text;
     private String title;
     private String username;
     private Integer reactionCount;
+    private Integer commentCount;
+    private List<String> images;
+    private List<String> flairs;
 
     public Long getPostId() {
         return postId;
@@ -33,14 +39,6 @@ public class PostResponse {
 
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
     }
 
     public String getText() {
@@ -75,6 +73,31 @@ public class PostResponse {
         this.reactionCount = reactionCount;
     }
 
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public List<String> getFlairs() {
+        return flairs;
+    }
+
+    public void setFlairs(List<String> flairs) {
+        this.flairs = flairs;
+    }
+
+    @NonNull
     @Override
     public String toString() {
 
@@ -82,7 +105,6 @@ public class PostResponse {
                 "postId=" + postId +
                 ", communityName='" + communityName + '\'' +
                 ", creationDate='" + creationDate + '\'' +
-                ", imagePath='" + imagePath + '\'' +
                 ", text='" + text + '\'' +
                 ", title='" + title + '\'' +
                 ", username='" + username + '\'' +

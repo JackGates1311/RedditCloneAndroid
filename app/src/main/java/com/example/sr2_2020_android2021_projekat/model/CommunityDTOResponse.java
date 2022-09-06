@@ -1,6 +1,10 @@
 package com.example.sr2_2020_android2021_projekat.model;
 
-public class Community {
+import androidx.annotation.NonNull;
+
+import java.util.List;
+
+public class CommunityDTOResponse {
 
     private Long communityId;
     private String name;
@@ -8,16 +12,21 @@ public class Community {
     private String creationDate;
     private Boolean isSuspended;
     private String suspendedReason;
-
     private int numberOfPosts;
+    private List<String> flairs;
 
-    public Community(String name, String description, String creationDate, Boolean isSuspended, String suspendedReason, int numberOfPosts) {
+    public CommunityDTOResponse(Long communityId, String name, String description, String creationDate,
+                                Boolean isSuspended, String suspendedReason, int numberOfPosts,
+                                List<String> flairs) {
+
+        this.communityId = communityId;
         this.name = name;
         this.description = description;
         this.creationDate = creationDate;
         this.isSuspended = isSuspended;
         this.suspendedReason = suspendedReason;
         this.numberOfPosts = numberOfPosts;
+        this.flairs = flairs;
     }
 
     public Long getCommunityId() {
@@ -74,5 +83,28 @@ public class Community {
 
     public void setNumberOfPosts(int numberOfPosts) {
         this.numberOfPosts = numberOfPosts;
+    }
+
+    public List<String> getFlairs() {
+        return flairs;
+    }
+
+    public void setFlairs(List<String> flairs) {
+        this.flairs = flairs;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Community{" +
+                "communityId=" + communityId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", creationDate='" + creationDate + '\'' +
+                ", isSuspended=" + isSuspended +
+                ", suspendedReason='" + suspendedReason + '\'' +
+                ", numberOfPosts=" + numberOfPosts +
+                ", flairs=" + flairs +
+                '}';
     }
 }

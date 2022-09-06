@@ -1,6 +1,7 @@
 package com.example.sr2_2020_android2021_projekat.fragments;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,22 +9,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
-import com.example.sr2_2020_android2021_projekat.api.Routes;
-import com.example.sr2_2020_android2021_projekat.model.RegisterUser;
-import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
+import com.example.sr2_2020_android2021_projekat.model.AuthResponse;
+import com.example.sr2_2020_android2021_projekat.model.FileResponse;
+import com.example.sr2_2020_android2021_projekat.model.LoginRequest;
+import com.example.sr2_2020_android2021_projekat.model.RegisterRequest;
+import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
+import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
+import java.util.Objects;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MultipartBody;
 
 public class RegisterFragment extends Fragment {
 
@@ -34,9 +34,7 @@ public class RegisterFragment extends Fragment {
     private com.google.android.material.textfield.TextInputEditText passwordRepeated;
     private com.google.android.material.textfield.TextInputEditText description;
 
-    private Button registerButton;
-
-    private Routes routes;
+    private final HttpClient httpClient = new HttpClient();
 
     public static RegisterFragment newInstance() {
 
@@ -44,9 +42,12 @@ public class RegisterFragment extends Fragment {
 
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle data) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup vg, Bundle data) {
 
-        ((MainActivity)getActivity()).setGroupMenuVisibility(false,
+        httpClient.setContext(getContext());
+
+        if(getActivity() != null)
+            ((MainActivity)getActivity()).setGroupMenuVisibility(false,
                 false);
 
         getActivity().setTitle("Register to Reddit Clone");
@@ -62,131 +63,167 @@ public class RegisterFragment extends Fragment {
         password = view.findViewById(R.id.password);
         passwordRepeated = view.findViewById(R.id.passwordRepeated);
         description = view.findViewById(R.id.description);
+        com.google.android.material.button.MaterialButton uploadAvatarButton =
+                view.findViewById(R.id.button_avatar_upload);
 
-        registerButton = view.findViewById(R.id.registerButton);
+        Button registerButton = view.findViewById(R.id.registerButton);
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        registerButton.setOnClickListener(v -> {
 
-                boolean isUsernameValid = username.getText().toString().length() > 0;
-                boolean isDisplayNameValid = displayName.getText().toString().length() > 0;
-                boolean isEmailValid = email.getText().toString().length() > 0 &&
-                        email.getText().toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+");
-                boolean isPasswordValid = password.getText().toString().length() > 0;
-                boolean isRepeatedPasswordValid = password.getText().toString().length() > 0 &&
-                        passwordRepeated.getText().toString().equals(password.getText().toString());
-                boolean isDescriptionValid = description.getText().toString().length() > 0;
+            if (validateData(view)) return;
 
+            register(view);
 
-                if(!isUsernameValid) {
-
-                    Toast.makeText(view.getContext(), "Please provide a valid username",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                if(!isDisplayNameValid) {
-
-                    Toast.makeText(view.getContext(), "Please provide a valid display name",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                if(!isEmailValid) {
-
-                    Toast.makeText(view.getContext(), "Please provide a valid email",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                if(!isPasswordValid) {
-
-                    Toast.makeText(view.getContext(), "Please provide a valid password",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                if(!isRepeatedPasswordValid) {
-
-                    Toast.makeText(view.getContext(), "Passwords are not matching",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                if(!isDescriptionValid) {
-
-                    Toast.makeText(view.getContext(), "Please provide a valid description",
-                            Toast.LENGTH_SHORT).show();
-
-                    return;
-                }
-
-                register();
-
-            }
         });
+
+        uploadAvatarButton.setOnClickListener(v ->
+                ((MainActivity)getActivity()).openFileChooser());
 
         return view;
     }
 
-    private void register() {
+    private boolean validateData(View view) {
 
-        Gson gson = new GsonBuilder().setLenient().create();
+        boolean isUsernameValid = Objects.requireNonNull(username.getText()).
+                toString().length() > 0;
+        boolean isDisplayNameValid = Objects.requireNonNull(displayName.getText()).
+                toString().length() > 0;
+        boolean isEmailValid = Objects.requireNonNull(email.getText()).
+                toString().length() > 0 && email.getText().toString().
+                matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+");
+        boolean isPasswordValid = Objects.requireNonNull(password.getText()).
+                toString().length() > 0;
+        boolean isRepeatedPasswordValid = password.getText().toString().length() > 0 &&
+                Objects.requireNonNull(passwordRepeated.getText()).toString().equals(
+                        password.getText().toString());
+        boolean isDescriptionValid = Objects.requireNonNull(description.getText()).
+                toString().length() > 0;
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
-                addConverterFactory(ScalarsConverterFactory.create()).
-                addConverterFactory(GsonConverterFactory.create(gson)).build();
+        if(!isUsernameValid) {
 
-        routes = retrofit.create(Routes.class);
+            Toast.makeText(view.getContext(), "Please provide a valid username",
+                    Toast.LENGTH_SHORT).show();
 
-        RegisterUser registerUser = new RegisterUser(username.getText().toString(),
-                password.getText().toString(), email.getText().toString(), "",
-                description.getText().toString(), displayName.getText().toString());
+            return true;
+        }
 
-        Call<String> call = routes.register(registerUser);
+        if(!isDisplayNameValid) {
 
-        call.enqueue(new Callback<String>() {
+            Toast.makeText(view.getContext(), "Please provide a valid display name",
+                    Toast.LENGTH_SHORT).show();
 
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            return true;
+        }
 
-                if(!response.isSuccessful()) {
+        if(!isEmailValid) {
 
-                    Toast.makeText(getContext(), "HTTP returned code " + response.code(),
-                            Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(), "Please provide a valid email",
+                    Toast.LENGTH_SHORT).show();
 
-                    return;
-                }
+            return true;
+        }
 
-                Toast.makeText(getContext(), "User registration is successful",
-                        Toast.LENGTH_LONG).show();
+        if(!isPasswordValid) {
 
-            }
+            Toast.makeText(view.getContext(), "Please provide a valid password",
+                    Toast.LENGTH_SHORT).show();
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            return true;
+        }
 
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
+        if(!isRepeatedPasswordValid) {
 
+            Toast.makeText(view.getContext(), "Passwords are not matching",
+                    Toast.LENGTH_SHORT).show();
+
+            return true;
+        }
+
+        if(!isDescriptionValid) {
+
+            Toast.makeText(view.getContext(), "Please provide a valid description",
+                    Toast.LENGTH_SHORT).show();
+
+            return true;
+        }
+        return false;
+    }
+
+    private void register(View view) {
+
+        RetrofitRepository<String> retrofitRepository = new RetrofitRepository<>();
+
+        RegisterRequest registerRequest = new RegisterRequest(
+                Objects.requireNonNull(username.getText()).toString(),
+                Objects.requireNonNull(password.getText()).toString(),
+                Objects.requireNonNull(email.getText()).toString(), "",
+                Objects.requireNonNull(description.getText()).toString(),
+                Objects.requireNonNull(displayName.getText()).toString(), false);
+
+        retrofitRepository.sendRequest(httpClient.routes.register(registerRequest), view, () -> {
+
+            Toast.makeText(getContext(), "User registration is successful",
+                    Toast.LENGTH_LONG).show();
+
+            if(getActivity() != null)
+                if(((MainActivity)getActivity()).getMultipartFile() != null)
+                    uploadAvatar(((MainActivity)getActivity()).getMultipartFile(), view);
+        });
+
+
+        if(getActivity() != null)
+            FragmentTransition.to(PostsFragment.newInstance("hot"), getActivity(),
+                    false, R.id.viewPage);
+
+    }
+
+    private void uploadAvatar(MultipartBody.Part multipartFile, View view) {
+
+        RetrofitRepository<AuthResponse> authResponseRetrofitRepository =
+                new RetrofitRepository<>();
+
+        LoginRequest loginRequest = new LoginRequest(
+                Objects.requireNonNull(username.getText()).toString(),
+                Objects.requireNonNull(password.getText()).toString());
+
+
+        HttpClient uploadHttpClient = new HttpClient();
+
+        authResponseRetrofitRepository.sendRequest(httpClient.routes.login(loginRequest), view,
+                () -> {
+
+                    //check if executes
+
+                    String authToken = authResponseRetrofitRepository.getResponseData().
+                            getAuthToken();
+
+                    int expiresIn = authResponseRetrofitRepository.getResponseData().
+                            getExpiresIn();
+
+                    String username = loginRequest.getUsername();
+
+                    if(getActivity() != null)
+                        ((MainActivity)getActivity()).storeDataToSharedPreferences(
+                                authToken, expiresIn, username);
+
+                    RetrofitRepository<FileResponse> retrofitRepository = new RetrofitRepository<>();
+
+                    uploadHttpClient.setContext(getContext());
+
+                    if(getActivity() != null) {
+
+                        retrofitRepository.sendRequest(uploadHttpClient.routes.uploadFile(
+                                multipartFile), view, () ->
+                                Toast.makeText(getActivity(),
+                                        "User avatar uploaded successfully",
+                                        Toast.LENGTH_SHORT).show());
+                    }
         });
 
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        //Toast.makeText(getActivity(), "onActivityCreated()", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         //Toast.makeText(getActivity(), "onAttach()", Toast.LENGTH_SHORT).show();
     }
@@ -200,7 +237,21 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        //Toast.makeText(getActivity(), "onDeatach()", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "onDetach()", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Uri uri;
+
+        CircleImageView avatarImage = getView().findViewById(R.id.avatar_image);
+
+        if(getActivity() != null && ((MainActivity)getActivity()).getUri()
+                != null) {
+            uri = ((MainActivity)getActivity()).getUri();
+            avatarImage.setImageURI(uri);
+        }
+    }
 }

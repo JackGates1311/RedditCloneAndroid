@@ -24,7 +24,7 @@
                 android:id="@+id/community_avatar"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_avatar"
+                android:src="@drawable/ic_community"
                 android:contentDescription="@string/logo_image_description"
                 android:layout_margin="8sp"/>
 

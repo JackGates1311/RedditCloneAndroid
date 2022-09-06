@@ -10,14 +10,18 @@
 
         <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="64.0dip"
-                android:layout_height="64.0dip"
-                android:layout_marginRight="10.0sp"
-                android:src="@drawable/ic_avatar"
-                android:contentDescription="@string/logo_image_description" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatar_image"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_avatar" />
 
-            <com.google.android.material.button.MaterialButton android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="7.0sp" android:text="@string/button_upload_photo_name" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_avatar_upload"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.0sp"
+                android:text="@string/button_upload_photo_name" />
 
         </LinearLayout>
 

@@ -19,7 +19,7 @@
 
             <item android:id="@+id/action_add_post"
                 android:icon="@drawable/ic_post_add"
-                android:title="Sort by"
+                android:title="Create new post"
                 android:iconTint="?android:textColorPrimary"
                 android:visible="false"
                 app:showAsAction="always" />

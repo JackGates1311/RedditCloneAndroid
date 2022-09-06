@@ -1,9 +1,12 @@
 package com.example.sr2_2020_android2021_projekat.tools;
 
 import com.example.sr2_2020_android2021_projekat.api.Routes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class EnvironmentConfig {
 
@@ -13,7 +16,7 @@ public class EnvironmentConfig {
     public static String apiRootURL = "/api/";
     public static String baseURL = protocol + "://" + ipAddress + ":" + port + apiRootURL;
 
-    public static Routes routes = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
-            addConverterFactory(GsonConverterFactory.create()).build().create(Routes.class);
+
+
 
 }

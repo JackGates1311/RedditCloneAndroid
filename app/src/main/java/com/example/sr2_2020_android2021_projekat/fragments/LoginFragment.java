@@ -18,7 +18,7 @@ import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.api.Routes;
 import com.example.sr2_2020_android2021_projekat.model.LoginRequest;
-import com.example.sr2_2020_android2021_projekat.model.LoginResponse;
+import com.example.sr2_2020_android2021_projekat.model.AuthResponse;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
 import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
 import com.google.gson.Gson;
@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment {
 
                     setAppDrawer();
 
-                    FragmentTransition.to(PostsFragment.newInstance(), getActivity(),
+                    FragmentTransition.to(PostsFragment.newInstance("hot"), getActivity(),
                             true, R.id.viewPage);
 
                     System.out.println(preferences.getString("authToken", null));
@@ -134,33 +134,36 @@ public class LoginFragment extends Fragment {
         LoginRequest loginRequest = new LoginRequest(username.getText().toString(),
                 password.getText().toString());
 
-        Call<LoginResponse> call = routes.login(loginRequest);
+        Call<AuthResponse> call = routes.login(loginRequest);
 
-        call.enqueue(new Callback<LoginResponse>() {
+        call.enqueue(new Callback<AuthResponse>() {
 
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
 
                 if(!response.isSuccessful()) {
 
-                    storeDataToSharedPreferences(null, 0);
+                    ((MainActivity)getActivity()).storeDataToSharedPreferences(null,
+                            0, null);
 
                     Toast.makeText(getContext(), "Login failed", Toast.LENGTH_LONG).show();
 
                     return;
                 }
 
-                LoginResponse loginResponse = response.body();
+                AuthResponse authResponse = response.body();
 
-                String authToken = loginResponse.getAuthToken();
-                int expiresIn = loginResponse.getExpiresIn();
+                String authToken = authResponse.getAuthToken();
+                int expiresIn = authResponse.getExpiresIn();
+                String username = loginRequest.getUsername();
 
-                storeDataToSharedPreferences(authToken, expiresIn);
+                ((MainActivity)getActivity()).storeDataToSharedPreferences(
+                        authToken, expiresIn, username);
 
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
 
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
 
@@ -168,18 +171,6 @@ public class LoginFragment extends Fragment {
 
         });
 
-    }
-
-    private void storeDataToSharedPreferences(String authToken, int expiresIn) {
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-        SharedPreferences.Editor editor = preferences.edit();
-
-        editor.putString("authToken", authToken);
-        editor.putInt("expiresIn", expiresIn);
-
-        editor.apply();
     }
 
     @Override

@@ -21,7 +21,7 @@
             android:hint="Community">
 
             <AutoCompleteTextView
-                android:id="@+id/postCommunities"
+                android:id="@+id/post_communities"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
@@ -56,23 +56,14 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dateFilterContainer" style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/post_select_flairs_button"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="20.0sp"
-            android:hint="Post Flairs">
-
-            <AutoCompleteTextView
-                android:id="@+id/datesFilterSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                tools:text="All Time"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/button_select_flairs" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/post_upload_images_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_upload_post_images_name" />

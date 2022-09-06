@@ -1,42 +1,47 @@
 package com.example.sr2_2020_android2021_projekat.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
-import com.example.sr2_2020_android2021_projekat.adapters.PostRecyclerAdapter;
-import com.example.sr2_2020_android2021_projekat.api.CrudService;
-import com.example.sr2_2020_android2021_projekat.api.Routes;
-import com.example.sr2_2020_android2021_projekat.model.Community;
-import com.example.sr2_2020_android2021_projekat.model.PostResponse;
+import com.example.sr2_2020_android2021_projekat.adapters.FlairButtonRecyclerAdapter;
+import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
+import com.example.sr2_2020_android2021_projekat.model.CommunityDTOResponse;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
-import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
+import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CommunityFragment extends Fragment {
 
-    private final CrudService<Community> crudService = new CrudService<>();
+    private final RetrofitRepository<CommunityDTOResponse> retrofitRepository = new RetrofitRepository<>();
+
+    private final HttpClient httpClient = new HttpClient();
 
     private final String communityNameParam;
 
     private TextView communityDescription;
+
+    private View view;
+
+    private RecyclerView recyclerView;
 
     public static CommunityFragment newInstance(String communityNameParam) {
 
@@ -54,79 +59,87 @@ public class CommunityFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        if((MainActivity)getActivity() != null)
+        if(getActivity() != null)
             ((MainActivity)getActivity()).setGroupMenuVisibility(
                     false, false);
 
         getActivity().setTitle("Community details");
 
-        View view = inflater.inflate(R.layout.fragment_community, container, false);
+        view = inflater.inflate(R.layout.fragment_community, container, false);
 
         TextView communityName = view.findViewById(R.id.community_info_name);
 
         communityDescription = view.findViewById(R.id.community_info_description);
 
+        SharedPreferences preferences = PreferenceManager.
+                getDefaultSharedPreferences(getContext());
+
+        ImageButton editCommunityButton = view.findViewById(R.id.button_edit_community);
+
+        if(preferences.getString("authToken", null) != null) {
+
+            editCommunityButton.setVisibility(View.VISIBLE);
+        }
+
+        editCommunityButton.setOnClickListener(v -> {
+
+            ((MainActivity)getActivity()).setCommunityMode("EDIT");
+
+            FragmentTransition.to(CreateEditCommunityFragment.newInstance(communityNameParam), getActivity(), true,
+                    R.id.viewPage);
+        });
+
         Button showAllCommunityPostsButton = view.findViewById(R.id.show_community_posts_button);
 
-        showAllCommunityPostsButton.setOnClickListener(view1 ->
+        showAllCommunityPostsButton.setOnClickListener(v ->
                 FragmentTransition.to(CommunityPostsFragment.newInstance(
-                        communityNameParam), getActivity(), true, R.id.viewPage));
+                        communityNameParam, "hot"), getActivity(), true,
+                        R.id.viewPage));
 
         communityName.setText(communityNameParam);
 
-        getCommunityByName(view);
+        getCommunityByName();
 
         return view;
     }
 
-    private void getCommunityByName(View view) {
+    @Override
+    public void onResume() {
+        super.onResume();
 
-        //TODO make develop branch and do commit
-        //Add interceptor
-        //Refactor code
+        getCommunityByName();
 
-        /*Retrofit retrofit = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
-                addConverterFactory(GsonConverterFactory.create()).build();
+        view.findViewById(R.id.no_flairs_text).setVisibility(View.GONE);
+        recyclerView.setAdapter(new FlairButtonRecyclerAdapter(getActivity(), new ArrayList<>()));
+    }
 
-        Routes route = retrofit.create(Routes.class);
+    private void getCommunityByName() {
 
-        Call<Community> call = route.getCommunityByName(communityNameParam);
+        retrofitRepository.sendRequest(httpClient.routes.getCommunityByName(communityNameParam),
+                view, () -> {
 
-        call.enqueue(new Callback<Community>() {
+            CommunityDTOResponse communityDTOResponse = retrofitRepository.getResponseData();
 
-            @Override
-            public void onResponse(@NonNull Call<Community> call,
-                                   @NonNull Response<Community> response) {
+            communityDescription.setText(communityDTOResponse.getDescription());
 
-                if(!response.isSuccessful()) {
-
-                    // Errors 400 and 500
-
-                    Toast.makeText(getContext(), "HTTP returned code " + response.code(),
-                            Toast.LENGTH_LONG).show();
-
-                    return;
-                }
-
-                Community community = response.body();
-
-                assert community != null;
-                communityDescription.setText(community.getDescription());
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Community> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), "Connection with server is not established", Toast.LENGTH_LONG).show();
-            }
-        });*/
-
-        crudService.getData(EnvironmentConfig.routes.getCommunityByName(communityNameParam), view, () -> {
-
-            Community community  = crudService.getResponseData().get(0);
-
-            communityDescription.setText(community.getDescription());
+            initializeRecyclerView(communityDTOResponse.getFlairs());
 
         });
+    }
+
+    private void initializeRecyclerView(List<String> flairs) {
+
+        recyclerView = view.findViewById(R.id.recycler_view_flairs);
+
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
+        assert flairs != null;
+        if(!flairs.isEmpty())
+            recyclerView.setAdapter(new FlairButtonRecyclerAdapter(getActivity(), flairs));
+        else
+            view.findViewById(R.id.no_flairs_text).setVisibility(View.VISIBLE);
 
     }
+
+
 }

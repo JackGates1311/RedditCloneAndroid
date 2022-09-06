@@ -14,14 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- <ImageView
-                android:id="@+id/community_avatar"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_avatar"
-                android:contentDescription="@string/logo_image_description"
-                android:layout_margin="8sp"/> !-->
-
             <TextView
                 android:id="@+id/post_community"
                 android:layout_width="0dp"
@@ -68,6 +60,14 @@
                 android:layout_margin="8sp"
                 android:text="" />
 
+            <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                android:id="@+id/post_images"
+                android:layout_margin="8sp"
+                android:layout_width="match_parent"
+                android:layout_height="256dp"
+                app:showIndicator="true"
+                app:showNavigationButtons="false"
+                android:visibility="gone"/>
 
             <!-- <ImageView
                 android:layout_width="300dp"
@@ -88,6 +88,7 @@
                 android:src="@drawable/postimage2" /> !-->
 
             <LinearLayout
+                android:id="@+id/post_tile_footer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -102,6 +103,7 @@
                     app:tint="?colorAccent" />
 
                 <TextView
+                    android:id="@+id/post_comment_count"
                     android:layout_width="0dp"
                     android:layout_height="24dp"
                     android:textSize="8pt"
@@ -109,7 +111,18 @@
                     android:layout_margin="4sp"
                     android:text="0"/>
 
+                <ImageButton
+                    android:background="@null"
+                    android:id="@+id/downvote_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_downvote"
+                    android:contentDescription="@string/logo_image_description"
+                    android:layout_margin="8sp"
+                    app:tint="?colorAccent" />
+
                 <TextView
+                    android:id="@+id/post_reaction_count"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:textSize="8pt"
@@ -118,17 +131,7 @@
 
                 <ImageButton
                     android:background="@null"
-                    android:id="@+id/downVoteButton"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_downvote"
-                    android:contentDescription="@string/logo_image_description"
-                    android:layout_margin="8sp"
-                    app:tint="?colorAccent" />
-
-                <ImageButton
-                    android:background="@null"
-                    android:id="@+id/upVoteButton"
+                    android:id="@+id/upvote_button"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_upvote"
@@ -138,13 +141,33 @@
 
                 <ImageButton
                     android:background="@null"
-                    android:id="@+id/reportButton"
+                    android:id="@+id/report_button"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_report"
                     android:contentDescription="@string/logo_image_description"
                     android:layout_margin="8sp"
                     app:tint="?colorAccent" />
+
+                <ImageButton
+                    android:background="@null"
+                    android:id="@+id/post_edit_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_edit"
+                    android:layout_margin="8sp"
+                    app:tint="?colorAccent"
+                    android:visibility="gone"/>
+
+                <ImageButton
+                    android:background="@null"
+                    android:id="@+id/post_delete_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_delete"
+                    android:layout_margin="8sp"
+                    app:tint="?colorAccent"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
