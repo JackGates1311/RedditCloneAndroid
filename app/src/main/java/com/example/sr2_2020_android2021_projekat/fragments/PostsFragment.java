@@ -1,6 +1,8 @@
 package com.example.sr2_2020_android2021_projekat.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +17,18 @@ import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.adapters.PostRecyclerAdapter;
 import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
 import com.example.sr2_2020_android2021_projekat.model.PostResponse;
+import com.example.sr2_2020_android2021_projekat.model.ReactionDTO;
 import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostsFragment extends Fragment {
 
-    private final RetrofitRepository<List<PostResponse>> retrofitRepository =
-            new RetrofitRepository<>();
     private final HttpClient httpClient = new HttpClient();
     private View view = null;
     private final String sortBy;
+    List<ReactionDTO> reactions = new ArrayList<>();
 
     public PostsFragment(String sortBy) {
         this.sortBy = sortBy;
@@ -40,6 +44,8 @@ public class PostsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        httpClient.setContext(getContext());
 
         if(getActivity() != null) {
             ((MainActivity)getActivity()).setGroupMenuVisibility(true,
@@ -62,11 +68,28 @@ public class PostsFragment extends Fragment {
 
     public void getPosts(RecyclerView recyclerView, View view) {
 
-        retrofitRepository.sendRequest(httpClient.routes.getAllPosts(sortBy), view, () -> {
+        SharedPreferences preferences = PreferenceManager.
+                getDefaultSharedPreferences(getContext());
 
-            List<PostResponse> postResponse = retrofitRepository.getResponseData();
+        if(preferences.getString("username", null) != null) {
 
-            recyclerView.setAdapter(new PostRecyclerAdapter(getActivity(), postResponse));
+            RetrofitRepository<List<ReactionDTO>> reactionDTORetrofitRepository = new RetrofitRepository<>();
+
+            reactionDTORetrofitRepository.sendRequest(httpClient.routes.getReactionsByUsername(), view,
+                    () -> {
+                        reactions = reactionDTORetrofitRepository.getResponseData();
+                    });
+        }
+
+        RetrofitRepository<List<PostResponse>> postRetrofitRepository =
+                new RetrofitRepository<>();
+
+        postRetrofitRepository.sendRequest(httpClient.routes.getAllPosts(sortBy), view, () -> {
+
+            List<PostResponse> postResponse = postRetrofitRepository.getResponseData();
+
+            recyclerView.setAdapter(new PostRecyclerAdapter(getActivity(), postResponse, reactions,
+                    preferences.getString("username", null), view));
 
         });
     }

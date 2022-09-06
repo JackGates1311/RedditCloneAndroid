@@ -1,6 +1,8 @@
 package com.example.sr2_2020_android2021_projekat.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,10 @@ import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.adapters.PostRecyclerAdapter;
 import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
 import com.example.sr2_2020_android2021_projekat.model.PostResponse;
+import com.example.sr2_2020_android2021_projekat.model.ReactionDTO;
 import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommunityPostsFragment extends Fragment {
@@ -30,6 +34,8 @@ public class CommunityPostsFragment extends Fragment {
 
     private final String communityNameParam;
     private final String sortBy;
+
+    List<ReactionDTO> reactions = new ArrayList<>();
 
 
     public static CommunityPostsFragment newInstance(String communityNameParam, String sortBy) {
@@ -75,47 +81,27 @@ public class CommunityPostsFragment extends Fragment {
 
     private void getPostsByCommunityName(RecyclerView recyclerView) {
 
-        /* Retrofit retrofit = new Retrofit.Builder().baseUrl(EnvironmentConfig.baseURL).
-                addConverterFactory(GsonConverterFactory.create()).build();
+        SharedPreferences preferences = PreferenceManager.
+                getDefaultSharedPreferences(getContext());
 
-        Routes routes = retrofit.create(Routes.class);
+        if(preferences.getString("username", null) != null) {
 
-        Call<List<PostResponse>> call = routes.getPostsByCommunityName("hot",
-                communityNameParam);
+            RetrofitRepository<List<ReactionDTO>> reactionDTORetrofitRepository = new RetrofitRepository<>();
 
-        call.enqueue(new Callback<List<PostResponse>>() {
+            reactionDTORetrofitRepository.sendRequest(httpClient.routes.getReactionsByUsername(), view,
+                    () -> {
+                        reactions = reactionDTORetrofitRepository.getResponseData();
+                    });
+        }
 
-            @Override
-            public void onResponse(Call<List<PostResponse>> call, Response<List<PostResponse>> response) {
-
-                if(!response.isSuccessful()) {
-
-                    // Errors 400 and 500
-
-                    Toast.makeText(getContext(), "HTTP returned code " + response.code(),
-                            Toast.LENGTH_LONG).show();
-
-                    return;
-                }
-
-                recyclerView.setAdapter(new PostRecyclerAdapter(getActivity(), response.body()));
-
-            }
-
-            @Override
-            public void onFailure(Call<List<PostResponse>> call, Throwable t) {
-
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-
-            }
-        }); */
 
         retrofitRepository.sendRequest(httpClient.routes.getPostsByCommunityName(
                 communityNameParam, sortBy), view, () -> {
 
             List<PostResponse> postResponse = retrofitRepository.getResponseData();
 
-            recyclerView.setAdapter(new PostRecyclerAdapter(getActivity(), postResponse));
+            recyclerView.setAdapter(new PostRecyclerAdapter(getActivity(), postResponse, reactions,
+                    preferences.getString("username", null), view));
 
         });
 

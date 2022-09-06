@@ -48,7 +48,7 @@
                     android:textSize="8pt"
                     android:textStyle="bold" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/button_edit_community"
                     android:layout_width="28dp"
                     android:layout_height="28dp"

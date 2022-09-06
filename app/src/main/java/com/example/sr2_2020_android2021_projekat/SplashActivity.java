@@ -27,6 +27,8 @@ public class SplashActivity extends AppCompatActivity {
 
         editor.putString("authToken", null);
 
+        editor.putString("username", null);
+
         editor.apply();
 
         int delay = 3000;

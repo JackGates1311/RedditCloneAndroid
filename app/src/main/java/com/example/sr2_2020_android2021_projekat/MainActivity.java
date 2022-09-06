@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void logout() {
 
-        storeDataToSharedPreferences(null, 0);
+        storeDataToSharedPreferences(null, 0, null);
 
         MainActivity.this.navigationView.getMenu().
                 findItem(R.id.navigation_bar_item_user_register).setVisible(true);
@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
                 false, R.id.viewPage);
     }
 
-    public void storeDataToSharedPreferences(String authToken, int expiresIn) {
+    public void storeDataToSharedPreferences(String authToken, int expiresIn, String username) {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -254,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
 
         editor.putString("authToken", authToken);
         editor.putInt("expiresIn", expiresIn);
+        editor.putString("username", username);
 
         editor.apply();
     }

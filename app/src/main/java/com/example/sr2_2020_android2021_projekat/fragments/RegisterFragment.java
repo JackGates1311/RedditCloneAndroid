@@ -200,8 +200,11 @@ public class RegisterFragment extends Fragment {
                     int expiresIn = authResponseRetrofitRepository.getResponseData().
                             getExpiresIn();
 
+                    String username = loginRequest.getUsername();
+
                     if(getActivity() != null)
-                        ((MainActivity)getActivity()).storeDataToSharedPreferences(authToken, expiresIn);
+                        ((MainActivity)getActivity()).storeDataToSharedPreferences(
+                                authToken, expiresIn, username);
 
                     RetrofitRepository<FileResponse> retrofitRepository = new RetrofitRepository<>();
 

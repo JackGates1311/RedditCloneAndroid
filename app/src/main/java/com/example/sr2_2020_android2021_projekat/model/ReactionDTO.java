@@ -23,6 +23,11 @@ public class ReactionDTO {
         this.reactionCount = reactionCount;
     }
 
+    public ReactionDTO(String reactionType, Long postId) {
+        this.reactionType = reactionType;
+        this.postId = postId;
+    }
+
     public Long getReactionId() {
         return reactionId;
     }

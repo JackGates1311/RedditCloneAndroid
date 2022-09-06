@@ -143,7 +143,8 @@ public class LoginFragment extends Fragment {
 
                 if(!response.isSuccessful()) {
 
-                    storeDataToSharedPreferences(null, 0);
+                    ((MainActivity)getActivity()).storeDataToSharedPreferences(null,
+                            0, null);
 
                     Toast.makeText(getContext(), "Login failed", Toast.LENGTH_LONG).show();
 
@@ -154,8 +155,10 @@ public class LoginFragment extends Fragment {
 
                 String authToken = authResponse.getAuthToken();
                 int expiresIn = authResponse.getExpiresIn();
+                String username = loginRequest.getUsername();
 
-                storeDataToSharedPreferences(authToken, expiresIn);
+                ((MainActivity)getActivity()).storeDataToSharedPreferences(
+                        authToken, expiresIn, username);
 
             }
 
@@ -168,18 +171,6 @@ public class LoginFragment extends Fragment {
 
         });
 
-    }
-
-    private void storeDataToSharedPreferences(String authToken, int expiresIn) {
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-        SharedPreferences.Editor editor = preferences.edit();
-
-        editor.putString("authToken", authToken);
-        editor.putInt("expiresIn", expiresIn);
-
-        editor.apply();
     }
 
     @Override

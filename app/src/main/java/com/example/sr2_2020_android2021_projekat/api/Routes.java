@@ -82,7 +82,7 @@ public interface Routes {
                                                      @Query("sortBy") String sortBy);
 
     @GET("reactions")
-    Call<List<ReactionDTO>> getReactionsByUsername(@Body ReactionDTO reactionDTO);
+    Call<List<ReactionDTO>> getReactionsByUsername();
 
     @POST("reactions")
     Call<String> sendReaction(@Body ReactionDTO reactionDTO);
