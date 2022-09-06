@@ -14,14 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- <ImageView
-                android:id="@+id/community_avatar"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_avatar"
-                android:contentDescription="@string/logo_image_description"
-                android:layout_margin="8sp"/> !-->
-
             <TextView
                 android:id="@+id/post_community"
                 android:layout_width="0dp"
@@ -68,6 +60,14 @@
                 android:layout_margin="8sp"
                 android:text="" />
 
+            <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                android:id="@+id/post_images"
+                android:layout_margin="8sp"
+                android:layout_width="match_parent"
+                android:layout_height="256dp"
+                app:showIndicator="true"
+                app:showNavigationButtons="false"
+                android:visibility="gone"/>
 
             <!-- <ImageView
                 android:layout_width="300dp"
@@ -148,6 +148,26 @@
                     android:contentDescription="@string/logo_image_description"
                     android:layout_margin="8sp"
                     app:tint="?colorAccent" />
+
+                <ImageButton
+                    android:background="@null"
+                    android:id="@+id/post_edit_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_edit"
+                    android:layout_margin="8sp"
+                    app:tint="?colorAccent"
+                    android:visibility="gone"/>
+
+                <ImageButton
+                    android:background="@null"
+                    android:id="@+id/post_delete_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_delete"
+                    android:layout_margin="8sp"
+                    app:tint="?colorAccent"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

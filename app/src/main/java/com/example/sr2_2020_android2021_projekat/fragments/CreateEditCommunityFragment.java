@@ -64,6 +64,8 @@ public class CreateEditCommunityFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        //TODO inject object in newInstance instead of parameter!
+
         view = inflater.inflate(R.layout.fragment_create_edit_community, container, false);
 
         httpClient.setContext(getContext());
@@ -245,7 +247,7 @@ public class CreateEditCommunityFragment extends Fragment {
         assert flairNames != null;
         if(!flairNames.isEmpty())
             recyclerView.setAdapter(new FlairCheckboxRecyclerAdapter(this,
-                    getActivity(), flairNames));
+                    null, getActivity(), flairNames));
 
     }
 

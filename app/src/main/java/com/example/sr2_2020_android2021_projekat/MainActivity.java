@@ -17,17 +17,23 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import com.example.sr2_2020_android2021_projekat.adapters.SortByAdapter;
+import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
 import com.example.sr2_2020_android2021_projekat.fragments.AdministratorManagerFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.CommunitiesFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.CommunityPostsFragment;
@@ -37,14 +43,18 @@ import com.example.sr2_2020_android2021_projekat.fragments.LoginFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.ManageAccountFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.PostsFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.RegisterFragment;
+import com.example.sr2_2020_android2021_projekat.model.AuthResponse;
+import com.example.sr2_2020_android2021_projekat.model.LoginRequest;
 import com.example.sr2_2020_android2021_projekat.tools.DialogHelper;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
+import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 import com.example.sr2_2020_android2021_projekat.tools.InputStreamRequestBody;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.Executor;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -68,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
     private MultipartBody.Part multipartFile;
     private String filePath;
 
+    private SharedPreferences preferences;
+
+    private HttpClient httpClient = new HttpClient();
+
     ///
 
     //TODO remove duplicate store data method if possible ... (LOW PRIORITY)
@@ -80,6 +94,12 @@ public class MainActivity extends AppCompatActivity {
 
     ///
 
+    ///
+
+    BiometricPrompt biometricPrompt;
+    BiometricPrompt.PromptInfo promptInfo;
+
+    ///
     public MainActivity() {
         super();
     }
@@ -91,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        httpClient.setContext(this);
         /////
 
         SensorManager sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -103,6 +126,96 @@ public class MainActivity extends AppCompatActivity {
         shake = 0.00f;
 
         /////
+
+        ////
+
+        BiometricManager biometricManager = BiometricManager.from(this);
+
+        switch (biometricManager.canAuthenticate()) {
+
+            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
+            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
+                Toast.makeText(getApplicationContext(), "Device does not support " +
+                        "fingerprint login", Toast.LENGTH_SHORT);
+                break;
+            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
+                Toast.makeText(getApplicationContext(), "Fingerprint sensor has not " +
+                        "configured yet for work", Toast.LENGTH_SHORT);
+                break;
+            case BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED:
+                break;
+            case BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED:
+                break;
+            case BiometricManager.BIOMETRIC_STATUS_UNKNOWN:
+                break;
+            case BiometricManager.BIOMETRIC_SUCCESS:
+                break;
+        }
+
+        Executor executor = ContextCompat.getMainExecutor(this);
+
+        biometricPrompt = new BiometricPrompt(MainActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+
+                Toast.makeText(getApplicationContext(), "Fail", Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+
+                RetrofitRepository<AuthResponse> retrofitRepository = new RetrofitRepository<>();
+
+                LoginRequest loginRequest = new LoginRequest(
+                        preferences.getString("saved_username", null),
+                        preferences.getString("saved_password", null)
+                );
+
+                retrofitRepository.sendRequest(httpClient.routes.login(loginRequest),
+                        getWindow().getDecorView().getRootView(), () -> {
+
+                    Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT);
+
+                            storeDataToSharedPreferences(
+                                    retrofitRepository.getResponseData().getAuthToken(),
+                                    retrofitRepository.getResponseData().getExpiresIn(),
+                                    retrofitRepository.getResponseData().getRole());
+
+                            if(preferences.getString("authToken", null) != null) {
+
+                                setAppDrawer();
+
+                                FragmentTransition.to(PostsFragment.newInstance(""),
+                                        MainActivity.this, true, R.id.viewPage);
+
+                                System.out.println(preferences.getString("authToken", null));
+
+                            }
+
+
+
+                });
+
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+
+                Toast.makeText(getApplicationContext(), "Fail", Toast.LENGTH_SHORT);
+            }
+        });
+
+        promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("Reddit Clone Login").
+                setDescription("Please touch your fingerprint sensor to login into Reddit Clone").
+                setDeviceCredentialAllowed(true).build();
+
+        if(preferences.getString("saved_username", null) != null)
+            biometricPrompt.authenticate(promptInfo);
+
+        ////
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -284,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_add_post) {
             postMode = "ADD";
-            FragmentTransition.to(CreateEditPostFragment.newInstance(), MainActivity.this,
+            FragmentTransition.to(CreateEditPostFragment.newInstance(null), MainActivity.this,
                     true, R.id.viewPage);
         } else if (id == R.id.action_sort) {
             dialogHelper.showDialog(this, "Sort posts by:",
@@ -462,6 +575,33 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    private void setAppDrawer() {
+
+        navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_user_register).setVisible(false);
+
+        navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_user_login).setVisible(false);
+
+        navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_user_logout).setVisible(true);
+
+        navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_user_manage).setVisible(true);
+
+        navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_create_community).setVisible(true);
+
+        navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_communities).setVisible(true);
+
+        navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_administrator_tools).setVisible(true);
+
+        menu.findItem(R.id.action_add_post).setVisible(true);
+
+    }
 
     public void setSortByMode(String sortByMode) {
         this.sortByMode = sortByMode;

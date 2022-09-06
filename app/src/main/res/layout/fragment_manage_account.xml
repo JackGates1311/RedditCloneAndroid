@@ -118,6 +118,12 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <CheckBox
+            android:id="@+id/enable_fingerprint_checkbox"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_enable_fingerprint_name" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/change_password_button"
             android:layout_width="fill_parent"

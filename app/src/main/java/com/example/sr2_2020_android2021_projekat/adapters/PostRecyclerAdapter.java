@@ -1,5 +1,6 @@
 package com.example.sr2_2020_android2021_projekat.adapters;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,15 +15,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
 import com.example.sr2_2020_android2021_projekat.fragments.CommunityFragment;
+import com.example.sr2_2020_android2021_projekat.fragments.CreateEditPostFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.PostDetailsFragment;
+import com.example.sr2_2020_android2021_projekat.fragments.PostsFragment;
 import com.example.sr2_2020_android2021_projekat.model.PostResponse;
 import com.example.sr2_2020_android2021_projekat.model.ReactionDTO;
+import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
 import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 
+import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,7 +43,6 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
     private List<ReactionDTO> reactions;
     private final String username;
     private final View view;
-    private boolean isButtonColored = false;
 
     private final HttpClient httpClient = new HttpClient();
 
@@ -78,6 +87,34 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 
         if(username == null)
             holder.postTileFooter.setVisibility(View.GONE);
+        else {
+            if(username.equals(postResponse.getUsername())) {
+                holder.editPostButton.setVisibility(View.VISIBLE);
+                holder.deletePostButton.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+        //posting image/
+
+        holder.postImages.registerLifecycle(fragmentActivity.getLifecycle());
+
+        if(!postResponse.getImages().isEmpty()) {
+            holder.postImages.setVisibility(View.VISIBLE);
+
+            List<CarouselItem> images = new ArrayList<>();
+
+            for(String imageName : postResponse.getImages()) {
+
+                String imageUrl = EnvironmentConfig.baseURL + "file/" + imageName;
+
+                images.add(new CarouselItem(imageUrl));
+            }
+
+            holder.postImages.setData(images);
+        }
+
+        ///
 
         populateReactions(holder, postResponse);
 
@@ -88,13 +125,8 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 
         holder.postTitle.setOnClickListener(view ->
                 FragmentTransition.to(PostDetailsFragment.newInstance(
-                postResponse.getPostId()), fragmentActivity,
+                postResponse), fragmentActivity,
                 true, R.id.viewPage));
-
-        isButtonColored = !Objects.isNull(String.valueOf(holder.downvoteButton.
-                getColorFilter()));
-
-        Log.d("buttonColor", String.valueOf(holder.downvoteButton.getColorFilter()));
 
         holder.downvoteButton.setOnClickListener(v -> {
 
@@ -116,6 +148,29 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 
         });
 
+        holder.editPostButton.setOnClickListener(v -> {
+
+            ((MainActivity)fragmentActivity).setPostMode("EDIT");
+            FragmentTransition.to(CreateEditPostFragment.newInstance(postResponse),
+                    fragmentActivity, true, R.id.viewPage);
+        });
+
+        holder.deletePostButton.setOnClickListener(v -> {
+            deletePost(view, postResponse.getPostId());
+        });
+
+    }
+
+    private void deletePost(View view, Long postId) {
+
+        RetrofitRepository<String> retrofitRepository = new RetrofitRepository<>();
+
+        retrofitRepository.sendRequest(httpClient.routes.deletePost(postId), view, () ->
+                Toast.makeText(view.getContext(), "Post deleted successfully",
+                Toast.LENGTH_SHORT).show());
+
+        FragmentTransition.to(PostsFragment.newInstance("hot"), fragmentActivity,
+                true, R.id.viewPage);
     }
 
     private void sendReaction(@NonNull ViewHolder holder, PostResponse postResponse, String reactionType, ReactionDTO reactionDTO) {
@@ -227,6 +282,12 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 
         private final LinearLayout postTileFooter;
 
+        private final ImageCarousel postImages;
+
+        private final ImageButton editPostButton;
+
+        private final ImageButton deletePostButton;
+
         ViewHolder(View v) {
 
             super(v);
@@ -240,6 +301,9 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
             upvoteButton = v.findViewById(R.id.upvote_button);
             downvoteButton = v.findViewById(R.id.downvote_button);
             postTileFooter = v.findViewById(R.id.post_tile_footer);
+            postImages = v.findViewById(R.id.post_images);
+            editPostButton = v.findViewById(R.id.post_edit_button);
+            deletePostButton = v.findViewById(R.id.post_delete_button);
 
         }
     }

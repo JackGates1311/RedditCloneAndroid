@@ -112,7 +112,7 @@
     <string name="post_text_name">Post text</string>
     <string name="post_flairs_name">Post flairs</string>
     <string name="button_create_post_name">Create post</string>
-    <string name="button_upload_post_images_name">Upload postResponse images</string>
+    <string name="button_upload_post_images_name">Upload images</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_user_logout_name">Logout</string>
@@ -160,4 +160,6 @@
     <string name="btn_save_text">Save</string>
     <string name="change_flairs_text">Change flairs</string>
     <string name="button_remove_photo_name">Remove</string>
+    <string name="post_flairs_text">Flairs:</string>
+    <string name="button_enable_fingerprint_name">Enable login with fingerprint sensor</string>
 </resources>

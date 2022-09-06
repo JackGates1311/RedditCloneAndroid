@@ -17,6 +17,7 @@ import androidx.transition.Visibility;
 
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.fragments.CreateEditCommunityFragment;
+import com.example.sr2_2020_android2021_projekat.fragments.CreateEditPostFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -28,10 +29,16 @@ public class FlairCheckboxRecyclerAdapter extends
 
     private final List<String> flairsRecyclerView;
     private final CreateEditCommunityFragment createEditCommunityFragment;
+    private final CreateEditPostFragment createEditPostFragment;
 
-    public FlairCheckboxRecyclerAdapter(CreateEditCommunityFragment createEditCommunityFragment, FragmentActivity activity, List<String> flairsRecyclerView) {
+    public FlairCheckboxRecyclerAdapter(CreateEditCommunityFragment createEditCommunityFragment,
+                                        CreateEditPostFragment createEditPostFragment,
+                                        FragmentActivity activity,
+                                        List<String> flairsRecyclerView) {
+
         this.flairsRecyclerView = flairsRecyclerView;
         this.createEditCommunityFragment = createEditCommunityFragment;
+        this.createEditPostFragment = createEditPostFragment;
     }
 
     @NonNull
@@ -51,17 +58,37 @@ public class FlairCheckboxRecyclerAdapter extends
 
         holder.flairCheckBox.setText(flair);
 
-        for(String flairName : createEditCommunityFragment.getSelectedCommunityFlairs())
-            if(flairName.equals(flair))
-                holder.flairCheckBox.setChecked(true);
+        if(createEditCommunityFragment != null) {
+            for(String flairName : createEditCommunityFragment.getSelectedCommunityFlairs())
+                if(flairName.equals(flair))
+                    holder.flairCheckBox.setChecked(true);
+        }
+
+        if(createEditPostFragment != null) {
+
+            for(String flairName : createEditPostFragment.getSelectedPostFlairs())
+                if(flairName.equals(flair))
+                    holder.flairCheckBox.setChecked(true);
+        }
 
         holder.flairCheckBox.setOnClickListener(v -> {
             if (((CheckBox) v).isChecked()) {
                 String item = ((CheckBox) v).getText().toString();
-                createEditCommunityFragment.getSelectedCommunityFlairs().add(item);
+
+                if(createEditCommunityFragment != null) {
+                    createEditCommunityFragment.getSelectedCommunityFlairs().add(item);
+                }
+                if(createEditPostFragment != null) {
+                    createEditPostFragment.getSelectedPostFlairs().add(item);
+                }
+
             }
             else {
-                createEditCommunityFragment.getSelectedCommunityFlairs().remove(((CheckBox) v).getText().toString());
+                if(createEditCommunityFragment != null)
+                    createEditCommunityFragment.getSelectedCommunityFlairs().remove(((CheckBox) v).getText().toString());
+                if(createEditPostFragment != null)
+                    createEditPostFragment.getSelectedPostFlairs().remove(((CheckBox) v).getText().toString());
+
             }
         });
 

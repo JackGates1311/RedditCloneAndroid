@@ -1,14 +1,17 @@
 package com.example.sr2_2020_android2021_projekat.fragments;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +23,10 @@ import androidx.annotation.Nullable;
 import com.example.sr2_2020_android2021_projekat.MainActivity;
 import com.example.sr2_2020_android2021_projekat.R;
 import com.example.sr2_2020_android2021_projekat.api.RetrofitRepository;
+import com.example.sr2_2020_android2021_projekat.model.AuthResponse;
 import com.example.sr2_2020_android2021_projekat.model.ChangePasswordRequest;
 import com.example.sr2_2020_android2021_projekat.model.FileResponse;
+import com.example.sr2_2020_android2021_projekat.model.LoginRequest;
 import com.example.sr2_2020_android2021_projekat.model.UserInfoDTO;
 import com.example.sr2_2020_android2021_projekat.tools.DialogHelper;
 import com.example.sr2_2020_android2021_projekat.tools.EnvironmentConfig;
@@ -51,9 +56,12 @@ public class ManageAccountFragment extends Fragment {
     private TextInputEditText email;
     private TextInputEditText displayName;
     private TextInputEditText description;
+    private CheckBox enableFingerprintLoginCheckbox;
 
     private String avatarMode = "";
     private String filename = null;
+
+    private SharedPreferences.Editor editor;
 
     public static ManageAccountFragment newInstance() {
 
@@ -68,6 +76,11 @@ public class ManageAccountFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_manage_account, container, false);
 
         httpClient.setContext(getContext());
+
+        SharedPreferences preferences = PreferenceManager.
+                getDefaultSharedPreferences(getContext());
+
+        editor =  preferences.edit();
 
         if(getActivity() != null) {
             ((MainActivity)getActivity()).setGroupMenuVisibility(false,
@@ -84,6 +97,7 @@ public class ManageAccountFragment extends Fragment {
         email = view.findViewById(R.id.user_email);
         displayName = view.findViewById(R.id.user_display_name);
         description = view.findViewById(R.id.user_description);
+        enableFingerprintLoginCheckbox = view.findViewById(R.id.enable_fingerprint_checkbox);
 
         getActivity().setTitle("Manage account");
 
@@ -91,6 +105,58 @@ public class ManageAccountFragment extends Fragment {
                 findItem(R.id.navigation_bar_item_user_manage).setChecked(true);
 
         getUserInfo();
+
+        ////
+
+        if(preferences.getString("saved_username", null) != null) {
+            enableFingerprintLoginCheckbox.setChecked(true);
+        }
+
+
+        ///
+
+        enableFingerprintLoginCheckbox.setOnClickListener(v -> {
+
+
+            if (((CheckBox) v).isChecked()) {
+
+                dialogHelper.showDialog(getContext(), "Enter password:",
+                        R.layout.component_enter_password, () -> {
+
+                            TextInputEditText currentPassword = dialogHelper.getCurrentDialog().
+                                    findViewById(R.id.user_current_password);
+
+                            RetrofitRepository<AuthResponse> retrofitRepository =
+                                    new RetrofitRepository<>();
+
+                            LoginRequest loginRequest = new LoginRequest(
+                                    Objects.requireNonNull(username.getText()).toString(),
+                                    Objects.requireNonNull(currentPassword.getText()).toString()
+                            );
+
+                            retrofitRepository.sendRequest(httpClient.routes.login(loginRequest),
+                                    view, () -> {
+
+
+                                        editor.putString("saved_username",
+                                                loginRequest.getUsername());
+                                        editor.putString("saved_password",
+                                                loginRequest.getPassword());
+
+                                    });
+
+                        }, () -> {
+
+                        }, () -> {
+
+                        });
+
+            } else {
+                editor.putString("saved_username", null);
+                editor.putString("saved_password", null);
+            }
+
+        });
 
         Button changePasswordButton = view.findViewById(R.id.change_password_button);
 
@@ -194,6 +260,8 @@ public class ManageAccountFragment extends Fragment {
                     postAvatar(view);
             }
 
+            editor.apply();
+
             if(getActivity() != null)
                 FragmentTransition.to(PostsFragment.newInstance("hot"), getActivity(),
                         false, R.id.viewPage);
@@ -262,8 +330,6 @@ public class ManageAccountFragment extends Fragment {
 
                 String imageUrl = EnvironmentConfig.baseURL + "file/" +
                         userInfoDTO.getAvatar();
-
-               // Picasso.get().load(imageUrl).noFade().fit().into(avatarImage);
 
                 Picasso.get().load(imageUrl).into(avatarImage);
 

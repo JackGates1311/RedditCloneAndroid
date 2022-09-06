@@ -28,6 +28,11 @@ public class ReactionDTO {
         this.postId = postId;
     }
 
+    public ReactionDTO(String reactionType, CommentDTOResponse commentDTOResponse) {
+        this.reactionType = reactionType;
+        this.commentId = commentDTOResponse.getCommentId();
+    }
+
     public Long getReactionId() {
         return reactionId;
     }

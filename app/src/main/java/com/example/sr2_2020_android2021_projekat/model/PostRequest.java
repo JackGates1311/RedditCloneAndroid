@@ -26,6 +26,12 @@ public class PostRequest {
         this.flairs = flairs;
     }
 
+    public PostRequest(String text, String title, List<String> flairs) {
+        this.text = text;
+        this.title = title;
+        this.flairs = flairs;
+    }
+
     public Long getPostId() {
         return postId;
     }

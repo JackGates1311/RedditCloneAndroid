@@ -69,7 +69,7 @@ public interface Routes {
     Call<PostRequest> editPost(@Path("id") Long id, @Body PostRequest postRequest);
 
     @DELETE("posts/{id}")
-    Call<?> deletePost(@Path("id") Long id);
+    Call<String> deletePost(@Path("id") Long id);
 
     @PUT("auth/changePassword")
     Call<ChangePasswordRequest> changePassword(@Body ChangePasswordRequest changePasswordRequest);
@@ -97,11 +97,11 @@ public interface Routes {
     Call<String> postComment(@Body CommentDTORequest commentDTORequest);
 
     @GET("comments/getPostComments/{id}")
-    Call<List<CommentDTOResponse>> getPostComments(@Query("sortBy") String sortBy,
-                                                   @Path("id") Long id);
+    Call<List<CommentDTOResponse>> getPostComments(@Path("id") Long id,
+                                                   @Query("sortBy") String sortBy);
 
     @PUT("comments/{id}")
-    Call<CommentDTOResponse> editComment(@Path("id") Long id,
+    Call<String> editComment(@Path("id") Long id,
                                          @Body CommentDTORequest commentDTORequest);
 
     @DELETE("comments/{id}")

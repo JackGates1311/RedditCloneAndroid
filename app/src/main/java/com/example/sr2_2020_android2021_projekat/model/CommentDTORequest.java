@@ -16,6 +16,16 @@ public class CommentDTORequest {
         this.repliedToCommentId = repliedToCommentId;
     }
 
+    public CommentDTORequest(String text, Long postId, Long repliedToCommentId) {
+        this.text = text;
+        this.postId = postId;
+        this.repliedToCommentId = repliedToCommentId;
+    }
+
+    public CommentDTORequest(String text) {
+        this.text = text;
+    }
+
     public Long getCommentId() {
         return commentId;
     }
