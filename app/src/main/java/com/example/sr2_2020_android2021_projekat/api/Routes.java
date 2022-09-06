@@ -91,7 +91,7 @@ public interface Routes {
     Call<UserInfoDTO> getAccountInfo();
 
     @PUT("auth/updateAccountInfo")
-    Call<?> updateAccountInfo(@Body UserInfoDTO userInfoDTO);
+    Call<String> updateAccountInfo(@Body UserInfoDTO userInfoDTO);
 
     @POST("comments/postComment")
     Call<String> postComment(@Body CommentDTORequest commentDTORequest);
@@ -122,6 +122,7 @@ public interface Routes {
     @GET("file/{filename}")
     Call<ResponseBody> getFile(@Path("filename") String filename);
 
+    @Multipart
     @PUT("file/upload")
     Call<FileResponse> changeAvatar(@Part MultipartBody.Part files);
 

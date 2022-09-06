@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,6 +12,8 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,9 +39,8 @@ import com.example.sr2_2020_android2021_projekat.fragments.PostsFragment;
 import com.example.sr2_2020_android2021_projekat.fragments.RegisterFragment;
 import com.example.sr2_2020_android2021_projekat.tools.DialogHelper;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
+import com.example.sr2_2020_android2021_projekat.tools.InputStreamRequestBody;
 import com.google.android.material.navigation.NavigationView;
-
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.util.Locale;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     public int fileSelectRequestCode = 1;
     private Uri uri = null;
     private MultipartBody.Part multipartFile;
+    private String filePath;
 
     ///
 
@@ -150,35 +153,10 @@ public class MainActivity extends AppCompatActivity {
 
             if(item.getTitle().equals("Logout")) {
 
-                storeDataToSharedPreferences(null, 0);
 
                 // Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
 
-                MainActivity.this.navigationView.getMenu().
-                        findItem(R.id.navigation_bar_item_user_register).setVisible(true);
-
-                MainActivity.this.navigationView.getMenu().
-                        findItem(R.id.navigation_bar_item_user_login).setVisible(true);
-
-                MainActivity.this.navigationView.getMenu().
-                        findItem(R.id.navigation_bar_item_user_logout).setVisible(false);
-
-                MainActivity.this.navigationView.getMenu().
-                        findItem(R.id.navigation_bar_item_user_manage).setVisible(false);
-
-                MainActivity.this.navigationView.getMenu().
-                        findItem(R.id.navigation_bar_item_create_community).setVisible(false);
-
-                MainActivity.this.navigationView.getMenu().
-                        findItem(R.id.navigation_bar_item_communities).setVisible(false);
-
-                MainActivity.this.navigationView.getMenu().
-                        findItem(R.id.navigation_bar_item_administrator_tools).setVisible(false);
-
-                MainActivity.this.menu.findItem(R.id.action_add_post).setVisible(false);
-
-                FragmentTransition.to(PostsFragment.newInstance("hot"), MainActivity.this,
-                        false, R.id.viewPage);
+                logout();
 
                 // item.setVisible(false); -- WORKS
 
@@ -235,6 +213,37 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void logout() {
+
+        storeDataToSharedPreferences(null, 0);
+
+        MainActivity.this.navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_user_register).setVisible(true);
+
+        MainActivity.this.navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_user_login).setVisible(true);
+
+        MainActivity.this.navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_user_logout).setVisible(false);
+
+        MainActivity.this.navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_user_manage).setVisible(false);
+
+        MainActivity.this.navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_create_community).setVisible(false);
+
+        MainActivity.this.navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_communities).setVisible(false);
+
+        MainActivity.this.navigationView.getMenu().
+                findItem(R.id.navigation_bar_item_administrator_tools).setVisible(false);
+
+        MainActivity.this.menu.findItem(R.id.action_add_post).setVisible(false);
+
+        FragmentTransition.to(PostsFragment.newInstance("hot"), MainActivity.this,
+                false, R.id.viewPage);
     }
 
     public void storeDataToSharedPreferences(String authToken, int expiresIn) {
@@ -324,20 +333,49 @@ public class MainActivity extends AppCompatActivity {
 
             File file = new File(uri.getPath());
 
-            String filePath = file.getPath().split(":")[1];
+            filePath = getRealPathFromURI_API19(getBaseContext(), uri);
 
-            RequestBody requestFile =
-                    RequestBody.create(MediaType.parse(getContentResolver().
-                            getType(uri)), filePath);
+            InputStreamRequestBody inputStreamRequestBody =
+                    new InputStreamRequestBody(MediaType.parse("*/*"), getContentResolver(), uri);
 
             Log.d("FilePath", filePath);
             Log.d("MULTIPART FILE", String.valueOf(
-                    MultipartBody.Part.createFormData("files", file.getName(), requestFile)));
+                    MultipartBody.Part.createFormData("files", file.getName(),
+                            inputStreamRequestBody)));
 
-            multipartFile = MultipartBody.Part.createFormData("files", file.getName(), requestFile);
+            multipartFile = MultipartBody.Part.createFormData("files", file.getName(),
+                    inputStreamRequestBody);
 
             //Toast.makeText(getApplicationContext(), avatarPath, Toast.LENGTH_LONG).show();
         }
+    }
+
+    public static String getRealPathFromURI_API19(Context context, Uri uri) {
+        String filePath = "";
+        if (uri.getHost().contains("com.android.providers.media")) {
+            // Image pick from recent
+            String wholeID = DocumentsContract.getDocumentId(uri);
+
+            // Split at colon, use second item in the array
+            String id = wholeID.split(":")[1];
+
+            String[] column = {MediaStore.Images.Media.DATA};
+
+            // where id is equal to
+            String sel = MediaStore.Images.Media._ID + "=?";
+
+            Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    column, sel, new String[]{id}, null);
+
+            int columnIndex = cursor.getColumnIndex(column[0]);
+
+            if (cursor.moveToFirst()) {
+                filePath = cursor.getString(columnIndex);
+            }
+            cursor.close();
+        }
+
+        return filePath;
     }
 
     public void openFileChooser() {
@@ -466,5 +504,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void setMultipartFile(MultipartBody.Part multipartFile) {
         this.multipartFile = multipartFile;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

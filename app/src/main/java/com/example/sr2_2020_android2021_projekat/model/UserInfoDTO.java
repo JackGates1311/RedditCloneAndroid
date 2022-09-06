@@ -11,14 +11,9 @@ public class UserInfoDTO {
     private String description;
     private int karma;
 
-    public UserInfoDTO(String username, String email, String avatar, String displayName,
-                       String description, int karma) {
-        this.username = username;
-        this.email = email;
-        this.avatar = avatar;
+    public UserInfoDTO(String displayName, String description) {
         this.displayName = displayName;
         this.description = description;
-        this.karma = karma;
     }
 
     public String getUsername() {

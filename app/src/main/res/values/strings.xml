@@ -120,7 +120,7 @@
     <string name="button_change_password_name">Change password</string>
     <string name="button_my_communities_name">My communities</string>
     <string name="button_save_name">Save changes</string>
-    <string name="button_change_photo_name">Change image</string>
+    <string name="button_change_photo_name">Change</string>
     <string name="current_password_name">Current password</string>
     <string name="new_password_name">New password</string>
     <string name="repeat_new_password_name">Repeat new password</string>
@@ -159,4 +159,5 @@
     <string name="flair_name_text">Flair name</string>
     <string name="btn_save_text">Save</string>
     <string name="change_flairs_text">Change flairs</string>
+    <string name="button_remove_photo_name">Remove</string>
 </resources>

@@ -10,12 +10,13 @@
 
         <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="64.0dip"
-                android:layout_height="64.0dip"
-                android:layout_marginRight="10.0sp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatar_image"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:src="@drawable/ic_avatar"
-                android:contentDescription="@string/logo_image_description" />
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FFFFFF"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_avatar_upload"

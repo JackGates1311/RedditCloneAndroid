@@ -1,6 +1,7 @@
 package com.example.sr2_2020_android2021_projekat.fragments;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ import com.example.sr2_2020_android2021_projekat.model.RegisterRequest;
 import com.example.sr2_2020_android2021_projekat.tools.FragmentTransition;
 import com.example.sr2_2020_android2021_projekat.tools.HttpClient;
 import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MultipartBody;
 
 public class RegisterFragment extends Fragment {
@@ -60,7 +63,8 @@ public class RegisterFragment extends Fragment {
         password = view.findViewById(R.id.password);
         passwordRepeated = view.findViewById(R.id.passwordRepeated);
         description = view.findViewById(R.id.description);
-        com.google.android.material.button.MaterialButton uploadAvatarButton = view.findViewById(R.id.button_avatar_upload);
+        com.google.android.material.button.MaterialButton uploadAvatarButton =
+                view.findViewById(R.id.button_avatar_upload);
 
         Button registerButton = view.findViewById(R.id.registerButton);
 
@@ -231,5 +235,20 @@ public class RegisterFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         //Toast.makeText(getActivity(), "onDetach()", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Uri uri;
+
+        CircleImageView avatarImage = getView().findViewById(R.id.avatar_image);
+
+        if(getActivity() != null && ((MainActivity)getActivity()).getUri()
+                != null) {
+            uri = ((MainActivity)getActivity()).getUri();
+            avatarImage.setImageURI(uri);
+        }
     }
 }
